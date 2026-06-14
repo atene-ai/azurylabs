@@ -2,23 +2,52 @@
 export interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title = "azury labs", description = "" } = Astro.props;
+const { title = "azury labs", description = "", noindex = false } = Astro.props;
+
+const siteUrl = Astro.site ?? new URL("https://iruzlabs.com");
+const pathname = Astro.url.pathname;
+const [, firstSegment] = pathname.split("/");
+const currentLang = firstSegment === "es" ? "es" : "en";
+
+const canonicalUrl = new URL(pathname, siteUrl).toString();
+const enUrl = new URL(pathname.replace(/^\/(en|es)\//, "/en/"), siteUrl).toString();
+const esUrl = new URL(pathname.replace(/^\/(en|es)\//, "/es/"), siteUrl).toString();
+const xDefaultUrl = new URL(pathname.replace(/^\/(en|es)\//, "/en/"), siteUrl).toString();
+
+const ogLocale = currentLang === "es" ? "es_MX" : "en_US";
+const robotsContent = noindex ? "noindex, nofollow" : "index, follow";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="robots" content={robotsContent} />
+    <meta name="theme-color" content="#0A0C10" />
     <meta name="generator" content={Astro.generator} />
+
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="es" href={esUrl} />
+    <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:site_name" content="azury labs" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
