@@ -1,0 +1,50 @@
+---
+export interface Props {
+  color?: "brand" | "blue" | "glow" | "success" | "warning" | "error";
+  class?: string;
+}
+
+const { color = "brand", class: className = "" } = Astro.props;
+---
+
+<span class:list={["tag", `tag--${color}`, className]}>
+  <slot />
+</span>
+
+<style>
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-sm);
+    line-height: 1.5;
+  }
+
+  .tag--brand {
+    background: var(--color-brand-dim);
+    color: var(--color-brand);
+  }
+  .tag--blue {
+    background: var(--color-blue-dim);
+    color: var(--color-blue);
+  }
+  .tag--glow {
+    background: rgba(167, 139, 250, 0.12);
+    color: var(--color-glow);
+  }
+  .tag--success {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--color-success);
+  }
+  .tag--warning {
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--color-warning);
+  }
+  .tag--error {
+    background: rgba(239, 68, 68, 0.12);
+    color: var(--color-error);
+  }
+</style>

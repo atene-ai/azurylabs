@@ -1,0 +1,214 @@
+nav:
+  products: "Squads"
+  solutions: "Orchestration"
+  howItWorks: "How it works"
+  company: "Who we are"
+
+  scheduleDemo: "Design My Team"
+
+hero:
+  eyebrow: "Artificial Agents as a Service"
+  headline: "Don't buy software.<br />Deploy an<br /><span class='hero__headline--accent'>agent workforce</span>"
+  subtext: "We build specialized agent squads that execute real work across revenue, operations, and customer care 24/7 with human supervision and enterprise SLA."
+  ctaPrimary: "Design My Squad"
+  ctaSecondary: "See Agents in Action"
+  trust: "Measurable outcomes · Multi-agent orchestration · Instant scalability"
+  visual:
+    title: "azury labs — Dashboard"
+    start: "Active Agents"
+    conversions: "Conversions"
+    respTime: "Resp. Time"
+    activity: "Agent Activity"
+    feed:
+      re: "RE Agent processed lead #4821"
+      hc: "HC Agent scheduled appointment #1093"
+      crm: "CRM updated Q1 pipeline"
+      re2: "RE Agent qualified prospect"
+    pills:
+      re: "Real Estate"
+      hc: "Healthcare"
+      crm: "CRM"
+      sw: "Software"
+
+products:
+  header:
+    badge: "Agent Squads"
+    title: "Digital teams built to<br /><span class='products__title--accent'>operate outcomes</span>"
+    sub: "Each squad combines specialist agents, business rules, and supervision to execute critical workflows end-to-end."
+  stack:
+    title: "Connect your productive tools"
+    sub: "We integrate channels, messaging, voice, and scheduling so your agents can operate without friction."
+    items:
+      telegram: "Telegram"
+      whatsapp: "WhatsApp Business"
+      instagram: "Instagram Messenger"
+      calls: "Calls"
+      calendar: "Google Calendar"
+  ai:
+    badge: "Revenue Squad"
+    title: "Capture and Close Squad"
+    desc: "Agents that qualify leads, prioritize opportunities, schedule meetings, and follow up until your team receives a close-ready pipeline."
+    visualAlt: "Revenue Squad visual showing lead capture, qualification, and close pipeline"
+    features:
+      - "Agents for Real Estate"
+      - "Agents for Healthcare"
+      - "Reactive and proactive"
+      - "Omnichannel: WhatsApp, email, SMS"
+    cta: "View squad"
+  crm:
+    badge: "Operations Squad"
+    title: "Operations Execution Squad"
+    desc: "Agents that coordinate tasks, update systems, trigger automations, and remove operational bottlenecks every day."
+    visualAlt: "Operations Squad visual showing workflow routing, automations, and system sync"
+    features:
+      - "Intelligent visual pipeline"
+      - "Predictive lead scoring"
+      - "Flow automation"
+      - "Advanced analytics and reports"
+    cta: "View squad"
+  sw:
+    badge: "Care Squad"
+    title: "Customer Care Squad"
+    desc: "Agents that handle omnichannel requests, resolve common cases, escalate complex issues, and keep service quality consistent."
+    visualAlt: "Care Squad visual showing omnichannel service hub and smart escalation"
+    features:
+      - "Clean and scalable architecture"
+      - "Integrations with existing systems"
+      - "MVPs and digital products"
+      - "Continuous support and maintenance"
+    cta: "View squad"
+
+features:
+  header:
+    badge: "AAAS Orchestration"
+    title: "Control infrastructure<br /><span class='features__title--accent'>for agent teams</span>"
+    sub: "Define rules, monitor performance, and improve outcomes without fragile manual operations."
+  items:
+    reactive:
+      title: "Reactive Execution"
+      desc: "Agents react in seconds to business events and customer actions with consistent operational quality."
+    proactive:
+      title: "Proactive Execution"
+      desc: "Agents detect signals, trigger sequences, and open opportunities before your pipeline cools down."
+    omnichannel:
+      title: "Omnichannel Operations"
+      desc: "WhatsApp, email, SMS, and web in one operational layer to keep every conversation continuous."
+    integrations:
+      title: "Stack Integrations"
+      desc: "Connect CRMs, EHRs, ERPs, and calendars so agents work directly inside your real workflows."
+    analytics:
+      title: "Control Tower and SLA"
+      desc: "Full visibility into productivity, response times, resolution rates, and SLA compliance by squad."
+    custom:
+      title: "Custom Playbooks"
+      desc: "We design industry-specific playbooks per process and objective to accelerate outcomes from week one."
+
+howItWorks:
+  header:
+    badge: "Deployment"
+    title: "From brief to production<br /><span class='how__title--accent'>in three phases</span>"
+  steps:
+    connect:
+      title: "Map your operation"
+      desc: "We align goals, bottlenecks, and data sources to design the right squad for your business."
+      detail: "Goals · Processes · Systems · Rules"
+    configure:
+      title: "Configure and train"
+      desc: "We define playbooks, handoffs, escalation protocols, and autonomy boundaries for each agent."
+      detail: "Playbooks · QA · Human handoff"
+    scale:
+      title: "Operate and optimize"
+      desc: "We launch your squad in production and improve continuously using outcome metrics and SLA targets."
+      detail: "SLA · Continuous improvement · Scale"
+
+stats:
+  conversations:
+    label: "Interactions operated"
+    desc: "Executed daily by agents in production"
+  responseTime:
+    label: "Reaction time"
+    desc: "Average activation time on critical events"
+  industries:
+    label: "Active squads"
+    desc: "Multi-agent cells running business-critical workflows"
+  uptime:
+    label: "SLA compliance"
+    desc: "Enterprise operations with monitoring and continuous support"
+
+cta:
+  overline: "Design your AAAS operation"
+  title: "Your next team<br /><span class='cta__title--accent'>does not need hiring</span>"
+  sub: "Launch agent squads in days, not months. Start with one critical workflow and scale by outcomes."
+  primary: "Design My Agent Team"
+  secondary: "Explore Squads"
+  disclaimer: "Executive discovery · 7-day roadmap · Guided implementation"
+  link: "https://calendly.com/admin-iruzlabs/we-re-going-to-transform-your-business-zuri-labs"
+
+footer:
+  tagline: "Agent teams that execute measurable outcomes."
+  status: "All systems operational"
+  copy: "© {year} Azury Labs LLC. All rights reserved."
+  cols:
+    products: "Products"
+    solutions: "Solutions"
+    company: "Company"
+    legal: "Legal"
+  links:
+    aiRE: "Real Estate Agents"
+    aiHC: "Healthcare Agents"
+    crm: "Neural CRM"
+    reactive: "Reactive Agents"
+    proactive: "Proactive Agents"
+    omni: "Omnichannel"
+    about: "About"
+    contact: "Contact"
+    blog: "Blog"
+    privacy: "Privacy"
+    terms: "Terms"
+    security: "Security"
+    encryption: "Encryption"
+    api: "Neural API"
+    internal: "Internal Access"
+
+legal:
+  back: "← Back to home"
+  updated: "Last updated: {date}"
+
+about:
+  hero:
+    title: "Mission"
+    subtitle: "Empower sales teams by eliminating noise and inefficiency. Our mission is to deploy autonomous AI agents that centralize, profile, and reactivate leads across all channels, delivering only ready-to-close opportunities to humans."
+    quote: "“Transforming disconnected leads into imminent closes via autonomous artificial intelligence.”"
+  vision:
+    title: "Vision"
+    text: "To become the central nervous system of modern sales, redefining the standard of customer service where immediacy and personalization are the norm, and where no business opportunity is lost due to lack of human capacity."
+  values:
+    title: "Values"
+    v1:
+      title: "Radical Immediacy"
+      desc: "Time is the most expensive asset in sales."
+    v2:
+      title: "Clarity over Noise"
+      desc: "We hate inefficiency and disorder."
+    v3:
+      title: "Organic Omnipresence"
+      desc: "We are where the customer is, without being invasive."
+    v4:
+      title: "Excellence Standardization"
+      desc: "Quality of service should not depend on human mood."
+  personality:
+    title: "Brand Personality"
+    items:
+      p1:
+        title: "Technical Authority (The Sage)"
+        desc: "Speaks with precision. Doesn't 'believe' a lead is good; profiles it with data. An expert brand in efficiency and workflows."
+      p2:
+        title: "Sophisticated Simplicity (The Magician)"
+        desc: "Internal technology is complex, but user experience is magical and fluid. Transforms 'noise' into 'opportunities' almost invisibly."
+      p3:
+        title: "Human Empowerment"
+        desc: "Doesn't seek to replace the salesperson, but turn them into a 'super-closer'. An allied brand, warm in treatment but relentless in execution."
+    slogan: "We manage the complexity; you close the deal."
+  tone:
+    title: "Tone and Voice"
+    desc: "We are not a simple chatbot; we are Sales Infrastructure. We are the 'brain' that filters, qualifies, and reactivates, allowing humans to focus on closing."

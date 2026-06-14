@@ -1,0 +1,397 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const prerender = true;
+
+import Navbar from "../../components/sections/Navbar.astro";
+import Footer from "../../components/sections/Footer.astro";
+import { useTranslations } from "../../i18n/utils";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang);
+const lastUpdated =
+  lang === "es" ? "19 de febrero de 2026" : "February 19, 2026";
+
+const title =
+  lang === "es"
+    ? "Aviso de Privacidad — Azury Labs LLC"
+    : "Privacy Policy — Azury Labs LLC";
+const desc =
+  lang === "es"
+    ? "Aviso de Privacidad de Azury Labs LLC. Conoce cómo recopilamos, usamos y protegemos tu información personal."
+    : "Azury Labs LLC Privacy Policy. Learn how we collect, use, and protect your personal information.";
+---
+
+<BaseLayout title={title} description={desc}>
+  <Navbar lang={lang} />
+
+  <main class="legal-page">
+    <div class="container legal-page__inner">
+      <header class="legal-page__header">
+        <a href={`/${lang}/`} class="legal-page__back">{t("legal.back")}</a>
+        <h1 class="legal-page__title">
+          {lang === "es" ? "Aviso de Privacidad" : "Privacy Policy"}
+        </h1>
+        <p class="legal-page__meta">
+          {t("legal.updated").replace("{date}", lastUpdated)}
+        </p>
+      </header>
+
+      <div class="legal-page__body">
+        {
+          lang === "es" ? (
+            <>
+              <section class="legal-section">
+                <h2>1. Identidad y Domicilio del Responsable</h2>
+                <p>
+                  <strong>Azury Labs LLC</strong> (en adelante, "Azury Labs"
+                  o "Nosotros"), con domicilio para efectos de este aviso en la
+                  Ciudad de México, es responsable del uso y protección de sus
+                  datos personales, y al respecto le informamos lo siguiente:
+                </p>
+                <div class="legal-responsible">
+                  <p>
+                    <strong>Responsable:</strong> Azury Labs LLC
+                  </p>
+                  <p>
+                    <strong>Sitio web:</strong>{" "}
+                    <a
+                      href="https://azurylabs.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      https://azurylabs.com
+                    </a>
+                  </p>
+                </div>
+              </section>
+
+              <section class="legal-section">
+                <h2>2. Datos Personales que Recabamos</h2>
+                <p>
+                  Para llevar a cabo las finalidades descritas en este aviso de
+                  privacidad, utilizaremos los siguientes datos personales:
+                  datos de identificación (nombre completo), datos de contacto
+                  (correo electrónico, teléfono), datos laborales (cargo,
+                  empresa) y datos de facturación.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>3. Finalidades del Tratamiento</h2>
+                <p>
+                  Utilizaremos sus datos personales para las siguientes
+                  finalidades necesarias para el servicio que solicita:
+                </p>
+                <ul>
+                  <li>
+                    Proveer los servicios de agentes de IA, CRM y desarrollo de
+                    software contratados.
+                  </li>
+                  <li>Facturación y cobro.</li>
+                  <li>
+                    Dar cumplimiento a obligaciones y requerimientos legales.
+                  </li>
+                  <li>
+                    Mantener la seguridad de nuestra infraestructura y prevenir
+                    fraudes.
+                  </li>
+                </ul>
+                <p>
+                  De manera adicional, utilizaremos su información para
+                  finalidades secundarias que nos permiten y facilitan brindarle
+                  una mejor atención: enviar información sobre nuevos productos,
+                  boletines y encuestas de calidad.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>4. Transferencia de Datos</h2>
+                <p>
+                  Le informamos que sus datos personales no serán vendidos ni
+                  compartidos con terceros ajenos a Azury Labs LLC para
+                  fines comerciales sin su consentimiento, salvo las excepciones
+                  previstas en el artículo 37 de la Ley Federal de Protección de
+                  Datos Personales en Posesión de los Particulares.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>5. Derechos ARCO</h2>
+                <p>
+                  Usted tiene derecho a conocer qué datos personales tenemos de
+                  usted, para qué los utilizamos y las condiciones del uso que
+                  les damos (Acceso). Asimismo, es su derecho solicitar la
+                  corrección de su información personal en caso de que esté
+                  desactualizada, sea inexacta o incompleta (Rectificación); que
+                  la eliminemos de nuestros registros o bases de datos cuando
+                  considere que la misma no está siendo utilizada adecuadamente
+                  (Cancelación); así como oponerse al uso de sus datos
+                  personales para fines específicos (Oposición).
+                </p>
+                <p>
+                  Para ejercer cualquiera de los derechos ARCO, deberá presentar
+                  la solicitud respectiva enviando un correo electrónico a:{" "}
+                  <a href="mailto:privacidad@azurylabs.com">
+                    privacidad@azurylabs.com
+                  </a>
+                  .
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>6. Uso de Tecnologías de Rastreo</h2>
+                <p>
+                  Le informamos que en nuestra página de internet utilizamos
+                  cookies y otras tecnologías, a través de las cuales es posible
+                  monitorear su comportamiento como usuario de internet, así
+                  como brindarle un mejor servicio y experiencia al navegar en
+                  nuestra página.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>7. Cambios al Aviso de Privacidad</h2>
+                <p>
+                  El presente aviso de privacidad puede sufrir modificaciones,
+                  cambios o actualizaciones derivadas de nuevos requerimientos
+                  legales; de nuestras propias necesidades por los productos o
+                  servicios que ofrecemos; de nuestras prácticas de privacidad;
+                  de cambios en nuestro modelo de negocio, o por otras causas.
+                  Nos comprometemos a mantenerlo informado sobre los cambios que
+                  pueda sufrir este aviso de privacidad a través de nuestro
+                  sitio web.
+                </p>
+              </section>
+            </>
+          ) : (
+            <>
+              <section class="legal-section">
+                <h2>1. Identity and Address of the Data Controller</h2>
+                <p>
+                  <strong>Azury Labs LLC</strong> (hereinafter, "Azury Labs" or
+                  "We"), with address for the purposes of this
+                  notice in Mexico City, is responsible for the use and
+                  protection of your personal data, and in this regard we inform
+                  you as follows:
+                </p>
+                <div class="legal-responsible">
+                  <p>
+                    <strong>Responsible:</strong> Azury Labs LLC
+                  </p>
+                  <p>
+                    <strong>Website:</strong>{" "}
+                    <a
+                      href="https://azurylabs.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      https://azurylabs.com
+                    </a>
+                  </p>
+                </div>
+              </section>
+
+              <section class="legal-section">
+                <h2>2. Personal Data We Collect</h2>
+                <p>
+                  To carry out the purposes described in this privacy notice, we
+                  will use the following personal data: identification data
+                  (full name), contact data (email, phone), employment data (job
+                  title, company), and billing data.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>3. Purposes of Processing</h2>
+                <p>
+                  We will use your personal data for the following purposes
+                  necessary for the service you request:
+                </p>
+                <ul>
+                  <li>
+                    Provide the contracted AI agents, CRM, and software
+                    development services.
+                  </li>
+                  <li>Billing and collection.</li>
+                  <li>Comply with legal obligations and requirements.</li>
+                  <li>
+                    Maintain the security of our infrastructure and prevent
+                    fraud.
+                  </li>
+                </ul>
+                <p>
+                  Additionally, we will use your information for secondary
+                  purposes that allow us to provide better service: sending
+                  information about new products, newsletters, and quality
+                  surveys.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>4. Data Transfers</h2>
+                <p>
+                  We inform you that your personal data will not be sold or
+                  shared with third parties outside Azury Labs LLC for
+                  commercial purposes without your consent, except for the
+                  exceptions provided by law.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>5. ARCO Rights</h2>
+                <p>
+                  You have the right to know what personal data we have about
+                  you, what we use it for, and the conditions of use (Access).
+                  Likewise, it is your right to request the correction of your
+                  personal information if it is outdated, inaccurate, or
+                  incomplete (Rectification); that we remove it from our records
+                  or databases when you consider that it is not being used
+                  properly (Cancellation); as well as to oppose the use of your
+                  personal data for specific purposes (Opposition).
+                </p>
+                <p>
+                  To exercise any of the ARCO rights, you must submit the
+                  respective request by sending an email to:{" "}
+                  <a href="mailto:privacy@azurylabs.com">privacy@azurylabs.com</a>
+                  .
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>6. Use of Tracking Technologies</h2>
+                <p>
+                  We inform you that on our website we use cookies and other
+                  technologies, through which it is possible to monitor your
+                  behavior as an internet user, as well as to provide you with a
+                  better service and experience when browsing our page.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>7. Changes to the Privacy Notice</h2>
+                <p>
+                  This privacy notice may suffer modifications, changes, or
+                  updates derived from new legal requirements; from our own
+                  needs regarding the products or services we offer; from our
+                  privacy practices; from changes in our business model, or for
+                  other reasons. We are committed to keeping you informed about
+                  the changes that this privacy notice may suffer through our
+                  website.
+                </p>
+              </section>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-top: 68px;
+  }
+  .legal-page__inner {
+    max-width: 760px;
+    padding-block: var(--space-16);
+  }
+  .legal-page__header {
+    margin-bottom: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .legal-page__back {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-brand);
+    text-decoration: none;
+  }
+  .legal-page__back:hover {
+    color: var(--color-glow);
+  }
+  .legal-page__title {
+    font-family: var(--font-brand);
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+  }
+  .legal-page__meta {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-faint);
+  }
+  .legal-page__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+  .legal-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-bottom: var(--space-10);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  .legal-section:last-child {
+    border-bottom: none;
+  }
+  .legal-section h2 {
+    font-family: var(--font-brand);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text);
+  }
+  .legal-section p,
+  .legal-section li {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+  .legal-section ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-left: var(--space-6);
+  }
+  .legal-section li {
+    list-style: disc;
+  }
+  .legal-section a {
+    color: var(--color-brand);
+    text-decoration: none;
+  }
+  .legal-section a:hover {
+    color: var(--color-glow);
+  }
+  .legal-section strong {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+  .legal-responsible {
+    background: var(--color-surface-2);
+    border-left: 4px solid var(--color-brand);
+    padding: var(--space-4);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .legal-responsible p {
+    margin: 0 !important;
+    font-size: var(--text-sm) !important;
+    color: var(--color-text-muted);
+  }
+  .legal-responsible strong {
+    color: var(--color-text);
+  }
+</style>

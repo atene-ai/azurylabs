@@ -1,0 +1,6 @@
+# Redirect root to default locale
+/     /es/   302
+
+# Normalize locale paths (no trailing slash → with trailing slash)
+/es   /es/   301
+/en   /en/   301

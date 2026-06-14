@@ -1,0 +1,141 @@
+---
+export interface Props {
+  variant?: "primary" | "secondary" | "ghost";
+  size?: "sm" | "md" | "lg";
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  class?: string;
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  type = "button",
+  disabled = false,
+  class: className = "",
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  class:list={["btn", `btn--${variant}`, `btn--${size}`, className]}
+  href={href}
+  type={!href ? type : undefined}
+  disabled={!href ? disabled : undefined}
+  aria-disabled={disabled}
+>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-family: var(--font-body);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      background var(--duration-normal) var(--ease-out),
+      color var(--duration-normal) var(--ease-out),
+      border-color var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+  }
+
+  .btn:hover::before {
+    opacity: 1;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  /* ── Sizes ── */
+  .btn--sm {
+    font-size: var(--text-xs);
+    padding: var(--space-2) var(--space-4);
+    height: 32px;
+  }
+
+  .btn--md {
+    font-size: var(--text-sm);
+    padding: var(--space-3) var(--space-6);
+    height: 44px;
+  }
+
+  .btn--lg {
+    font-size: var(--text-base);
+    padding: var(--space-4) var(--space-8);
+    height: 56px;
+  }
+
+  /* ── Variants ── */
+  .btn--primary {
+    background: var(--color-brand);
+    color: #fff;
+    border-color: var(--color-brand);
+  }
+
+  .btn--primary:hover {
+    background: var(--color-glow);
+    border-color: var(--color-glow);
+    box-shadow: var(--shadow-brand);
+  }
+
+  .btn--secondary {
+    background: var(--color-brand-dim);
+    color: var(--color-glow);
+    border-color: var(--color-border);
+  }
+
+  .btn--secondary:hover {
+    background: rgba(139, 92, 246, 0.25);
+    border-color: var(--color-brand);
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.2);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-text-muted);
+    border-color: var(--color-border-subtle);
+  }
+
+  .btn--ghost:hover {
+    color: var(--color-text);
+    border-color: var(--color-border);
+    background: var(--color-brand-dim);
+  }
+
+  /* ── Disabled ── */
+  .btn[disabled],
+  .btn[aria-disabled="true"] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+</style>

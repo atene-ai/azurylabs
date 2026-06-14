@@ -1,0 +1,65 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Operations Squad visual</title>
+  <desc id="desc">Agent workflow board with automations, routing, and analytics skills.</desc>
+  <defs>
+    <linearGradient id="bg" x1="100" y1="70" x2="1100" y2="650" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1426"/>
+      <stop offset="1" stop-color="#111D33"/>
+    </linearGradient>
+    <linearGradient id="line" x1="250" y1="230" x2="920" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+    <filter id="soft" x="0" y="0" width="1200" height="720" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+  </defs>
+
+  <rect x="24" y="24" width="1152" height="672" rx="36" fill="url(#bg)"/>
+  <rect x="24" y="24" width="1152" height="672" rx="36" stroke="#284061"/>
+
+  <rect x="96" y="96" width="1008" height="88" rx="18" fill="#162743" stroke="#2D4A70"/>
+  <text x="140" y="150" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="34" font-weight="700">Operations Command Layer</text>
+
+  <g opacity="0.24">
+    <path d="M96 236H1104" stroke="#2A456A"/>
+    <path d="M96 320H1104" stroke="#2A456A"/>
+    <path d="M96 404H1104" stroke="#2A456A"/>
+    <path d="M96 488H1104" stroke="#2A456A"/>
+    <path d="M96 572H1104" stroke="#2A456A"/>
+  </g>
+
+  <g>
+    <rect x="154" y="256" width="220" height="86" rx="16" fill="#1A3154" stroke="#3B82F6"/>
+    <text x="264" y="308" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="28" text-anchor="middle" font-weight="700">Input Queue</text>
+
+    <rect x="486" y="256" width="220" height="86" rx="16" fill="#1A3154" stroke="#6366F1"/>
+    <text x="596" y="308" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="28" text-anchor="middle" font-weight="700">Routing AI</text>
+
+    <rect x="818" y="256" width="220" height="86" rx="16" fill="#1A3154" stroke="#22D3EE"/>
+    <text x="928" y="308" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="28" text-anchor="middle" font-weight="700">Auto Actions</text>
+
+    <path d="M374 299H486" stroke="url(#line)" stroke-width="4"/>
+    <path d="M706 299H818" stroke="url(#line)" stroke-width="4"/>
+    <circle cx="430" cy="299" r="8" fill="#60A5FA"/>
+    <circle cx="762" cy="299" r="8" fill="#60A5FA"/>
+  </g>
+
+  <g>
+    <rect x="154" y="406" width="380" height="168" rx="18" fill="#162947" stroke="#2F4E73"/>
+    <text x="184" y="448" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="30" font-weight="700">Skills</text>
+    <text x="184" y="488" fill="#7DD3FC" font-family="Arial, sans-serif" font-size="25">Task orchestration</text>
+    <text x="184" y="522" fill="#7DD3FC" font-family="Arial, sans-serif" font-size="25">Workflow automation</text>
+    <text x="184" y="556" fill="#7DD3FC" font-family="Arial, sans-serif" font-size="25">System sync + scoring</text>
+
+    <rect x="666" y="406" width="372" height="168" rx="18" fill="#162947" stroke="#2F4E73"/>
+    <text x="696" y="448" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="30" font-weight="700">Output</text>
+    <text x="696" y="488" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">Bottlenecks reduced</text>
+    <text x="696" y="522" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">SLA visibility increased</text>
+    <text x="696" y="556" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">Daily ops stabilized</text>
+  </g>
+
+  <g filter="url(#soft)" opacity="0.25">
+    <circle cx="596" cy="360" r="110" fill="#38BDF8"/>
+  </g>
+</svg>

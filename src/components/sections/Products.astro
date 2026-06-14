@@ -1,0 +1,555 @@
+---
+import Badge from '../ui/Badge.astro';
+import BackgroundGlow from '../ui/BackgroundGlow.astro';
+import { useTranslations } from '../../i18n/utils';
+import {
+  siAnthropic,
+  siClaude,
+  siDeepseek,
+  siGooglegemini,
+  siGooglecalendar,
+  siGooglemeet,
+  siInstagram,
+  siMeta,
+  siMessenger,
+  siMoonshotai,
+  siOllama,
+  siWhatsapp,
+  siZapier,
+  siX,
+} from 'simple-icons';
+
+export interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const stackTools = [
+  { name: 'OpenAI', mark: 'OA' },
+  { name: 'Claude', icon: siClaude },
+  { name: 'Anthropic', icon: siAnthropic },
+  { name: 'Grok via X', icon: siX },
+  { name: 'Gemini', icon: siGooglegemini },
+  { name: 'DeepSeek', icon: siDeepseek },
+  { name: 'Kimi K2', icon: siMoonshotai },
+  { name: 'Llama', icon: siOllama },
+  { name: 'Meta', icon: siMeta },
+  { name: 'WhatsApp Business', icon: siWhatsapp },
+  { name: 'Instagram Messenger', icon: siInstagram },
+  { name: 'Messenger', icon: siMessenger },
+  { name: 'Google Meet', icon: siGooglemeet },
+  { name: 'Google Calendar', icon: siGooglecalendar },
+  { name: 'Outlook Calendar', mark: 'OC' },
+  { name: 'Webhooks', mark: 'WH' },
+  { name: 'Zapier', icon: siZapier },
+];
+
+const products = [
+  {
+    id: 'ai-agents',
+    badge: { label: t('products.ai.badge'), variant: 'brand' },
+    icon: '🤖',
+    title: t('products.ai.title'),
+    description: t('products.ai.desc'),
+    visual: '/images/squad-revenue.svg',
+    visualAlt: t('products.ai.visualAlt'),
+    features: t('products.ai.features'),
+    accentColor: 'var(--color-brand)',
+    accentDim: 'var(--color-brand-dim)',
+  },
+  {
+    id: 'crm',
+    badge: { label: t('products.crm.badge'), variant: 'blue' },
+    icon: '⚡',
+    title: t('products.crm.title'),
+    description: t('products.crm.desc'),
+    visual: '/images/squad-operations.svg',
+    visualAlt: t('products.crm.visualAlt'),
+    features: t('products.crm.features'),
+    accentColor: 'var(--color-blue)',
+    accentDim: 'var(--color-blue-dim)',
+  },
+  {
+    id: 'software',
+    badge: { label: t('products.sw.badge'), variant: 'glow' },
+    icon: '🛠️',
+    title: t('products.sw.title'),
+    description: t('products.sw.desc'),
+    visual: '/images/squad-care.svg',
+    visualAlt: t('products.sw.visualAlt'),
+    features: t('products.sw.features'),
+    accentColor: 'var(--color-glow)',
+    accentDim: 'rgba(167, 139, 250, 0.12)',
+  },
+];
+---
+
+<section class="products" id="productos">
+  <BackgroundGlow role="glow" size="800px" top="-200px" right="-200px" blur="120px" />
+  <BackgroundGlow role="blue" size="600px" bottom="-100px" left="-100px" blur="100px" />
+  <div class="container" style="position: relative; z-index: 1;">
+    <!-- Header -->
+    <div class="products__header reveal">
+      <Badge variant="subtle">{t('products.header.badge')}</Badge>
+      <h2 class="products__title" set:html={t('products.header.title')} />
+      <p class="products__sub">
+        {t('products.header.sub')}
+      </p>
+    </div>
+
+    <!-- Product cards -->
+    <div class="products__grid">
+      {products.map((product, i) => (
+        <div class={`product-card reveal reveal-delay-${(i + 1) * 100}`} style={`--accent: ${product.accentColor}; --accent-dim: ${product.accentDim};`}>
+          <div class="product-card__top">
+            <Badge variant={product.badge.variant as any}>{product.badge.label}</Badge>
+            <span class="product-card__icon">{product.icon}</span>
+          </div>
+
+          <div class="product-card__visual-wrap">
+            <img class="product-card__visual" src={product.visual} alt={product.visualAlt} loading="lazy" />
+          </div>
+
+          <h3 class="product-card__title">{product.title}</h3>
+          <p class="product-card__desc">{product.description}</p>
+
+          <ul class="product-card__features">
+            {Array.isArray(product.features) && product.features.map((f: string) => (
+              <li class="feature-item">
+                <span class="feature-item__check" aria-hidden="true">✓</span>
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+
+          <!-- Accent glow -->
+          <div class="product-card__glow" aria-hidden="true"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="products__runway reveal" aria-label={t('products.stack.title')}>
+    <div class="products__runway-inner">
+      <div class="products__stack-viewport">
+        <div class="products__stack-track">
+          {stackTools.map((tool) => (
+            <div class="stack-item">
+              <span class="stack-item__icon" aria-hidden="true">
+                {tool.icon ? (
+                  <svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false">
+                    <path d={tool.icon.path}></path>
+                  </svg>
+                ) : (
+                  <span class="stack-item__mono">{tool.mark}</span>
+                )}
+              </span>
+              <span class="stack-item__name">{tool.name}</span>
+            </div>
+          ))}
+          {stackTools.map((tool) => (
+            <div class="stack-item" aria-hidden="true">
+              <span class="stack-item__icon" aria-hidden="true">
+                {tool.icon ? (
+                  <svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false">
+                    <path d={tool.icon.path}></path>
+                  </svg>
+                ) : (
+                  <span class="stack-item__mono">{tool.mark}</span>
+                )}
+              </span>
+              <span class="stack-item__name">{tool.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .products {
+    padding-block: var(--space-24);
+    position: relative;
+    overflow-x: clip;
+    --runway-bg-top: color-mix(in srgb, #15233b 78%, transparent);
+    --runway-bg-bottom: color-mix(in srgb, #11203a 86%, transparent);
+    --runway-logo-color: color-mix(in srgb, var(--color-text) 72%, transparent);
+    --runway-label-color: color-mix(in srgb, var(--color-text) 68%, transparent);
+    --runway-hover-color: color-mix(in srgb, var(--color-text) 88%, transparent);
+  }
+
+  /* ── Header ── */
+  .products__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-16);
+  }
+
+  .products__title {
+    font-family: var(--font-brand);
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+  }
+
+  :global(.products__title--accent) {
+    background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-glow) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .products__sub {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    max-width: 560px;
+    line-height: var(--leading-relaxed);
+  }
+
+  .products__runway {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: var(--space-12);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    background:
+      linear-gradient(180deg, var(--runway-bg-top), var(--runway-bg-bottom));
+    position: relative;
+    z-index: 1;
+  }
+
+  .products__runway-inner {
+    max-width: 1440px;
+    margin-inline: auto;
+    padding: var(--space-6) var(--space-6);
+  }
+
+  .products__stack-viewport {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .products__stack-track {
+    display: flex;
+    align-items: center;
+    gap: clamp(var(--space-10), 4vw, var(--space-16));
+    width: max-content;
+    animation: runway-carousel 42s linear infinite;
+  }
+
+  .stack-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    min-height: 40px;
+    min-width: auto;
+    color: var(--runway-label-color);
+    opacity: 0.78;
+    transition: opacity var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+  }
+
+  .stack-item__icon {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--runway-logo-color);
+    padding: 0;
+  }
+
+  .stack-item__icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  .stack-item__mono {
+    display: inline-block;
+    font-size: 0.56rem;
+    font-weight: var(--weight-bold);
+    line-height: 1;
+    letter-spacing: 0.06em;
+  }
+
+  .stack-item__name {
+    font-family: var(--font-body);
+    font-size: clamp(0.92rem, 0.95vw, 1rem);
+    font-weight: var(--weight-semibold);
+    color: var(--runway-label-color);
+    line-height: 1.2;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+
+  .stack-item:hover,
+  .stack-item:hover .stack-item__icon,
+  .stack-item:hover .stack-item__name {
+    color: var(--runway-hover-color);
+    opacity: 1;
+  }
+
+  @keyframes runway-carousel {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-50% - (clamp(var(--space-10), 4vw, var(--space-16)) / 2))); }
+  }
+
+  :global(:root[data-theme="light"]) .products {
+    --runway-bg-top: color-mix(in srgb, var(--color-surface-2) 86%, white 14%);
+    --runway-bg-bottom: color-mix(in srgb, var(--color-surface) 92%, white 8%);
+    --runway-logo-color: color-mix(in srgb, #1f2937 58%, transparent);
+    --runway-label-color: color-mix(in srgb, #1f2937 62%, transparent);
+    --runway-hover-color: color-mix(in srgb, #0f172a 82%, transparent);
+  }
+
+  :global(:root[data-theme="light"]) .products__runway {
+    border-top-color: rgba(15, 23, 42, 0.12);
+    border-bottom-color: rgba(15, 23, 42, 0.12);
+  }
+
+  /* ── Grid ── */
+  .products__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  /* ── Product card ── */
+  .product-card {
+    position: relative;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    overflow: hidden;
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      border-color var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  /* Top edge highlight */
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.6;
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+
+  :global(:root[data-theme="light"]) .product-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(15, 23, 42, 0.1);
+  }
+
+  :global(:root[data-theme="light"]) .product-card:hover {
+    box-shadow:
+      0 12px 28px rgba(15, 23, 42, 0.12),
+      0 0 20px color-mix(in srgb, var(--accent) 16%, transparent);
+  }
+
+  :global(:root[data-theme="light"]) .product-card__visual-wrap {
+    background:
+      radial-gradient(circle at 20% 15%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 42%),
+      rgba(237, 241, 248, 0.9);
+  }
+
+  /* ── Card parts ── */
+  .product-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .product-card__icon {
+    font-size: var(--text-2xl);
+    line-height: 1;
+  }
+
+  .product-card__visual-wrap {
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(circle at 20% 15%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 42%),
+      var(--color-surface-2);
+    overflow: hidden;
+  }
+
+  .product-card__visual {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    transition: transform var(--duration-normal) var(--ease-out);
+  }
+
+  .product-card:hover .product-card__visual {
+    transform: scale(1.02);
+  }
+
+  .product-card__title {
+    font-family: var(--font-brand);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+    line-height: var(--leading-snug);
+  }
+
+  .product-card__desc {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    flex: 1;
+  }
+
+  /* ── Features list ── */
+  .product-card__features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .feature-item__check {
+    color: var(--accent);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-xs);
+    flex-shrink: 0;
+  }
+
+  /* ── Glow ── */
+  .product-card__glow {
+    position: absolute;
+    bottom: -40px;
+    right: -40px;
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+    pointer-events: none;
+    transition: opacity var(--duration-normal) var(--ease-out);
+    opacity: 0;
+  }
+
+  .product-card:hover .product-card__glow { opacity: 1; }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .products__runway {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .products__runway-inner {
+      padding-inline: var(--space-4);
+    }
+
+    .products__stack-track {
+      gap: var(--space-10);
+      animation-duration: 34s;
+    }
+    .products__grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .products {
+      padding-block: var(--space-18);
+    }
+
+    .products__header {
+      margin-bottom: var(--space-10);
+      gap: var(--space-3);
+    }
+
+    .products__sub {
+      font-size: var(--text-base);
+    }
+
+    .products__runway {
+      margin-top: var(--space-8);
+    }
+
+    .products__runway-inner {
+      padding: var(--space-4) var(--space-2);
+    }
+
+    .products__stack-track {
+      gap: var(--space-6);
+      animation-duration: 28s;
+    }
+
+    .stack-item {
+      min-height: 34px;
+      gap: 8px;
+    }
+
+    .stack-item__icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .stack-item__name {
+      font-size: 0.84rem;
+    }
+
+    .products__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .product-card {
+      padding: var(--space-6);
+      gap: var(--space-3);
+    }
+
+    .product-card__title {
+      font-size: var(--text-lg);
+    }
+
+    .feature-item {
+      font-size: var(--text-xs);
+      line-height: 1.35;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .products__stack-track {
+      animation: none;
+    }
+  }
+
+</style>

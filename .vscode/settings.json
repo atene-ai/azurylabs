@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^node -e \"const s=require\\('simple-icons'\\); const keys=\\['siTwilio','siInstagram','siGooglemessages','siMessenger'\\]; for\\(const k of keys\\)\\{console\\.log\\(k, !!s\\[k\\]\\);\\}\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

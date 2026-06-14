@@ -1,0 +1,74 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Revenue Squad visual</title>
+  <desc id="desc">Lead capture, qualification, and close workflow with agent skills.</desc>
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="1080" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1222"/>
+      <stop offset="1" stop-color="#131A2D"/>
+    </linearGradient>
+    <linearGradient id="funnel" x1="370" y1="180" x2="840" y2="540" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A78BFA" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#60A5FA" stop-opacity="0.35"/>
+    </linearGradient>
+    <linearGradient id="pill" x1="0" y1="0" x2="200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+    <filter id="soft" x="0" y="0" width="1200" height="720" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+  </defs>
+
+  <rect x="24" y="24" width="1152" height="672" rx="36" fill="url(#bg)"/>
+  <rect x="24" y="24" width="1152" height="672" rx="36" stroke="#29314A"/>
+
+  <g opacity="0.26">
+    <path d="M96 150H1104" stroke="#2E3957"/>
+    <path d="M96 250H1104" stroke="#2E3957"/>
+    <path d="M96 350H1104" stroke="#2E3957"/>
+    <path d="M96 450H1104" stroke="#2E3957"/>
+    <path d="M96 550H1104" stroke="#2E3957"/>
+  </g>
+
+  <path d="M300 190H900L670 520H530L300 190Z" fill="url(#funnel)"/>
+  <path d="M300 190H900L670 520H530L300 190Z" stroke="#7485B8" stroke-opacity="0.55"/>
+
+  <g>
+    <circle cx="360" cy="228" r="9" fill="#A78BFA"/>
+    <circle cx="430" cy="228" r="9" fill="#A78BFA"/>
+    <circle cx="500" cy="228" r="9" fill="#A78BFA"/>
+    <circle cx="570" cy="228" r="9" fill="#A78BFA"/>
+    <circle cx="840" cy="228" r="9" fill="#60A5FA"/>
+
+    <path d="M360 228C520 248 610 298 640 366" stroke="#A78BFA" stroke-width="3"/>
+    <path d="M430 228C570 256 662 322 670 390" stroke="#8B9BFF" stroke-width="3"/>
+    <path d="M500 228C625 275 708 345 696 422" stroke="#7D8CFF" stroke-width="3"/>
+    <path d="M570 228C666 286 736 360 720 450" stroke="#6F84FF" stroke-width="3"/>
+    <path d="M840 228C688 280 620 360 600 520" stroke="#60A5FA" stroke-width="3"/>
+  </g>
+
+  <g>
+    <rect x="454" y="495" width="292" height="66" rx="18" fill="url(#pill)"/>
+    <text x="600" y="537" fill="#EEF2FF" font-family="Arial, sans-serif" font-size="30" text-anchor="middle" font-weight="700">Close-Ready Pipeline</text>
+  </g>
+
+  <g>
+    <rect x="112" y="422" width="286" height="156" rx="18" fill="#18223A" fill-opacity="0.78" stroke="#314062"/>
+    <text x="142" y="466" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="30" font-weight="700">Skills</text>
+    <text x="142" y="506" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">Lead qualification</text>
+    <text x="142" y="540" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">Meeting booking</text>
+    <text x="142" y="574" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">Follow-up sequences</text>
+  </g>
+
+  <g>
+    <rect x="802" y="422" width="286" height="156" rx="18" fill="#18223A" fill-opacity="0.78" stroke="#314062"/>
+    <text x="832" y="466" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="30" font-weight="700">Channels</text>
+    <text x="832" y="506" fill="#93C5FD" font-family="Arial, sans-serif" font-size="25">WhatsApp</text>
+    <text x="832" y="540" fill="#93C5FD" font-family="Arial, sans-serif" font-size="25">Email</text>
+    <text x="832" y="574" fill="#93C5FD" font-family="Arial, sans-serif" font-size="25">SMS + Web</text>
+  </g>
+
+  <g filter="url(#soft)" opacity="0.25">
+    <circle cx="598" cy="352" r="90" fill="#8B5CF6"/>
+  </g>
+</svg>

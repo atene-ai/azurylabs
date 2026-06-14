@@ -1,0 +1,269 @@
+---
+import { useTranslations } from "../../i18n/utils";
+import StatCard from "../ui/StatCard.astro";
+import ActivityFeedItem from "../ui/ActivityFeedItem.astro";
+import Tag from "../ui/Tag.astro";
+
+export interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="hero__screen">
+  <!-- Simulated dashboard -->
+  <div class="screen__header">
+    <div class="screen__dots">
+      <span></span><span></span><span></span>
+    </div>
+    <span class="screen__title">{t("hero.visual.title")}</span>
+  </div>
+  <div class="screen__body">
+    <div class="screen__left">
+      <!-- Stat cards -->
+      <div class="screen__stats">
+        <StatCard label={t("hero.visual.start")} value="247" delta="+12%" />
+        <StatCard
+          label={t("hero.visual.conversions")}
+          value="3.8k"
+          delta="+24%"
+        />
+        <StatCard label={t("hero.visual.respTime")} value="1.2s" delta="-40%" />
+      </div>
+
+      <!-- Product pills -->
+      <div class="screen__pills">
+        <Tag color="brand">{t("hero.visual.pills.re")}</Tag>
+        <Tag color="blue">{t("hero.visual.pills.hc")}</Tag>
+        <Tag color="glow">{t("hero.visual.pills.crm")}</Tag>
+        <Tag color="success">{t("hero.visual.pills.sw")}</Tag>
+      </div>
+    </div>
+
+    <div class="screen__right">
+      <!-- Agent activity feed -->
+      <div class="screen__feed">
+        <div class="feed__label">{t("hero.visual.activity")}</div>
+        <ActivityFeedItem
+          dotColor="brand"
+          text={t("hero.visual.feed.re")}
+          time="ahora"
+        />
+        <ActivityFeedItem
+          dotColor="blue"
+          text={t("hero.visual.feed.hc")}
+          time="2s"
+        />
+        <ActivityFeedItem
+          dotColor="glow"
+          text={t("hero.visual.feed.crm")}
+          time="5s"
+        />
+        <ActivityFeedItem
+          dotColor="brand"
+          text={t("hero.visual.feed.re2")}
+          time="12s"
+        />
+      </div>
+    </div>
+  </div>
+  
+  <div class="screen__fog"></div>
+</div>
+
+<style>
+  .hero__screen {
+    width: 100%;
+    max-width: 900px;
+    background: var(--color-surface);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+      0 20px 80px rgba(0, 0, 0, 0.6),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      0 -20px 80px rgba(139, 92, 246, 0.15);
+    animation: screen-float 6s ease-in-out infinite;
+  }
+
+  .hero__screen::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 180px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(167, 139, 250, 0.15), transparent 70%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .screen__fog {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to top, var(--color-bg) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  @keyframes screen-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .screen__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface-2);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .screen__dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .screen__dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-border);
+  }
+
+  .screen__dots span:nth-child(1) {
+    background: #ef4444;
+  }
+  .screen__dots span:nth-child(2) {
+    background: #f59e0b;
+  }
+  .screen__dots span:nth-child(3) {
+    background: #10b981;
+  }
+
+  .screen__title {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .screen__body {
+    padding: var(--space-6);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+  }
+
+  .screen__left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .screen__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+  }
+
+  .screen__feed {
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .feed__label {
+    font-size: 9px;
+    font-family: var(--font-body);
+    color: var(--color-text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-1);
+  }
+
+  .screen__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  @media (max-width: 768px) {
+    .screen__body {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      padding: var(--space-4);
+    }
+    .hero__screen {
+      max-width: 100%;
+      animation: none;
+    }
+
+    .screen__fog {
+      height: 84px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .screen__header {
+      padding: var(--space-2) var(--space-3);
+    }
+
+    .screen__title {
+      font-size: 10px;
+    }
+
+    .screen__stats {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+
+    .screen__feed {
+      padding: var(--space-2);
+    }
+
+    .screen__left {
+      gap: var(--space-3);
+    }
+
+    .screen__pills {
+      gap: 6px;
+    }
+
+    .screen__fog {
+      display: none;
+    }
+  }
+
+  :global(:root[data-theme="light"]) .hero__screen {
+    border-color: rgba(124, 58, 237, 0.22);
+    box-shadow:
+      0 16px 44px rgba(15, 23, 42, 0.14),
+      0 0 0 1px rgba(15, 23, 42, 0.06),
+      0 -12px 36px rgba(124, 58, 237, 0.12);
+  }
+
+  :global(:root[data-theme="light"]) .hero__screen::before {
+    background: radial-gradient(ellipse at 50% 0%, rgba(124, 58, 237, 0.14), transparent 72%);
+  }
+
+  :global(:root[data-theme="light"]) .screen__fog {
+    background: linear-gradient(to top, rgba(246, 247, 251, 0.94) 0%, transparent 100%);
+  }
+
+  :global(:root[data-theme="light"]) .screen__feed {
+    background: rgba(255, 255, 255, 0.78);
+    border-color: rgba(15, 23, 42, 0.1);
+  }
+</style>

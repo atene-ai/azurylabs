@@ -1,0 +1,118 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="220" y1="120" x2="1380" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="1" stop-color="#0B1220"/>
+    </linearGradient>
+    <linearGradient id="funnelTop" x1="250" y1="220" x2="1350" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A78BFA" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#60A5FA" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="funnelMid" x1="450" y1="440" x2="1150" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C4B5FD" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0.8"/>
+    </linearGradient>
+    <linearGradient id="funnelBottom" x1="700" y1="760" x2="900" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="nodeLine" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+    <filter id="softGlow" x="0" y="0" width="1600" height="1000" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <rect x="40" y="40" width="1520" height="920" rx="36" fill="url(#bg)"/>
+  <rect x="40" y="40" width="1520" height="920" rx="36" stroke="rgba(167,139,250,0.35)"/>
+
+  <!-- Subtle grid -->
+  <g opacity="0.12">
+    <path d="M120 100V900" stroke="#94A3B8"/>
+    <path d="M240 100V900" stroke="#94A3B8"/>
+    <path d="M360 100V900" stroke="#94A3B8"/>
+    <path d="M480 100V900" stroke="#94A3B8"/>
+    <path d="M600 100V900" stroke="#94A3B8"/>
+    <path d="M720 100V900" stroke="#94A3B8"/>
+    <path d="M840 100V900" stroke="#94A3B8"/>
+    <path d="M960 100V900" stroke="#94A3B8"/>
+    <path d="M1080 100V900" stroke="#94A3B8"/>
+    <path d="M1200 100V900" stroke="#94A3B8"/>
+    <path d="M1320 100V900" stroke="#94A3B8"/>
+    <path d="M1440 100V900" stroke="#94A3B8"/>
+
+    <path d="M100 160H1500" stroke="#94A3B8"/>
+    <path d="M100 260H1500" stroke="#94A3B8"/>
+    <path d="M100 360H1500" stroke="#94A3B8"/>
+    <path d="M100 460H1500" stroke="#94A3B8"/>
+    <path d="M100 560H1500" stroke="#94A3B8"/>
+    <path d="M100 660H1500" stroke="#94A3B8"/>
+    <path d="M100 760H1500" stroke="#94A3B8"/>
+    <path d="M100 860H1500" stroke="#94A3B8"/>
+  </g>
+
+  <!-- Header bar -->
+  <rect x="100" y="90" width="1400" height="70" rx="20" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="138" cy="125" r="8" fill="#EF4444"/>
+  <circle cx="164" cy="125" r="8" fill="#F59E0B"/>
+  <circle cx="190" cy="125" r="8" fill="#10B981"/>
+  <text x="230" y="132" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">Funnel Orchestration Map</text>
+
+  <!-- Stage chips -->
+  <rect x="150" y="186" width="180" height="44" rx="22" fill="rgba(167,139,250,0.2)" stroke="rgba(167,139,250,0.5)"/>
+  <text x="196" y="214" fill="#DDD6FE" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Awareness</text>
+
+  <rect x="710" y="186" width="180" height="44" rx="22" fill="rgba(96,165,250,0.2)" stroke="rgba(96,165,250,0.5)"/>
+  <text x="763" y="214" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Qualify</text>
+
+  <rect x="1270" y="186" width="180" height="44" rx="22" fill="rgba(59,130,246,0.2)" stroke="rgba(59,130,246,0.5)"/>
+  <text x="1321" y="214" fill="#93C5FD" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Close</text>
+
+  <!-- Funnel body -->
+  <path d="M220 260 L1380 260 L1110 520 L490 520 Z" fill="url(#funnelTop)" opacity="0.32"/>
+  <path d="M490 520 L1110 520 L920 740 L680 740 Z" fill="url(#funnelMid)" opacity="0.34"/>
+  <rect x="680" y="740" width="240" height="72" rx="20" fill="url(#funnelBottom)" opacity="0.9"/>
+
+  <!-- Internal pathways -->
+  <g opacity="0.9" stroke="url(#nodeLine)" stroke-width="3">
+    <path d="M300 300 C540 330, 630 420, 800 520 C920 590, 970 660, 800 760"/>
+    <path d="M420 300 C610 340, 740 430, 820 520 C880 590, 870 660, 810 760"/>
+    <path d="M520 300 C700 350, 820 430, 900 520 C970 600, 930 680, 840 760"/>
+    <path d="M1120 300 C970 350, 870 430, 820 520 C780 600, 770 660, 770 760"/>
+  </g>
+
+  <!-- Nodes -->
+  <g>
+    <circle cx="300" cy="300" r="8" fill="#A78BFA"/>
+    <circle cx="420" cy="300" r="8" fill="#A78BFA"/>
+    <circle cx="520" cy="300" r="8" fill="#A78BFA"/>
+    <circle cx="1120" cy="300" r="8" fill="#60A5FA"/>
+
+    <circle cx="780" cy="520" r="10" fill="#C4B5FD"/>
+    <circle cx="820" cy="520" r="10" fill="#93C5FD"/>
+    <circle cx="900" cy="520" r="10" fill="#93C5FD"/>
+
+    <circle cx="800" cy="760" r="12" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Glow pools -->
+  <g filter="url(#softGlow)" opacity="0.35">
+    <ellipse cx="800" cy="520" rx="260" ry="80" fill="#A78BFA"/>
+    <ellipse cx="800" cy="760" rx="180" ry="50" fill="#3B82F6"/>
+  </g>
+
+  <!-- Side metrics -->
+  <rect x="170" y="570" width="320" height="160" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(148,163,184,0.35)"/>
+  <text x="198" y="610" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Lead Intake</text>
+  <text x="198" y="646" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">8,420 interactions / day</text>
+  <text x="198" y="678" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">Response latency &lt; 2.0s</text>
+
+  <rect x="1110" y="570" width="320" height="160" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(148,163,184,0.35)"/>
+  <text x="1138" y="610" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Conversion Cell</text>
+  <text x="1138" y="646" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">Qualified to close-ready: +29%</text>
+  <text x="1138" y="678" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">SLA compliance: 98%</text>
+
+  <text x="710" y="787" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Outcome Engine</text>
+</svg>

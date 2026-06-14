@@ -1,0 +1,531 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
+import Badge from "../components/ui/Badge.astro";
+import Card from "../components/ui/Card.astro";
+import Tag from "../components/ui/Tag.astro";
+import Divider from "../components/ui/Divider.astro";
+import Typography from "../components/ui/Typography.astro";
+---
+
+<BaseLayout title="azury labs — Design System">
+  <main class="container">
+    <!-- ── Header ── -->
+    <header class="ds-header">
+      <div class="ds-logo">
+        <Typography as="span" variant="heading-2" color="default"
+          >azury</Typography
+        >
+        <Typography as="span" variant="heading-2" color="brand">
+          Labs</Typography
+        >
+      </div>
+      <Typography as="p" variant="caption" color="faint"
+        >Design System · v1.0</Typography
+      >
+    </header>
+
+    <!-- ══════════════════════════════════════════════════════
+         COLORS
+    ══════════════════════════════════════════════════════ -->
+    <section class="ds-section">
+      <Typography as="h2" variant="overline" color="faint"
+        >01 — Cromatismo Vital</Typography
+      >
+      <Typography
+        as="p"
+        variant="body-sm"
+        color="muted"
+        class="ds-section__desc"
+      >
+        Una paleta diseñada para la profundidad, el contraste tecnológico y la
+        jerarquía de información crítica.
+      </Typography>
+
+      <div class="color-grid">
+        <div
+          class="color-swatch"
+          style="background:#0A0C10; border:1px solid rgba(255,255,255,0.08)"
+        >
+          <span class="color-swatch__hex">#0A0C10</span>
+          <span class="color-swatch__name">Deep Space</span>
+          <span class="color-swatch__role">Primary Background</span>
+        </div>
+        <div class="color-swatch" style="background:#8B5CF6">
+          <span class="color-swatch__hex">#8B5CF6</span>
+          <span class="color-swatch__name">Neural Violet</span>
+          <span class="color-swatch__role">Action & Brand Mark</span>
+        </div>
+        <div class="color-swatch" style="background:#3B82F6">
+          <span class="color-swatch__hex">#3B82F6</span>
+          <span class="color-swatch__name">Synthetic Blue</span>
+          <span class="color-swatch__role">Connectivity & UI</span>
+        </div>
+        <div class="color-swatch" style="background:#A78BFA">
+          <span class="color-swatch__hex">#A78BFA</span>
+          <span class="color-swatch__name">azury Glow</span>
+          <span class="color-swatch__role">Highlights & States</span>
+        </div>
+        <div
+          class="color-swatch"
+          style="background:#111318; border:1px solid rgba(255,255,255,0.08)"
+        >
+          <span class="color-swatch__hex">#111318</span>
+          <span class="color-swatch__name">Surface</span>
+          <span class="color-swatch__role">Elevated Cards</span>
+        </div>
+        <div class="color-swatch" style="background:#F0F0F5">
+          <span class="color-swatch__hex" style="color:#0A0C10">#F0F0F5</span>
+          <span class="color-swatch__name" style="color:#0A0C10"
+            >Primary Text</span
+          >
+          <span class="color-swatch__role" style="color:#4B5563">Default</span>
+        </div>
+      </div>
+    </section>
+
+    <Divider label="Tipografía" />
+
+    <!-- ══════════════════════════════════════════════════════
+         TYPOGRAPHY
+    ══════════════════════════════════════════════════════ -->
+    <section class="ds-section">
+      <Typography as="h2" variant="overline" color="faint"
+        >02 — Selección Tipográfica</Typography
+      >
+
+      <div class="type-stack">
+        <Card padding="md">
+          <div class="type-row">
+            <div class="type-meta">
+              <Badge variant="brand">Space Grotesk</Badge>
+              <Typography as="p" variant="caption" color="muted"
+                >Futurista, geométrica, personalidad tecnológica</Typography
+              >
+            </div>
+            <Typography as="p" variant="display" color="gradient">Aa</Typography
+            >
+          </div>
+          <Typography as="p" variant="display" color="default"
+            >El sistema nervioso central del Real Estate.</Typography
+          >
+        </Card>
+
+        <Card padding="md">
+          <div class="type-row">
+            <div class="type-meta">
+              <Badge variant="blue">Inter</Badge>
+              <Typography as="p" variant="caption" color="muted"
+                >Eficiente, neutral, altamente legible</Typography
+              >
+            </div>
+            <Typography
+              as="p"
+              variant="display"
+              color="gradient"
+              style="font-family:var(--font-body)">Aa</Typography
+            >
+          </div>
+          <Typography
+            as="p"
+            variant="heading-2"
+            color="default"
+            style="font-family:var(--font-body)"
+            >El sistema nervioso central del Real Estate.</Typography
+          >
+        </Card>
+
+        <Card padding="md">
+          <div class="type-row">
+            <div class="type-meta">
+              <Badge variant="glow">Work Sans</Badge>
+              <Typography as="p" variant="caption" color="muted"
+                >Robusta, profesional, autoridad institucional</Typography
+              >
+            </div>
+            <Typography
+              as="p"
+              variant="display"
+              color="gradient"
+              style="font-family:var(--font-solid)">Aa</Typography
+            >
+          </div>
+          <Typography
+            as="p"
+            variant="heading-2"
+            color="default"
+            style="font-family:var(--font-solid)"
+            >El sistema nervioso central del Real Estate.</Typography
+          >
+        </Card>
+      </div>
+
+      <!-- Scale -->
+      <div class="type-scale">
+        <Typography as="h1" variant="display" color="default"
+          >Display — clamp(36px → 72px)</Typography
+        >
+        <Typography as="h1" variant="heading-1" color="default"
+          >Heading 1 — clamp(30px → 48px)</Typography
+        >
+        <Typography as="h2" variant="heading-2" color="default"
+          >Heading 2 — clamp(24px → 36px)</Typography
+        >
+        <Typography as="h3" variant="heading-3" color="default"
+          >Heading 3 — clamp(20px → 30px)</Typography
+        >
+        <Typography as="p" variant="subheading" color="muted"
+          >Subheading — clamp(18px → 20px)</Typography
+        >
+        <Typography as="p" variant="body" color="muted"
+          >Body — 16px · Legibilidad óptima para párrafos de contenido extenso.</Typography
+        >
+        <Typography as="p" variant="body-sm" color="muted"
+          >Body SM — 14px · Texto secundario, metadatos y descripciones cortas.</Typography
+        >
+        <Typography as="p" variant="caption" color="faint"
+          >Caption — 12px · Notas al pie, timestamps, información auxiliar.</Typography
+        >
+        <Typography as="span" variant="label" color="default"
+          >Label — 14px Semibold · Etiquetas de formulario</Typography
+        ><br />
+        <Typography as="span" variant="overline" color="faint"
+          >Overline — 12px Uppercase · Categorías y secciones</Typography
+        >
+      </div>
+    </section>
+
+    <Divider label="Componentes" />
+
+    <!-- ══════════════════════════════════════════════════════
+         BUTTONS
+    ══════════════════════════════════════════════════════ -->
+    <section class="ds-section">
+      <Typography as="h2" variant="overline" color="faint"
+        >03 — Buttons</Typography
+      >
+
+      <div class="component-row">
+        <div class="component-group">
+          <Typography as="p" variant="caption" color="faint">Primary</Typography
+          >
+          <div class="btn-row">
+            <Button variant="primary" size="sm">Small</Button>
+            <Button variant="primary" size="md">Medium</Button>
+            <Button variant="primary" size="lg">Large</Button>
+          </div>
+        </div>
+        <div class="component-group">
+          <Typography as="p" variant="caption" color="faint"
+            >Secondary</Typography
+          >
+          <div class="btn-row">
+            <Button variant="secondary" size="sm">Small</Button>
+            <Button variant="secondary" size="md">Medium</Button>
+            <Button variant="secondary" size="lg">Large</Button>
+          </div>
+        </div>
+        <div class="component-group">
+          <Typography as="p" variant="caption" color="faint">Ghost</Typography>
+          <div class="btn-row">
+            <Button variant="ghost" size="sm">Small</Button>
+            <Button variant="ghost" size="md">Medium</Button>
+            <Button variant="ghost" size="lg">Large</Button>
+          </div>
+        </div>
+        <div class="component-group">
+          <Typography as="p" variant="caption" color="faint">As Link</Typography
+          >
+          <div class="btn-row">
+            <Button variant="primary" href="#">Ir al portal →</Button>
+            <Button variant="ghost" disabled>Disabled</Button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Divider />
+
+    <!-- ══════════════════════════════════════════════════════
+         BADGES & TAGS
+    ══════════════════════════════════════════════════════ -->
+    <section class="ds-section">
+      <Typography as="h2" variant="overline" color="faint"
+        >04 — Badges & Tags</Typography
+      >
+
+      <div class="component-row">
+        <div class="component-group">
+          <Typography as="p" variant="caption" color="faint">Badges</Typography>
+          <div class="chip-row">
+            <Badge variant="brand">Neural Violet</Badge>
+            <Badge variant="blue">Synthetic Blue</Badge>
+            <Badge variant="glow">azury Glow</Badge>
+            <Badge variant="subtle">Subtle</Badge>
+          </div>
+        </div>
+        <div class="component-group">
+          <Typography as="p" variant="caption" color="faint">Tags</Typography>
+          <div class="chip-row">
+            <Tag color="brand">Brand</Tag>
+            <Tag color="blue">Blue</Tag>
+            <Tag color="glow">Glow</Tag>
+            <Tag color="success">Success</Tag>
+            <Tag color="warning">Warning</Tag>
+            <Tag color="error">Error</Tag>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Divider />
+
+    <!-- ══════════════════════════════════════════════════════
+         CARDS
+    ══════════════════════════════════════════════════════ -->
+    <section class="ds-section">
+      <Typography as="h2" variant="overline" color="faint"
+        >05 — Cards</Typography
+      >
+
+      <div class="card-grid">
+        <Card padding="md">
+          <Badge variant="brand">Default</Badge>
+          <Typography
+            as="h3"
+            variant="heading-3"
+            color="default"
+            class="card-title">Neural Surface</Typography
+          >
+          <Typography as="p" variant="body-sm" color="muted"
+            >Superficie base para contenido estructurado. Borde violeta sutil y
+            highlight superior.</Typography
+          >
+        </Card>
+
+        <Card padding="md" hoverable>
+          <Badge variant="blue">Hoverable</Badge>
+          <Typography
+            as="h3"
+            variant="heading-3"
+            color="default"
+            class="card-title">Hover para ver el efecto</Typography
+          >
+          <Typography as="p" variant="body-sm" color="muted"
+            >Levitación con glow violeta al hacer hover. Ideal para grids de
+            features.</Typography
+          >
+        </Card>
+
+        <Card padding="md" glass>
+          <Badge variant="glow">Glass</Badge>
+          <Typography
+            as="h3"
+            variant="heading-3"
+            color="default"
+            class="card-title">Glassmorphism</Typography
+          >
+          <Typography as="p" variant="body-sm" color="muted"
+            >Backdrop blur con fondo semi-transparente. Para overlays y modales.</Typography
+          >
+        </Card>
+      </div>
+    </section>
+
+    <Divider label="Dividers" />
+
+    <!-- ══════════════════════════════════════════════════════
+         DIVIDERS
+    ══════════════════════════════════════════════════════ -->
+    <section class="ds-section">
+      <Typography as="h2" variant="overline" color="faint"
+        >06 — Dividers</Typography
+      >
+      <Divider />
+      <Divider label="Con etiqueta" />
+      <Divider label="Sistema Operacional" />
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer class="ds-footer">
+      <Typography as="p" variant="caption" color="faint"
+        >© 2024 azury labs Holdings. All system operational.</Typography
+      >
+      <div class="ds-footer__links">
+        <Typography as="span" variant="caption" color="faint"
+          >Security Encryption</Typography
+        >
+        <Typography as="span" variant="caption" color="faint"
+          >Neural API</Typography
+        >
+        <Typography as="span" variant="caption" color="faint"
+          >Internal Access Only</Typography
+        >
+      </div>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  /* ── Page layout ── */
+  main {
+    padding-block: var(--space-12);
+  }
+
+  /* ── Header ── */
+  .ds-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: var(--space-16);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .ds-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+  }
+
+  /* ── Sections ── */
+  .ds-section {
+    margin-bottom: var(--space-12);
+  }
+
+  .ds-section__desc {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-6);
+    max-width: 480px;
+  }
+
+  /* ── Color grid ── */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .color-swatch {
+    border-radius: var(--radius-lg);
+    padding: var(--space-6) var(--space-4) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-height: 140px;
+    justify-content: flex-end;
+  }
+
+  .color-swatch__hex {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .color-swatch__name {
+    font-family: var(--font-brand);
+    font-size: var(--text-base);
+    font-weight: var(--weight-bold);
+    color: #fff;
+  }
+
+  .color-swatch__role {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* ── Type stack ── */
+  .type-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .type-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+
+  .type-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  /* ── Type scale ── */
+  .type-scale {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+  }
+
+  /* ── Component rows ── */
+  .component-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    margin-top: var(--space-6);
+  }
+
+  .component-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .btn-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .chip-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  /* ── Card grid ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .card-title {
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  /* ── Footer ── */
+  .ds-footer {
+    margin-top: var(--space-20);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    padding-bottom: var(--space-8);
+  }
+
+  .ds-footer__links {
+    display: flex;
+    gap: var(--space-6);
+  }
+</style>

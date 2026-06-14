@@ -1,0 +1,156 @@
+---
+import { useTranslations } from "../../i18n/utils";
+import BackgroundGlow from "../ui/BackgroundGlow.astro";
+
+export interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const statsData = [
+  { key: "conversations", value: "10k+", color: "var(--color-brand)" },
+  { key: "responseTime", value: "< 2s", color: "var(--color-blue)" },
+  { key: "industries", value: "3", color: "var(--color-glow)" },
+  { key: "uptime", value: "98%", color: "var(--color-brand)" },
+];
+
+const stats = statsData.map((s) => ({
+  ...s,
+  label: t(`stats.${s.key}.label`),
+  desc: t(`stats.${s.key}.desc`),
+}));
+---
+
+<section class="stats" id="empresa">
+  <BackgroundGlow role="blue" size="600px" top="50%" left="50%" blur="120px" class="stats-glow" />
+  <div class="container" style="position: relative; z-index: 1;">
+    <div class="stats__grid">
+      {
+        stats.map((stat, i) => (
+          <div class={`stat reveal reveal-delay-${(i + 1) * 100}`} style={`--sc: ${stat.color};`}>
+            <span class="stat__value">{stat.value}</span>
+            <span class="stat__label">{stat.label}</span>
+            <span class="stat__desc">{stat.desc}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats {
+    margin-top: var(--space-8);
+    padding-block: var(--space-12);
+    background: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-bg) 86%, transparent),
+      color-mix(in srgb, var(--color-brand) 10%, transparent),
+      color-mix(in srgb, var(--color-bg) 86%, transparent)
+    );
+    border-top: 1px solid var(--color-border-subtle);
+    border-bottom: 1px solid var(--color-border-subtle);
+    position: relative;
+    overflow: hidden;
+  }
+
+  :global(.stats-glow) {
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+  }
+
+  .stats__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-1);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+    background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+    overflow: hidden;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-2);
+    padding: var(--space-8) var(--space-4);
+    border-right: 1px solid var(--color-border-subtle);
+    position: relative;
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+
+  .stat:hover {
+    background: color-mix(in srgb, var(--sc) 12%, transparent);
+  }
+
+  .stat:last-child {
+    border-right: none;
+  }
+
+  .stat__value {
+    font-family: var(--font-brand);
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-bold);
+    color: var(--sc);
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .stat__label {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text);
+  }
+
+  .stat__desc {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    max-width: 180px;
+    line-height: var(--leading-normal);
+  }
+
+  @media (max-width: 768px) {
+    .stats__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat:nth-child(2) {
+      border-right: none;
+    }
+    .stat:nth-child(3) {
+      border-right: 1px solid var(--color-border-subtle);
+    }
+    .stat:nth-child(3),
+    .stat:nth-child(4) {
+      border-top: 1px solid var(--color-border-subtle);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stats {
+      margin-top: var(--space-6);
+    }
+
+    .stat {
+      border-right: none;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .stat:last-child {
+      border-bottom: none;
+    }
+  }
+
+  :global(:root[data-theme="light"]) .stats__grid {
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+  }
+</style>

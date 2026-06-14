@@ -1,0 +1,337 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/sections/Navbar.astro";
+import Footer from "../../components/sections/Footer.astro";
+import { useTranslations } from "../../i18n/utils";
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as string);
+
+const titleMap = {
+  es: "Sobre Nosotros — azury labs AAAS",
+  en: "About Us — azury labs AAAS",
+};
+---
+
+<BaseLayout
+  title={titleMap[lang as keyof typeof titleMap]}
+  description={t("about.hero.subtitle")}
+>
+  <Navbar lang={lang} page="about" />
+
+  <main class="about-page">
+    <!-- Hero Section (Mission) -->
+    <section id="mision" class="about-hero">
+      <div class="container about-hero__inner">
+        <span class="badge">{t("nav.company")}</span>
+        <h1 class="about-hero__title">{t("about.hero.title")}</h1>
+        <p class="about-hero__subtitle">{t("about.hero.subtitle")}</p>
+        <blockquote class="about-hero__quote">
+          {t("about.hero.quote")}
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section id="vision" class="about-vision">
+      <div class="container about-vision__inner">
+        <h2 class="section-title">{t("about.vision.title")}</h2>
+        <p class="vision-text">{t("about.vision.text")}</p>
+      </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="valores" class="about-values">
+      <div class="container">
+        <h2 class="section-title">{t("about.values.title")}</h2>
+        <div class="values-grid">
+          <!-- Value 1 -->
+          <div class="value-card">
+            <div class="value-icon">⚡️</div>
+            <h3>{t("about.values.v1.title")}</h3>
+            <p>{t("about.values.v1.desc")}</p>
+          </div>
+          <!-- Value 2 -->
+          <div class="value-card">
+            <div class="value-icon">🧹</div>
+            <h3>{t("about.values.v2.title")}</h3>
+            <p>{t("about.values.v2.desc")}</p>
+          </div>
+          <!-- Value 3 -->
+          <div class="value-card">
+            <div class="value-icon">🌐</div>
+            <h3>{t("about.values.v3.title")}</h3>
+            <p>{t("about.values.v3.desc")}</p>
+          </div>
+          <!-- Value 4 -->
+          <div class="value-card">
+            <div class="value-icon">🏆</div>
+            <h3>{t("about.values.v4.title")}</h3>
+            <p>{t("about.values.v4.desc")}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand Personality Section -->
+    <section id="personalidad" class="about-personality">
+      <div class="container">
+        <h2 class="section-title">{t("about.personality.title")}</h2>
+        <div class="personality-grid">
+          <div class="personality-card">
+            <h3>{t("about.personality.items.p1.title")}</h3>
+            <p>{t("about.personality.items.p1.desc")}</p>
+          </div>
+          <div class="personality-card">
+            <h3>{t("about.personality.items.p2.title")}</h3>
+            <p>{t("about.personality.items.p2.desc")}</p>
+          </div>
+          <div class="personality-card">
+            <h3>{t("about.personality.items.p3.title")}</h3>
+            <p>{t("about.personality.items.p3.desc")}</p>
+          </div>
+        </div>
+        <p class="brand-slogan">{t("about.personality.slogan")}</p>
+      </div>
+    </section>
+
+    <!-- Tone & Voice -->
+    <section class="about-tone">
+      <div class="container about-tone__inner">
+        <h2 class="section-title">{t("about.tone.title")}</h2>
+        <p class="tone-text">{t("about.tone.desc")}</p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="about-cta">
+      <div class="container about-cta__inner">
+        <h2 set:html={t("cta.title")} />
+        <a href={t("cta.link")} class="btn-primary">{t("cta.primary")}</a>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>
+
+<style>
+  .about-page {
+    padding-top: 80px;
+    background: var(--color-bg);
+  }
+
+  .section-title {
+    font-size: var(--text-3xl);
+    text-align: center;
+    margin-bottom: var(--space-8);
+    color: var(--color-text);
+  }
+
+  /* Hero */
+  .about-hero {
+    padding: var(--space-20) 0;
+    text-align: center;
+    background: radial-gradient(
+      circle at 50% 0%,
+      rgba(124, 58, 237, 0.15),
+      transparent 70%
+    );
+  }
+
+  .about-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .badge {
+    color: var(--color-brand);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(124, 58, 237, 0.1);
+    padding: 6px 12px;
+    border-radius: 99px;
+    border: 1px solid rgba(124, 58, 237, 0.2);
+  }
+
+  .about-hero__title {
+    font-size: var(--text-5xl);
+    line-height: 1.1;
+    color: var(--color-text);
+  }
+
+  .about-hero__subtitle {
+    font-size: var(--text-xl);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .about-hero__quote {
+    font-size: var(--text-2xl);
+    font-style: italic;
+    color: var(--color-text);
+    margin-top: var(--space-8);
+    border-left: 4px solid var(--color-brand);
+    padding-left: var(--space-6);
+  }
+
+  /* Vision */
+  .about-vision {
+    padding: var(--space-16) 0;
+    background: rgba(255, 255, 255, 0.02);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .about-vision__inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .vision-text {
+    font-size: var(--text-xl);
+    line-height: 1.7;
+    color: var(--color-text-muted);
+  }
+
+  /* Values */
+  .about-values {
+    padding: var(--space-20) 0;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .value-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    transition: transform var(--duration-normal);
+  }
+
+  .value-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-brand);
+  }
+
+  .value-icon {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .value-card h3 {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+    font-weight: var(--weight-bold);
+  }
+
+  .value-card p {
+    color: var(--color-text-muted);
+    font-size: var(--text-base);
+    line-height: 1.6;
+  }
+
+  /* Personality */
+  .about-personality {
+    padding: var(--space-20) 0;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .personality-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-8);
+    margin-bottom: var(--space-12);
+  }
+
+  .personality-card {
+    padding: var(--space-6);
+    border-left: 2px solid var(--color-brand);
+    background: linear-gradient(
+      to right,
+      rgba(124, 58, 237, 0.05),
+      transparent
+    );
+  }
+
+  .personality-card h3 {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+  }
+
+  .personality-card p {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .brand-slogan {
+    text-align: center;
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+    margin-top: var(--space-8);
+    letter-spacing: -0.02em;
+  }
+
+  /* Tone */
+  .about-tone {
+    padding: var(--space-20) 0;
+    text-align: center;
+  }
+
+  .about-tone__inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .tone-text {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.8;
+  }
+
+  /* CTA */
+  .about-cta {
+    padding: var(--space-20) 0;
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .about-cta h2 {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-8);
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--color-brand);
+    color: white;
+    padding: 12px 32px;
+    border-radius: 99px;
+    text-decoration: none;
+    font-weight: var(--weight-bold);
+    transition: filter var(--duration-fast);
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.1);
+  }
+</style>

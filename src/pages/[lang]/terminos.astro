@@ -1,0 +1,339 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/sections/Navbar.astro";
+import Footer from "../../components/sections/Footer.astro";
+import { useTranslations } from "../../i18n/utils";
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang);
+const lastUpdated =
+  lang === "es" ? "19 de febrero de 2026" : "February 19, 2026";
+
+const title =
+  lang === "es"
+    ? "Términos y Condiciones — Azury Labs LLC"
+    : "Terms and Conditions — Azury Labs LLC";
+const desc =
+  lang === "es"
+    ? "Términos y Condiciones de uso de Azury Labs LLC."
+    : "Terms and Conditions of use for Azury Labs LLC.";
+---
+
+<BaseLayout title={title} description={desc}>
+  <Navbar lang={lang} />
+
+  <main class="legal-page">
+    <div class="container legal-page__inner">
+      <header class="legal-page__header">
+        <a href={`/${lang}/`} class="legal-page__back">{t("legal.back")}</a>
+        <h1 class="legal-page__title">
+          {
+            lang === "es"
+              ? "Términos y Condiciones de Servicio"
+              : "Terms of Service"
+          }
+        </h1>
+        <p class="legal-page__meta">
+          {t("legal.updated").replace("{date}", lastUpdated)}
+        </p>
+      </header>
+
+      <div class="legal-page__body">
+        {
+          lang === "es" ? (
+            <>
+              <section class="legal-section">
+                <h2>1. Objeto</h2>
+                <p>
+                  Los presentes Términos y Condiciones de uso (en adelante,
+                  "Términos") regulan el uso de la plataforma SaaS y los
+                  servicios de desarrollo proporcionados por{" "}
+                  <strong>Azury Labs LLC</strong> (en adelante,
+                  "Proveeror", "nosotros" o "nuestro"). Al acceder o utilizar
+                  nuestros servicios, aceptas quedar vinculado por estos
+                  Términos.
+                </p>
+                <div class="legal-responsible">
+                  <p>
+                    <strong>Responsable:</strong> Azury Labs LLC
+                  </p>
+                  <p>
+                    <strong>Sitio web:</strong>{" "}
+                    <a
+                      href="https://azurylabs.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      https://azurylabs.com
+                    </a>
+                  </p>
+                </div>
+              </section>
+
+              <section class="legal-section">
+                <h2>2. Descripción del Servicio</h2>
+                <p>
+                  Azury Labs LLC proporciona herramientas de inteligencia
+                  artificial y desarrollo de software ("el Servicio") que
+                  permiten a los usuarios crear, procesar y gestionar contenido
+                  digital. Nos reservamos el derecho de modificar, suspender o
+                  discontinuar cualquier aspecto del Servicio en cualquier
+                  momento, con o sin previo aviso.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>3. Responsabilidad del Usuario</h2>
+                <p>
+                  Eres el único responsable de la precisión, calidad,
+                  integridad, legalidad y fiabilidad de todos los datos y
+                  contenidos que introduzcas en el Servicio. Aceptas no utilizar
+                  el Servicio para generar contenido ilegal, difamatorio,
+                  obsceno o que infrinja derechos de terceros.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>4. Propiedad Intelectual</h2>
+                <p>
+                  El software, algoritmos, interfaces y documentación del
+                  Servicio son propiedad exclusiva de Azury Labs LLC y
+                  están protegidos por leyes de propiedad intelectual. Sin
+                  embargo, tú conservas todos los derechos sobre los datos que
+                  proporcionas y el contenido generado específicamente para ti a
+                  través del uso legítimo del Servicio, sujeto a las
+                  limitaciones establecidas en estos Términos.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>5. Limitación de Responsabilidad</h2>
+                <p>
+                  El Servicio se proporciona "tal cual" y "según
+                  disponibilidad". En la máxima medida permitida por la ley,
+                  Azury Labs LLC no ofrece garantías de ningún tipo,
+                  expresas o implícitas. No seremos responsables por daños
+                  indirectos, incidentales o consecuentes derivados del uso o la
+                  imposibilidad de uso del Servicio.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>6. Jurisdicción y Ley Aplicable</h2>
+                <p>
+                  Estos Términos se regirán e interpretarán de acuerdo con las
+                  leyes de México. Cualquier disputa derivada de estos Términos
+                  se someterá a la jurisdicción exclusiva de los tribunales
+                  competentes en la Ciudad de México, renunciando a cualquier
+                  otro fuero que pudiera corresponderte.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>7. Contacto</h2>
+                <p>
+                  Si tienes preguntas sobre estos Términos, contáctanos en:{" "}
+                  <a href="mailto:legal@azurylabs.com">legal@azurylabs.com</a>.
+                </p>
+              </section>
+            </>
+          ) : (
+            <>
+              <section class="legal-section">
+                <h2>1. Object</h2>
+                <p>
+                  These Terms of Service (hereinafter, "Terms") govern the use
+                  of the SaaS platform and development services provided by{" "}
+                  <strong>Azury Labs LLC</strong> (hereinafter, "Provider",
+                  "we", or "us"). By accessing or using our services, you agree
+                  to be bound by these Terms.
+                </p>
+                <div class="legal-responsible">
+                  <p>
+                    <strong>Responsible:</strong> Azury Labs LLC
+                  </p>
+                  <p>
+                    <strong>Website:</strong>{" "}
+                    <a
+                      href="https://azurylabs.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      https://azurylabs.com
+                    </a>
+                  </p>
+                </div>
+              </section>
+
+              <section class="legal-section">
+                <h2>2. Description of Service</h2>
+                <p>
+                  Azury Labs LLC provides artificial intelligence tools and
+                  software development services ("the Service") that allow users
+                  to create, process, and manage digital content. We reserve the
+                  right to modify, suspend, or discontinue any aspect of the
+                  Service at any time, with or without notice.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>3. User Responsibility</h2>
+                <p>
+                  You are solely responsible for the accuracy, quality,
+                  integrity, legality, and reliability of all data and content
+                  you input into the Service. You agree not to use the Service
+                  to generate content that is illegal, defamatory, obscene, or
+                  infringes on third-party rights.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>4. Intellectual Property</h2>
+                <p>
+                  The software, algorithms, interfaces, and documentation of the
+                  Service are the exclusive property of Azury Labs LLC and
+                  are protected by intellectual property laws. However, you
+                  retain all rights to the data you provide and the content
+                  generated specifically for you through legitimate use of the
+                  Service, subject to the limitations set forth in these Terms.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>5. Limitation of Liability</h2>
+                <p>
+                  The Service is provided "as is" and "as available". To the
+                  fullest extent permitted by law, Azury Labs LLC makes no
+                  warranties of any kind, express or implied. We shall not be
+                  liable for any indirect, incidental, or consequential damages
+                  arising from the use or inability to use the Service.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>6. Jurisdiction and Governing Law</h2>
+                <p>
+                  These Terms shall be governed by and construed in accordance
+                  with the laws of Mexico. Any dispute arising from these Terms
+                  shall be subject to the exclusive jurisdiction of the
+                  competent courts in Mexico City, waiving any other
+                  jurisdiction that may correspond to you.
+                </p>
+              </section>
+
+              <section class="legal-section">
+                <h2>7. Contact</h2>
+                <p>
+                  If you have questions about these Terms, contact us at:{" "}
+                  <a href="mailto:legal@azurylabs.com">legal@azurylabs.com</a>.
+                </p>
+              </section>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-top: 68px;
+  }
+  .legal-page__inner {
+    max-width: 760px;
+    padding-block: var(--space-16);
+  }
+  .legal-page__header {
+    margin-bottom: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .legal-page__back {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-brand);
+    text-decoration: none;
+  }
+  .legal-page__back:hover {
+    color: var(--color-glow);
+  }
+  .legal-page__title {
+    font-family: var(--font-brand);
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+  }
+  .legal-page__meta {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-faint);
+  }
+  .legal-page__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+  .legal-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-bottom: var(--space-10);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  .legal-section:last-child {
+    border-bottom: none;
+  }
+  .legal-section h2 {
+    font-family: var(--font-brand);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text);
+  }
+  .legal-section p,
+  .legal-section li {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+  .legal-section strong {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+  .legal-section a {
+    color: var(--color-brand);
+    text-decoration: none;
+  }
+  .legal-section a:hover {
+    color: var(--color-glow);
+  }
+  .legal-responsible {
+    background: var(--color-surface-2);
+    border-left: 4px solid var(--color-brand);
+    padding: var(--space-4);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .legal-responsible p {
+    margin: 0 !important;
+    font-size: var(--text-sm) !important;
+    color: var(--color-text-muted);
+  }
+  .legal-responsible strong {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+</style>

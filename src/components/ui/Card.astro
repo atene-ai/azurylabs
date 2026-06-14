@@ -1,0 +1,86 @@
+---
+export interface Props {
+  padding?: "sm" | "md" | "lg";
+  hoverable?: boolean;
+  glass?: boolean;
+  class?: string;
+}
+
+const {
+  padding = "md",
+  hoverable = false,
+  glass = false,
+  class: className = "",
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "card",
+    `card--pad-${padding}`,
+    hoverable && "card--hoverable",
+    glass && "card--glass",
+    className,
+  ]}
+>
+  <slot />
+</div>
+
+<style>
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle top-edge highlight */
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(139, 92, 246, 0.4),
+      transparent
+    );
+  }
+
+  /* ── Padding ── */
+  .card--pad-sm {
+    padding: var(--space-4);
+  }
+  .card--pad-md {
+    padding: var(--space-6);
+  }
+  .card--pad-lg {
+    padding: var(--space-8) var(--space-10);
+  }
+
+  /* ── Glass variant ── */
+  .card--glass {
+    background: rgba(17, 19, 24, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  /* ── Hoverable ── */
+  .card--hoverable {
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out),
+      border-color var(--duration-normal) var(--ease-out);
+    cursor: pointer;
+  }
+
+  .card--hoverable:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-brand);
+    border-color: rgba(139, 92, 246, 0.4);
+  }
+</style>

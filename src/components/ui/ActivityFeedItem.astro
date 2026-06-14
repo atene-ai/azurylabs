@@ -1,0 +1,69 @@
+---
+export interface Props {
+  dotColor?: "brand" | "blue" | "glow" | "success" | "warning" | "error";
+  text: string;
+  time: string;
+  class?: string;
+}
+
+const { dotColor = "brand", text, time, class: className = "" } = Astro.props;
+---
+
+<div class:list={["feed__item", className]}>
+  <span class:list={["feed__dot", `feed__dot--${dotColor}`]}></span>
+  <span class="feed__text">{text}</span>
+  <span class="feed__time">{time}</span>
+</div>
+
+<style>
+  .feed__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) 0;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .feed__item:last-child {
+    border-bottom: none;
+  }
+
+  .feed__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .feed__dot--brand {
+    background: var(--color-brand);
+  }
+  .feed__dot--blue {
+    background: var(--color-blue);
+  }
+  .feed__dot--glow {
+    background: var(--color-glow);
+  }
+  .feed__dot--success {
+    background: var(--color-success);
+  }
+  .feed__dot--warning {
+    background: var(--color-warning);
+  }
+  .feed__dot--error {
+    background: var(--color-error);
+  }
+
+  .feed__text {
+    font-size: 11px;
+    font-family: var(--font-body);
+    color: var(--color-text-muted);
+    flex: 1;
+  }
+
+  .feed__time {
+    font-size: 10px;
+    font-family: var(--font-body);
+    color: var(--color-text-faint);
+  }
+</style>

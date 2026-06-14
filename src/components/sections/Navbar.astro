@@ -1,0 +1,539 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+export interface Props {
+  transparent?: boolean;
+  lang?: string;
+  page?: "home" | "about" | string;
+}
+
+const { transparent = false, page = "home" } = Astro.props;
+const lang = Astro.props.lang || getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const themeLabel = lang === "es" ? "Tema" : "Theme";
+const lightLabel = lang === "es" ? "Claro" : "Light";
+const darkLabel = lang === "es" ? "Oscuro" : "Dark";
+
+// Nav links per page
+const homeLinks = [
+  { label: t("nav.company"), href: `/${lang}/acerca` },
+  { label: t("nav.products"), href: `/${lang}/#productos` },
+  { label: t("nav.solutions"), href: `/${lang}/#capacidades` },
+  { label: t("nav.howItWorks"), href: `/${lang}/#como-funciona` },
+];
+
+const aboutLinks = [
+  { label: lang === "es" ? "← Inicio" : "← Home", href: `/${lang}/` },
+  { label: t("about.hero.title"), href: "#mision" },
+  { label: t("about.vision.title"), href: "#vision" },
+  { label: t("about.values.title"), href: "#valores" },
+  { label: t("about.personality.title"), href: "#personalidad" },
+];
+
+const navLinks = page === "about" ? aboutLinks : homeLinks;
+
+// Language switcher logic
+const nextLang = lang === "es" ? "en" : "es";
+const currentPath = Astro.url.pathname;
+let nextPath = currentPath;
+
+if (currentPath === "/" || currentPath === "/es/") {
+  nextPath = "/en/";
+} else if (currentPath === "/en/") {
+  nextPath = "/es/";
+} else {
+  // Replace /es/ with /en/ or vice versa
+  const prefix = `/${lang}/`;
+  if (currentPath.startsWith(prefix)) {
+    nextPath = currentPath.replace(prefix, `/${nextLang}/`);
+  } else {
+    // Should not happen with proper routing, but fallback
+    nextPath = `/${nextLang}${currentPath}`;
+  }
+}
+---
+
+<header
+  class:list={["navbar", transparent && "navbar--transparent"]}
+  id="navbar"
+>
+  <div class="navbar__inner container">
+    <!-- Logo -->
+    <a href={`/${lang}/`} class="navbar__logo" aria-label="azury labs">
+      <span class="logo__iruz">azury</span>
+      <span class="logo__labs"> Labs</span>
+    </a>
+
+    <!-- Nav links -->
+    <nav class="navbar__nav" aria-label="Navegación principal">
+      {
+        navLinks.map((link) => (
+          <a href={link.href} class="navbar__link">
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- Language Switcher & Actions -->
+    <div class="navbar__actions">
+      <!-- Lang Switcher (Segmented Control) -->
+      <div class="lang-switch">
+        <a
+          href={lang === "es" ? "#" : nextPath}
+          class:list={["lang-option", { "lang-option--active": lang === "es" }]}
+          aria-label="Cambiar a español"
+          aria-current={lang === "es" ? "page" : undefined}
+        >
+          ES
+        </a>
+        <a
+          href={lang === "en" ? "#" : nextPath}
+          class:list={["lang-option", { "lang-option--active": lang === "en" }]}
+          aria-label="Switch to English"
+          aria-current={lang === "en" ? "page" : undefined}
+        >
+          EN
+        </a>
+      </div>
+
+      <div class="theme-switch" role="group" aria-label={themeLabel}>
+        <button class="theme-option" type="button" data-set-theme="dark">{darkLabel}</button>
+        <button class="theme-option" type="button" data-set-theme="light">{lightLabel}</button>
+      </div>
+
+      <a href={t("cta.link")} class="navbar__cta">{t("nav.scheduleDemo")}</a>
+    </div>
+
+    <!-- Mobile toggle -->
+    <button
+      class="navbar__burger"
+      id="burger"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu (Outside header to avoid stacking context issues) -->
+<div class="navbar__mobile" id="mobile-menu" aria-hidden="true">
+  <nav class="navbar__mobile-nav">
+    {
+      navLinks.map((link) => (
+        <a href={link.href} class="navbar__link">
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="navbar__mobile-actions">
+    <div class="lang-switch lang-switch--mobile">
+      <a
+        href={lang === "es" ? "#" : nextPath}
+        class:list={["lang-option", { "lang-option--active": lang === "es" }]}
+      >
+        Español
+      </a>
+      <a
+        href={lang === "en" ? "#" : nextPath}
+        class:list={["lang-option", { "lang-option--active": lang === "en" }]}
+      >
+        English
+      </a>
+    </div>
+    <a href={t("cta.link")} class="navbar__cta">{t("nav.scheduleDemo")}</a>
+    <div class="theme-switch theme-switch--mobile" role="group" aria-label={themeLabel}>
+      <button class="theme-option" type="button" data-set-theme="dark">{darkLabel}</button>
+      <button class="theme-option" type="button" data-set-theme="light">{lightLabel}</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // @ts-nocheck
+  const navbar = document.getElementById("navbar");
+  const burger = document.getElementById("burger");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  // Scroll effect
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (window.scrollY > 20) {
+        navbar?.classList.add("navbar--scrolled");
+      } else {
+        navbar?.classList.remove("navbar--scrolled");
+      }
+    },
+    { passive: true },
+  );
+
+  // Mobile toggle
+  burger?.addEventListener("click", () => {
+    const isOpen = burger.getAttribute("aria-expanded") === "true";
+    const newState = !isOpen;
+
+    burger.setAttribute("aria-expanded", String(newState));
+    mobileMenu?.classList.toggle("navbar__mobile--open");
+    mobileMenu?.setAttribute("aria-hidden", String(!newState));
+
+    // Toggle body scroll lock
+    document.body.style.overflow = newState ? "hidden" : "";
+  });
+
+  // Close on link click
+  mobileMenu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.remove("navbar__mobile--open");
+      burger?.setAttribute("aria-expanded", "false");
+      mobileMenu?.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    });
+  });
+
+  /** @type {(activeTheme: "light" | "dark") => void} */
+  const updateThemeButtons = (activeTheme) => {
+    document.querySelectorAll(".theme-option").forEach((button) => {
+      const buttonTheme = button.getAttribute("data-set-theme");
+      const isActive = buttonTheme === activeTheme;
+      button.classList.toggle("theme-option--active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+  };
+
+  /** @type {(theme: string) => void} */
+  const applyTheme = (theme) => {
+    const normalized = theme === "light" ? "light" : "dark";
+    document.documentElement.dataset.theme = normalized;
+    localStorage.setItem("iruz-theme", normalized);
+    updateThemeButtons(normalized);
+  };
+
+  updateThemeButtons(document.documentElement.dataset.theme || "dark");
+
+  document.querySelectorAll("[data-set-theme]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const theme = button.getAttribute("data-set-theme") || "dark";
+      applyTheme(theme);
+    });
+  });
+</script>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all var(--duration-normal) var(--ease-out);
+    border-bottom: 1px solid transparent;
+    padding-block: var(--space-4);
+  }
+
+  .navbar--scrolled {
+    background: rgba(5, 5, 10, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+    padding-block: var(--space-2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px; /* Fixed height for content */
+  }
+
+  /* ── Logo ── */
+  .navbar__logo {
+    font-family: var(--font-brand);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+    z-index: 10;
+  }
+
+  .logo__iruz {
+    color: var(--color-text);
+  }
+  .logo__labs {
+    color: var(--color-brand);
+  }
+
+  /* ── Nav ── */
+  .navbar__nav {
+    display: none;
+    align-items: center;
+    gap: var(--space-5);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+  }
+
+  @media (min-width: 768px) {
+    .navbar__nav {
+      display: flex;
+    }
+  }
+
+  .navbar__link {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: all var(--duration-fast);
+    white-space: nowrap;
+    padding-inline: 2px;
+  }
+
+  .navbar__link:hover {
+    color: var(--color-text);
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  }
+
+  /* ── Actions ── */
+  .navbar__actions {
+    display: none;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 768px) {
+    .navbar__actions {
+      display: flex;
+    }
+  }
+
+  /* Language Switcher */
+  .lang-switch {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+    padding: 3px;
+    gap: 2px;
+  }
+
+  .theme-switch {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .theme-option {
+    border: none;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+    color: var(--color-text-muted);
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  .theme-option:hover {
+    color: var(--color-text);
+  }
+
+  .theme-option--active {
+    background: var(--color-brand);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.28);
+  }
+
+  .lang-option {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: var(--weight-bold);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 99px;
+    transition: all var(--duration-fast);
+    line-height: 1;
+  }
+
+  .lang-option:hover:not(.lang-option--active) {
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .lang-option--active {
+    background: var(--color-brand);
+    color: white;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+    pointer-events: none;
+  }
+
+  /* CTAs */
+  .navbar__cta-ghost {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: opacity var(--duration-fast);
+  }
+
+  .navbar__cta-ghost:hover {
+    opacity: 0.8;
+  }
+
+  .navbar__cta {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--color-brand) 0%, #7c3aed 100%);
+    padding: 8px 20px;
+    border-radius: 99px;
+    transition: all var(--duration-fast);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar__cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4);
+    filter: brightness(1.1);
+  }
+
+  /* ── Burger ── */
+  .navbar__burger {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: var(--space-2);
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 20;
+  }
+
+  @media (min-width: 768px) {
+    .navbar__burger {
+      display: none;
+    }
+  }
+
+  .navbar__burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  /* Mobile Open State */
+  .navbar__burger[aria-expanded="true"] span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+  }
+  .navbar__burger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .navbar__burger[aria-expanded="true"] span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+  }
+
+  /* ── Mobile menu ── */
+  .navbar__mobile {
+    position: fixed;
+    inset: 0;
+    background: var(--color-bg);
+    padding: 100px var(--space-6) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    transform: translateY(-100%);
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      visibility 0s 0.3s;
+    z-index: 900; /* Behind navbar (1000) but above content */
+    visibility: hidden;
+  }
+
+  .navbar__mobile--open {
+    transform: translateY(0);
+    visibility: visible;
+    transition: transform var(--duration-normal) var(--ease-out);
+  }
+
+  .navbar__mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .navbar__mobile .navbar__link {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border-subtle);
+    padding-bottom: var(--space-4);
+    text-decoration: none;
+  }
+
+  .navbar__mobile-actions {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .theme-switch--mobile {
+    justify-content: center;
+  }
+
+  .lang-switch--mobile {
+    justify-content: center;
+    padding: 6px;
+  }
+
+  .lang-switch--mobile .lang-option {
+    font-size: var(--text-sm);
+    padding: 8px 24px;
+  }
+
+  .navbar__mobile .navbar__cta {
+    text-align: center;
+    padding: 16px;
+    font-size: var(--text-lg);
+  }
+
+  :global(:root[data-theme="light"]) .navbar--scrolled {
+    background: rgba(246, 247, 251, 0.88);
+    border-bottom-color: rgba(15, 23, 42, 0.12);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+  }
+
+  :global(:root[data-theme="light"]) .navbar__nav,
+  :global(:root[data-theme="light"]) .lang-switch,
+  :global(:root[data-theme="light"]) .theme-switch {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(15, 23, 42, 0.12);
+  }
+
+  :global(:root[data-theme="light"]) .navbar__mobile {
+    background: #f6f7fb;
+  }
+</style>

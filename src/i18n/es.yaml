@@ -1,0 +1,214 @@
+nav:
+  products: "Escuadrones"
+  solutions: "Orquestación"
+  howItWorks: "Cómo funciona"
+  company: "Quiénes somos"
+
+  scheduleDemo: "Diseñar mi equipo"
+
+hero:
+  eyebrow: "Artificial Agents as a Service"
+  headline: "No compres software.<br />Despliega un<br /><span class='hero__headline--accent'>equipo de agentes</span>"
+  subtext: "Creamos escuadrones de agentes especializados que ejecutan trabajo real en ventas, operación y atención 24/7, con supervisión humana y SLA empresarial."
+  ctaPrimary: "Diseñar mi escuadrón"
+  ctaSecondary: "Ver agentes en acción"
+  trust: "Outcomes medibles · Orquestación multiagente · Escalado inmediato"
+  visual:
+    title: "azury labs — Panel de Control"
+    start: "Agentes Activos"
+    conversions: "Conversiones"
+    respTime: "Tiempo Resp."
+    activity: "Actividad de Agentes"
+    feed:
+      re: "Agente RE procesó lead #4821"
+      hc: "Agente HC agendó cita #1093"
+      crm: "CRM actualizó pipeline Q1"
+      re2: "Agente RE calificó prospecto"
+    pills:
+      re: "Real Estate"
+      hc: "Healthcare"
+      crm: "CRM"
+      sw: "Software"
+
+products:
+  header:
+    badge: "Escuadrones de Agentes"
+    title: "Equipos digitales listos para<br /><span class='products__title--accent'>operar resultados</span>"
+    sub: "Cada escuadrón combina agentes especialistas, reglas de negocio y supervisión para ejecutar procesos críticos de punta a punta."
+  stack:
+    title: "Conecta tus herramientas productivas"
+    sub: "Integramos canales, mensajeria, voz y agenda para que tus agentes operen sin friccion."
+    items:
+      telegram: "Telegram"
+      whatsapp: "WhatsApp Business"
+      instagram: "Instagram Messenger"
+      calls: "Llamadas"
+      calendar: "Google Calendar"
+  ai:
+    badge: "Revenue Squad"
+    title: "Escuadrón de Captura y Cierre"
+    desc: "Agentes que califican leads, priorizan oportunidades, agendan reuniones y hacen seguimiento hasta entregar pipeline listo para cerrar."
+    visualAlt: "Visual del Revenue Squad con embudo de captura, calificación y cierre de leads"
+    features:
+      - "Agentes para Real Estate"
+      - "Agentes para Healthcare"
+      - "Reactivos y proactivos"
+      - "Omnicanal: WhatsApp, email, SMS"
+    cta: "Ver escuadrón"
+  crm:
+    badge: "Operations Squad"
+    title: "Escuadrón de Operación"
+    desc: "Agentes que coordinan tareas, actualizan sistemas, disparan automatizaciones y eliminan cuellos de botella en la operación diaria."
+    visualAlt: "Visual del Operations Squad con flujo operativo, automatizaciones y enrutamiento inteligente"
+    features:
+      - "Pipeline visual inteligente"
+      - "Scoring predictivo de leads"
+      - "Automatización de flujos"
+      - "Analytics y reportes avanzados"
+    cta: "Ver escuadrón"
+  sw:
+    badge: "Care Squad"
+    title: "Escuadrón de Atención"
+    desc: "Agentes que atienden en todos tus canales, resuelven solicitudes, escalan casos complejos y sostienen una experiencia consistente."
+    visualAlt: "Visual del Care Squad con hub de atención omnicanal y escalación asistida por agentes"
+    features:
+      - "Arquitectura limpia y escalable"
+      - "Integraciones con sistemas existentes"
+      - "MVPs y productos digitales"
+      - "Soporte y mantenimiento continuo"
+    cta: "Ver escuadrón"
+
+features:
+  header:
+    badge: "Orquestación AAAS"
+    title: "Infraestructura de control<br /><span class='features__title--accent'>para equipos de agentes</span>"
+    sub: "Define reglas, monitorea performance y mejora outcomes sin depender de procesos manuales frágiles."
+  items:
+    reactive:
+      title: "Ejecución Reactiva"
+      desc: "Los agentes responden en segundos a eventos de negocio y acciones de clientes con consistencia operativa."
+    proactive:
+      title: "Ejecución Proactiva"
+      desc: "Los agentes detectan señales, activan secuencias y abren oportunidades antes de que se enfríe el pipeline."
+    omnichannel:
+      title: "Operación Omnicanal"
+      desc: "WhatsApp, email, SMS y web en una sola capa operativa para mantener continuidad en cada conversación."
+    integrations:
+      title: "Integración con tu Stack"
+      desc: "Conecta CRMs, EHRs, ERPs y calendarios para que los agentes trabajen sobre tus flujos reales."
+    analytics:
+      title: "Control Tower y SLA"
+      desc: "Visibilidad de productividad, tiempos de respuesta, tasa de resolución y cumplimiento por escuadrón."
+    custom:
+      title: "Playbooks a Medida"
+      desc: "Diseñamos playbooks de agentes por industria, proceso y objetivo para acelerar resultados desde semana uno."
+
+howItWorks:
+  header:
+    badge: "Despliegue"
+    title: "De brief a operación<br /><span class='how__title--accent'>en tres fases</span>"
+  steps:
+    connect:
+      title: "Mapeamos tu operación"
+      desc: "Alineamos objetivos, cuellos de botella y fuentes de datos para diseñar el escuadrón ideal para tu negocio."
+      detail: "Objetivos · Procesos · Sistemas · Reglas"
+    configure:
+      title: "Configuramos y entrenamos"
+      desc: "Definimos playbooks, handoffs, protocolos de escalación y límites de autonomía para cada agente."
+      detail: "Playbooks · QA · Handoff humano"
+    scale:
+      title: "Operamos y optimizamos"
+      desc: "Activamos el escuadrón en producción y optimizamos continuamente con métricas de outcome y SLA."
+      detail: "SLA · Mejora continua · Escalado"
+
+stats:
+  conversations:
+    label: "Interacciones operadas"
+    desc: "Ejecutadas diariamente por agentes en producción"
+  responseTime:
+    label: "Tiempo de reacción"
+    desc: "Promedio de activación ante un evento crítico"
+  industries:
+    label: "Escuadrones activos"
+    desc: "Células multiagente ejecutando procesos de negocio"
+  uptime:
+    label: "Cumplimiento SLA"
+    desc: "Operación enterprise con monitoreo y soporte continuo"
+
+cta:
+  overline: "Diseña tu operación AAAS"
+  title: "Tu próximo equipo<br /><span class='cta__title--accent'>no necesita contratación</span>"
+  sub: "Lanza escuadrones de agentes en días, no en meses. Empieza por un proceso crítico y escala por outcomes."
+  primary: "Diseñar mi equipo de agentes"
+  secondary: "Explorar escuadrones"
+  disclaimer: "Discovery ejecutivo · Roadmap en 7 días · Implementación guiada"
+  link: "https://calendly.com/admin-iruzlabs/we-re-going-to-transform-your-business-zuri-labs"
+
+footer:
+  tagline: "Equipos de agentes que ejecutan resultados reales."
+  status: "Todos los sistemas operacionales"
+  copy: "© {year} Azury Labs LLC. Todos los derechos reservados."
+  cols:
+    products: "Productos"
+    solutions: "Soluciones"
+    company: "Empresa"
+    legal: "Legal"
+  links:
+    aiRE: "Agentes Real Estate"
+    aiHC: "Agentes Healthcare"
+    crm: "CRM Neural"
+    reactive: "Agentes Reactivos"
+    proactive: "Agentes Proactivos"
+    omni: "Omnicanalidad"
+    about: "Acerca de"
+    contact: "Contacto"
+    blog: "Blog"
+    privacy: "Privacidad"
+    terms: "Términos"
+    security: "Seguridad"
+    encryption: "Encriptación"
+    api: "Neural API"
+    internal: "Acceso Interno"
+
+legal:
+  back: "← Volver al inicio"
+  updated: "Última actualización: {date}"
+
+about:
+  hero:
+    title: "Misión"
+    subtitle: "Potenciar a los equipos de ventas eliminando el ruido y la ineficiencia. Nuestra misión es desplegar agentes de IA autónomos que centralizan, perfilan y reactivan leads en todos los canales, entregando a los humanos únicamente oportunidades listas para cerrar."
+    quote: "“Transformar leads desconectados en cierres inminentes mediante inteligencia artificial autónoma.”"
+  vision:
+    title: "Visión"
+    text: "Convertirnos en el sistema nervioso central de las ventas modernas, redefiniendo el estándar de atención al cliente donde la inmediatez y la personalización son la norma, y donde ninguna oportunidad de negocio se pierde por falta de capacidad humana."
+  values:
+    title: "Valores"
+    v1:
+      title: "Inmediatez Radical"
+      desc: "El tiempo es el activo más caro en ventas."
+    v2:
+      title: "Claridad sobre Ruido"
+      desc: "Odiamos la ineficiencia y el desorden."
+    v3:
+      title: "Omnipresencia Orgánica"
+      desc: "Estamos donde el cliente está, sin ser invasivos."
+    v4:
+      title: "Estandarización de la Excelencia"
+      desc: "La calidad de la atención no debe depender del humor del humano."
+  personality:
+    title: "Personalidad de Marca"
+    items:
+      p1:
+        title: "Autoridad Técnica (El Sabio)"
+        desc: "Habla con precisión. No “cree” que un lead es bueno, lo perfila con datos. Es una marca experta en eficiencia y flujos de trabajo."
+      p2:
+        title: "Simplicidad Sofisticada (El Mago)"
+        desc: "La tecnología interna es compleja, pero la experiencia del usuario es mágica y fluida. Transforma el “ruido” en “oportunidades” de forma casi invisible."
+      p3:
+        title: "Empoderamiento Humano"
+        desc: "No busca reemplazar al vendedor, sino convertirlo en un “super-cerrador”. Es una marca aliada, cálida en su trato pero implacable en su ejecución."
+    slogan: "Nosotros gestionamos la complejidad; tú cierras el negocio."
+  tone:
+    title: "Tono y Voz"
+    desc: "No somos un simple chatbot; somos una Infraestructura de Ventas. Somos el “cerebro” que filtra, califica y reactiva, permitiendo que los humanos se dediquen a cerrar."

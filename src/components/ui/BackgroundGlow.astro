@@ -1,0 +1,73 @@
+---
+export interface Props {
+  role?: "brand" | "blue" | "glow";
+  size?: string;
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
+  animation?: string;
+  blur?: string;
+  class?: string;
+}
+
+const {
+  role = "brand",
+  size = "400px",
+  top,
+  bottom,
+  left,
+  right,
+  animation = "orb-float 10s ease-in-out infinite",
+  blur = "80px",
+  class: className = "",
+} = Astro.props;
+
+// Determine background color based on role
+let bg = "rgba(139, 92, 246, 0.18)"; // Default to brand
+if (role === "blue") bg = "rgba(59, 130, 246, 0.12)";
+else if (role === "glow") bg = "rgba(167, 139, 250, 0.1)";
+
+const styleStr = [
+  `width: ${size}`,
+  `height: ${size}`,
+  top !== undefined ? `top: ${top}` : "",
+  bottom !== undefined ? `bottom: ${bottom}` : "",
+  left !== undefined ? `left: ${left}` : "",
+  right !== undefined ? `right: ${right}` : "",
+  `animation: ${animation}`,
+  `filter: blur(${blur})`,
+  `background: radial-gradient(circle, ${bg} 0%, transparent 70%)`,
+]
+  .filter(Boolean)
+  .join("; ");
+---
+
+<div
+  class:list={["background-glow", className]}
+  style={styleStr}
+  aria-hidden="true"
+>
+</div>
+
+<style is:global>
+  .background-glow {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes orb-float {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(20px, -30px) scale(1.05);
+    }
+    66% {
+      transform: translate(-15px, 20px) scale(0.95);
+    }
+  }
+</style>

@@ -1,0 +1,176 @@
+---
+import Badge from "../ui/Badge.astro";
+import { useTranslations } from "../../i18n/utils";
+
+export interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const featuresData = [
+  { key: "reactive", icon: "⚡", color: "brand" },
+  { key: "proactive", icon: "🧠", color: "blue" },
+  { key: "omnichannel", icon: "🔗", color: "glow" },
+  { key: "integrations", icon: "🔌", color: "brand" },
+  { key: "analytics", icon: "📊", color: "blue" },
+  { key: "custom", icon: "🛠️", color: "glow" },
+];
+
+const features = featuresData.map((f) => ({
+  ...f,
+  title: t(`features.items.${f.key}.title`),
+  desc: t(`features.items.${f.key}.desc`),
+}));
+
+const colorMap: Record<string, string> = {
+  brand: "var(--color-brand)",
+  blue: "var(--color-blue)",
+  glow: "var(--color-glow)",
+};
+
+const dimMap: Record<string, string> = {
+  brand: "var(--color-brand-dim)",
+  blue: "var(--color-blue-dim)",
+  glow: "rgba(167,139,250,0.12)",
+};
+---
+
+<section class="features" id="capacidades">
+  <div class="container">
+    <div class="features__header reveal">
+      <Badge variant="subtle">{t("features.header.badge")}</Badge>
+      <h2 class="features__title" set:html={t("features.header.title")} />
+      <p class="features__sub">
+        {t("features.header.sub")}
+      </p>
+    </div>
+
+    <div class="features__grid">
+      {
+        features.map((f, i) => (
+          <div
+            class={`feature-card reveal reveal-delay-${((i % 3) + 1) * 100}`}
+            style={`--fc: ${colorMap[f.color]}; --fd: ${dimMap[f.color]};`}
+          >
+            <div class="feature-card__icon-wrap">
+              <span class="feature-card__icon">{f.icon}</span>
+            </div>
+            <h3 class="feature-card__title">{f.title}</h3>
+            <p class="feature-card__desc">{f.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .features {
+    padding-block: var(--space-24);
+    position: relative;
+  }
+
+  /* ── Header ── */
+  .features__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-16);
+  }
+
+  .features__title {
+    font-family: var(--font-brand);
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+  }
+
+  :global(.features__title--accent) {
+    background: linear-gradient(
+      135deg,
+      var(--color-blue) 0%,
+      var(--color-brand) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .features__sub {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    max-width: 480px;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ── Grid ── */
+  .features__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+
+  /* ── Feature card ── */
+  .feature-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    transition:
+      border-color var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out);
+  }
+
+  .feature-card:hover {
+    border-color: var(--fc);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 16px color-mix(in srgb, var(--fc) 15%, transparent);
+  }
+
+  .feature-card__icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: var(--fd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-xl);
+    border: 1px solid color-mix(in srgb, var(--fc) 25%, transparent);
+  }
+
+  .feature-card__title {
+    font-family: var(--font-brand);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text);
+  }
+
+  .feature-card__desc {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  @media (max-width: 900px) {
+    .features__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .features__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
