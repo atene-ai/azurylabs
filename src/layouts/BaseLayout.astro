@@ -1,66 +1,139 @@
 ---
+const SITE_NAME = "Azury Labs";
+const DEFAULT_OG_IMAGE = "/images/og-default.png";
+const SAME_AS = [
+  "https://www.facebook.com/profile.php?id=61588787630828",
+  "https://www.linkedin.com/company/iruzlabs",
+  "https://www.instagram.com/iruzlabsmx/",
+];
+
 export interface Props {
   title?: string;
   description?: string;
+  /** Codigo BCP-47 para el atributo lang del documento. */
+  lang?: string;
+  /** URL absoluta o relativa; por defecto la URL actual sin query string. */
+  canonical?: string;
+  /** Imagen para og:image / twitter:image; por defecto el card de marca. */
+  image?: string;
+  ogType?: "website" | "article";
   noindex?: boolean;
 }
 
-const { title = "azury labs", description = "", noindex = false } = Astro.props;
+const {
+  title = "Azury Labs",
+  description = "",
+  lang = "es-MX",
+  canonical,
+  image = DEFAULT_OG_IMAGE,
+  ogType = "website",
+  noindex = false,
+} = Astro.props;
 
-const siteUrl = Astro.site ?? new URL("https://iruzlabs.com");
-const pathname = Astro.url.pathname;
-const [, firstSegment] = pathname.split("/");
-const currentLang = firstSegment === "es" ? "es" : "en";
+const site = Astro.site ?? Astro.url;
+const canonicalURL = new URL(canonical ?? Astro.url.pathname, site);
+const ogImageURL = new URL(image, site);
+const locale = lang.startsWith("en") ? "en_US" : "es_MX";
+const altLocale = locale === "en_US" ? "es_MX" : "en_US";
 
-const canonicalUrl = new URL(pathname, siteUrl).toString();
-const enUrl = new URL(pathname.replace(/^\/(en|es)\//, "/en/"), siteUrl).toString();
-const esUrl = new URL(pathname.replace(/^\/(en|es)\//, "/es/"), siteUrl).toString();
-const xDefaultUrl = new URL(pathname.replace(/^\/(en|es)\//, "/en/"), siteUrl).toString();
+// Alternates es/en solo aplican a rutas bajo /[lang]/...
+const langMatch = Astro.url.pathname.match(/^\/(es|en)(\/.*)?$/);
+const hreflangAlternates = langMatch
+  ? (() => {
+      const rest = langMatch[2] ?? "/";
+      const esHref = new URL(`/es${rest}`, site).toString();
+      const enHref = new URL(`/en${rest}`, site).toString();
+      return [
+        { hreflang: "es", href: esHref },
+        { hreflang: "en", href: enHref },
+        { hreflang: "x-default", href: esHref },
+      ];
+    })()
+  : [];
 
-const ogLocale = currentLang === "es" ? "es_MX" : "en_US";
-const robotsContent = noindex ? "noindex, nofollow" : "index, follow";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${site}#organization`,
+      name: SITE_NAME,
+      url: site.toString(),
+      logo: new URL("/images/logos/iruzlabs-isotipo-light.png", site).toString(),
+      sameAs: SAME_AS,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${site}#website`,
+      name: SITE_NAME,
+      url: site.toString(),
+      publisher: { "@id": `${site}#organization` },
+      inLanguage: ["es-MX", "en"],
+    },
+  ],
+};
 ---
 
 <!doctype html>
-<html lang={currentLang}>
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="robots" content={robotsContent} />
-    <meta name="theme-color" content="#0A0C10" />
     <meta name="generator" content={Astro.generator} />
 
-    <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="es" href={esUrl} />
-    <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="canonical" href={canonicalURL} />
+    {
+      hreflangAlternates.map((alt) => (
+        <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+      ))
+    }
 
     <!-- Open Graph -->
+    <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:locale" content={ogLocale} />
-    <meta property="og:site_name" content="azury labs" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content={locale} />
+    {langMatch && <meta property="og:locale:alternate" content={altLocale} />}
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- Favicon -->
+    <!-- Favicon / iconos oficiales -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#070c12" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f2f7fb" media="(prefers-color-scheme: light)" />
+
+    <!-- Structured data (Organization + WebSite) -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
 
     <script is:inline>
       (() => {
-        const savedTheme = localStorage.getItem("iruz-theme");
+        const savedTheme = localStorage.getItem("azury-theme");
         const normalized = savedTheme === "light" ? "light" : "dark";
         document.documentElement.dataset.theme = normalized;
       })();
     </script>
 
     <title>{title}</title>
+
+    <!-- Meta adicional por pagina: JSON-LD especifico, etc. -->
+    <slot name="head" />
   </head>
   <body class="noise-overlay app-theme">
     <slot />

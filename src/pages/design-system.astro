@@ -8,21 +8,27 @@ import Divider from "../components/ui/Divider.astro";
 import Typography from "../components/ui/Typography.astro";
 ---
 
-<BaseLayout title="azury labs — Design System" noindex={true}>
+<BaseLayout title="Azury Labs — Design System" noindex>
   <main class="container">
     <!-- ── Header ── -->
     <header class="ds-header">
       <div class="ds-logo">
-        <Typography as="span" variant="heading-2" color="default"
-          >azury</Typography
-        >
-        <Typography as="span" variant="heading-2" color="brand">
-          Labs</Typography
-        >
+        <img
+          src="/images/logos/iruzlabs-logotipo-h-white.png"
+          alt="Azury Labs"
+          class="ds-logo__img"
+          width="220"
+          height="64"
+        />
+        <div class="ds-logo__meta">
+          <Typography as="p" variant="overline" color="brand"
+            >Tecnología · Innovación · Futuro</Typography
+          >
+          <Typography as="p" variant="caption" color="faint"
+            >Design System · v2.0</Typography
+          >
+        </div>
       </div>
-      <Typography as="p" variant="caption" color="faint"
-        >Design System · v1.0</Typography
-      >
     </header>
 
     <!-- ══════════════════════════════════════════════════════
@@ -30,7 +36,7 @@ import Typography from "../components/ui/Typography.astro";
     ══════════════════════════════════════════════════════ -->
     <section class="ds-section">
       <Typography as="h2" variant="overline" color="faint"
-        >01 — Cromatismo Vital</Typography
+        >01 — Paleta de Marca</Typography
       >
       <Typography
         as="p"
@@ -38,48 +44,50 @@ import Typography from "../components/ui/Typography.astro";
         color="muted"
         class="ds-section__desc"
       >
-        Una paleta diseñada para la profundidad, el contraste tecnológico y la
-        jerarquía de información crítica.
+        El degradado principal (turquesa → azul) se reserva para el isotipo. Los
+        tonos oscuros aportan profesionalismo y contraste; los claros funcionan
+        como apoyo en fondos y detalles.
       </Typography>
 
       <div class="color-grid">
-        <div
-          class="color-swatch"
-          style="background:#0A0C10; border:1px solid rgba(255,255,255,0.08)"
-        >
-          <span class="color-swatch__hex">#0A0C10</span>
-          <span class="color-swatch__name">Deep Space</span>
-          <span class="color-swatch__role">Primary Background</span>
-        </div>
-        <div class="color-swatch" style="background:#8B5CF6">
-          <span class="color-swatch__hex">#8B5CF6</span>
-          <span class="color-swatch__name">Neural Violet</span>
-          <span class="color-swatch__role">Action & Brand Mark</span>
-        </div>
-        <div class="color-swatch" style="background:#3B82F6">
-          <span class="color-swatch__hex">#3B82F6</span>
-          <span class="color-swatch__name">Synthetic Blue</span>
-          <span class="color-swatch__role">Connectivity & UI</span>
-        </div>
-        <div class="color-swatch" style="background:#A78BFA">
-          <span class="color-swatch__hex">#A78BFA</span>
-          <span class="color-swatch__name">azury Glow</span>
-          <span class="color-swatch__role">Highlights & States</span>
-        </div>
-        <div
-          class="color-swatch"
-          style="background:#111318; border:1px solid rgba(255,255,255,0.08)"
-        >
-          <span class="color-swatch__hex">#111318</span>
-          <span class="color-swatch__name">Surface</span>
-          <span class="color-swatch__role">Elevated Cards</span>
-        </div>
-        <div class="color-swatch" style="background:#F0F0F5">
-          <span class="color-swatch__hex" style="color:#0A0C10">#F0F0F5</span>
-          <span class="color-swatch__name" style="color:#0A0C10"
-            >Primary Text</span
+        <div class="color-swatch" style="background:#00C8FF">
+          <span class="color-swatch__hex" style="color:#0A2A3A">#00C8FF</span>
+          <span class="color-swatch__name" style="color:#0A2A3A">Turquesa</span>
+          <span class="color-swatch__role" style="color:rgba(10,42,58,0.65)"
+            >Acento principal</span
           >
-          <span class="color-swatch__role" style="color:#4B5563">Default</span>
+        </div>
+        <div class="color-swatch" style="background:#0891B2">
+          <span class="color-swatch__hex">#0891B2</span>
+          <span class="color-swatch__name">Azul Principal</span>
+          <span class="color-swatch__role">Acción & Marca</span>
+        </div>
+        <div class="color-swatch" style="background:#0A4A6A">
+          <span class="color-swatch__hex">#0A4A6A</span>
+          <span class="color-swatch__name">Azul Oscuro</span>
+          <span class="color-swatch__role">Profundidad</span>
+        </div>
+        <div class="color-swatch" style="background:#1A2A3A">
+          <span class="color-swatch__hex">#1A2A3A</span>
+          <span class="color-swatch__name">Negro Azulado</span>
+          <span class="color-swatch__role">Superficie base</span>
+        </div>
+        <div class="color-swatch" style="background:#7A8A9A">
+          <span class="color-swatch__hex">#7A8A9A</span>
+          <span class="color-swatch__name">Plata</span>
+          <span class="color-swatch__role">Texto secundario</span>
+        </div>
+        <div
+          class="color-swatch"
+          style="background:#E6F7FF; border:1px solid rgba(10,42,58,0.08)"
+        >
+          <span class="color-swatch__hex" style="color:#0A2A3A">#E6F7FF</span>
+          <span class="color-swatch__name" style="color:#0A2A3A"
+            >Azul Claro</span
+          >
+          <span class="color-swatch__role" style="color:rgba(10,42,58,0.6)"
+            >Apoyo & detalles</span
+          >
         </div>
       </div>
     </section>
@@ -98,64 +106,72 @@ import Typography from "../components/ui/Typography.astro";
         <Card padding="md">
           <div class="type-row">
             <div class="type-meta">
-              <Badge variant="brand">Space Grotesk</Badge>
+              <Badge variant="brand">Montserrat SemiBold · 600</Badge>
               <Typography as="p" variant="caption" color="muted"
-                >Futurista, geométrica, personalidad tecnológica</Typography
-              >
-            </div>
-            <Typography as="p" variant="display" color="gradient">Aa</Typography
-            >
-          </div>
-          <Typography as="p" variant="display" color="default"
-            >El sistema nervioso central del Real Estate.</Typography
-          >
-        </Card>
-
-        <Card padding="md">
-          <div class="type-row">
-            <div class="type-meta">
-              <Badge variant="blue">Inter</Badge>
-              <Typography as="p" variant="caption" color="muted"
-                >Eficiente, neutral, altamente legible</Typography
+                >Tipografía principal · títulos y marca</Typography
               >
             </div>
             <Typography
               as="p"
               variant="display"
               color="gradient"
-              style="font-family:var(--font-body)">Aa</Typography
+              style="font-weight:600">Aa</Typography
             >
           </div>
           <Typography
             as="p"
-            variant="heading-2"
+            variant="display"
             color="default"
-            style="font-family:var(--font-body)"
-            >El sistema nervioso central del Real Estate.</Typography
+            style="font-weight:600"
+            >Tecnología, innovación y futuro.</Typography
           >
         </Card>
 
         <Card padding="md">
           <div class="type-row">
             <div class="type-meta">
-              <Badge variant="glow">Work Sans</Badge>
+              <Badge variant="blue">Montserrat Medium · 500</Badge>
               <Typography as="p" variant="caption" color="muted"
-                >Robusta, profesional, autoridad institucional</Typography
+                >Tipografía secundaria · subtítulos y UI</Typography
               >
             </div>
             <Typography
               as="p"
               variant="display"
               color="gradient"
-              style="font-family:var(--font-solid)">Aa</Typography
+              style="font-weight:500">Aa</Typography
             >
           </div>
           <Typography
             as="p"
             variant="heading-2"
             color="default"
-            style="font-family:var(--font-solid)"
-            >El sistema nervioso central del Real Estate.</Typography
+            style="font-weight:500"
+            >Tecnología, innovación y futuro.</Typography
+          >
+        </Card>
+
+        <Card padding="md">
+          <div class="type-row">
+            <div class="type-meta">
+              <Badge variant="glow">Montserrat Regular · 400</Badge>
+              <Typography as="p" variant="caption" color="muted"
+                >Texto de párrafo · máxima legibilidad</Typography
+              >
+            </div>
+            <Typography
+              as="p"
+              variant="display"
+              color="gradient"
+              style="font-weight:400">Aa</Typography
+            >
+          </div>
+          <Typography
+            as="p"
+            variant="heading-2"
+            color="default"
+            style="font-weight:400"
+            >Tecnología, innovación y futuro.</Typography
           >
         </Card>
       </div>
@@ -258,9 +274,9 @@ import Typography from "../components/ui/Typography.astro";
         <div class="component-group">
           <Typography as="p" variant="caption" color="faint">Badges</Typography>
           <div class="chip-row">
-            <Badge variant="brand">Neural Violet</Badge>
-            <Badge variant="blue">Synthetic Blue</Badge>
-            <Badge variant="glow">azury Glow</Badge>
+            <Badge variant="brand">Azul Principal</Badge>
+            <Badge variant="blue">Turquesa</Badge>
+            <Badge variant="glow">Iruz Glow</Badge>
             <Badge variant="subtle">Subtle</Badge>
           </div>
         </div>
@@ -298,7 +314,7 @@ import Typography from "../components/ui/Typography.astro";
             class="card-title">Neural Surface</Typography
           >
           <Typography as="p" variant="body-sm" color="muted"
-            >Superficie base para contenido estructurado. Borde violeta sutil y
+            >Superficie base para contenido estructurado. Borde azul sutil y
             highlight superior.</Typography
           >
         </Card>
@@ -312,7 +328,7 @@ import Typography from "../components/ui/Typography.astro";
             class="card-title">Hover para ver el efecto</Typography
           >
           <Typography as="p" variant="body-sm" color="muted"
-            >Levitación con glow violeta al hacer hover. Ideal para grids de
+            >Levitación con glow turquesa al hacer hover. Ideal para grids de
             features.</Typography
           >
         </Card>
@@ -349,7 +365,7 @@ import Typography from "../components/ui/Typography.astro";
     <!-- ── Footer ── -->
     <footer class="ds-footer">
       <Typography as="p" variant="caption" color="faint"
-        >© 2024 azury labs Holdings. All system operational.</Typography
+        >© 2026 Azury Labs. Tecnología · Innovación · Futuro.</Typography
       >
       <div class="ds-footer__links">
         <Typography as="span" variant="caption" color="faint"
@@ -384,8 +400,25 @@ import Typography from "../components/ui/Typography.astro";
 
   .ds-logo {
     display: flex;
-    align-items: baseline;
-    gap: 0;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .ds-logo__img {
+    height: 64px;
+    width: auto;
+    filter: drop-shadow(0 0 16px rgba(0, 200, 255, 0.25));
+  }
+
+  .ds-logo__meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  :root[data-theme="light"] .ds-logo__img {
+    content: url("/images/logos/iruzlabs-logotipo-h-black.png");
+    filter: drop-shadow(0 0 12px rgba(8, 145, 178, 0.2));
   }
 
   /* ── Sections ── */

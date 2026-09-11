@@ -5,15 +5,15 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
   site: "https://iruzlabs.com",
+  output: "server",
   devToolbar: {
     enabled: false,
   },
 
   i18n: {
-    defaultLocale: "en",
-    locales: ["en", "es"],
+    defaultLocale: "es",
+    locales: ["es", "en"],
     routing: {
       prefixDefaultLocale: true,
       redirectToDefaultLocale: true,

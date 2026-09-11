@@ -3,38 +3,184 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Navbar from "../../components/sections/Navbar.astro";
 import Footer from "../../components/sections/Footer.astro";
 import { useTranslations } from "../../i18n/utils";
+import { getEnv, getTeamMembers, mediaUrl } from "../../lib/strapi";
+import SocialIcon from "../../components/ui/SocialIcon.astro";
+import ContactForm from "../../components/sections/ContactForm.astro";
 
-export const prerender = true;
+// SSR para que un integrante recien agregado en Strapi aparezca sin rebuild.
+export const prerender = false;
 
-export function getStaticPaths() {
-  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
-}
-
-const { lang } = Astro.params;
-const t = useTranslations(lang as string);
+const { lang: rawLang } = Astro.params;
+const lang = rawLang === "en" ? "en" : "es";
+const htmlLang = lang === "en" ? "en" : "es-MX";
+const t = useTranslations(lang);
+const contactCopy = lang === "es"
+  ? {
+      eyebrow: "CONSTRUYAMOS EL SIGUIENTE SISTEMA",
+      title: "¿Qué necesita tu operación para avanzar?",
+      text: "Cuéntanos el reto. Diseñamos el siguiente paso con producto, inteligencia, datos o desarrollo a medida.",
+    }
+  : {
+      eyebrow: "LET'S BUILD THE NEXT SYSTEM",
+      title: "What does your operation need to move forward?",
+      text: "Tell us the challenge. We will design the next step with product, intelligence, data or custom development.",
+    };
 
 const titleMap = {
-  es: "Sobre Nosotros — azury labs AAAS",
-  en: "About Us — azury labs AAAS",
+  es: "Acerca de Azury Labs — Inteligencia artificial aplicada",
+  en: "About Azury Labs — Applied artificial intelligence",
 };
+
+const strapiBase = getEnv(Astro.locals, "STRAPI_URL").replace(/\/$/, "");
+const teamMembers = await getTeamMembers({ locals: Astro.locals, lang });
+
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=0, s-maxage=300, stale-while-revalidate=600",
+);
 ---
 
 <BaseLayout
   title={titleMap[lang as keyof typeof titleMap]}
   description={t("about.hero.subtitle")}
+  lang={htmlLang}
 >
   <Navbar lang={lang} page="about" />
 
   <main class="about-page">
-    <!-- Hero Section (Mission) -->
     <section id="mision" class="about-hero">
       <div class="container about-hero__inner">
-        <span class="badge">{t("nav.company")}</span>
-        <h1 class="about-hero__title">{t("about.hero.title")}</h1>
-        <p class="about-hero__subtitle">{t("about.hero.subtitle")}</p>
-        <blockquote class="about-hero__quote">
-          {t("about.hero.quote")}
-        </blockquote>
+        <div class="about-hero__copy">
+          <p class="about-hero__eyebrow"><span aria-hidden="true"></span>{t("nav.company")}</p>
+          <h1 class="about-hero__title">{t("about.hero.title")}</h1>
+          <p class="about-hero__subtitle">{t("about.hero.subtitle")}</p>
+          <a class="about-hero__contact-link" href="#contacto">
+            {lang === "es" ? "Hablemos de tu operación" : "Let's talk about your operation"} <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+        <aside class="about-hero__statement" aria-label={lang === "es" ? "Tesis Iruz" : "Iruz thesis"}>
+          <span class="about-hero__statement-index">IRUZ / 2026</span>
+          <blockquote>{t("about.hero.quote")}</blockquote>
+          <div class="about-hero__statement-lines" aria-hidden="true">
+            <span>PRODUCTO</span><span>IA</span><span>DATOS</span><span>SOFTWARE</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    {
+      teamMembers.length > 0 && (
+        <section id="equipo" class="about-team">
+          <div class="container about-team__inner">
+            <span class="badge">{t("about.team.badge")}</span>
+            <h2 class="section-title">{t("about.team.title")}</h2>
+            <p class="about-team__subtitle">{t("about.team.subtitle")}</p>
+
+            <div class="team-grid">
+              {teamMembers.map((member) => (
+                <div class="team-card">
+                  <a href={`/${lang}/equipo/${member.slug}`} class="team-card__link">
+                    {member.avatar?.url && (
+                      <img
+                        class="team-card__photo"
+                        src={mediaUrl(strapiBase, member.avatar.url)}
+                        alt={member.avatar.alternativeText || member.name}
+                        width="120"
+                        height="120"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )}
+                    <h3 class="team-card__name">{member.name}</h3>
+                    <p class="team-card__role">{member.role}</p>
+                    <p class="team-card__bio">{member.bio}</p>
+                  </a>
+                  {member.socials && member.socials.length > 0 && (
+                    <div class="team-card__socials">
+                      {member.socials.map((social) => (
+                        <a
+                          href={social.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="team-card__social"
+                          aria-label={social.platform}
+                        >
+                          <SocialIcon platform={social.platform} />
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Ecosystem Section -->
+    <section id="ecosistema" class="about-ecosystem">
+      <div class="container about-ecosystem__inner">
+        <span class="badge">{t("about.ecosystem.badge")}</span>
+        <h2 class="section-title">{t("about.ecosystem.title")}</h2>
+        <p class="about-ecosystem__subtitle">{t("about.ecosystem.subtitle")}</p>
+
+        <div class="ecosystem-grid">
+          <div class="ecosystem-card">
+            <img
+              src="/images/logos/iruzlabs-atenea-logo.png"
+              alt="Iruz Atenea"
+              class="ecosystem-card__logo"
+              loading="lazy"
+            />
+            <h3>{t("about.ecosystem.items.atenea.name")}</h3>
+            <p>{t("about.ecosystem.items.atenea.desc")}</p>
+            <a href="https://atenea.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+          <div class="ecosystem-card">
+            <span class="ecosystem-card__wordmark gradient-text">SALES OS</span>
+            <h3>{t("about.ecosystem.items.crm.name")}</h3>
+            <p>{t("about.ecosystem.items.crm.desc")}</p>
+            <a href="https://crm.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+          <div class="ecosystem-card ecosystem-card--minegocio">
+            <span class="ecosystem-card__wordmark ecosystem-card__wordmark--minegocio">
+              <small>IRUZ</small>
+              <strong>Mi Negocio</strong>
+            </span>
+            <h3>{t("about.ecosystem.items.minegocio.name")}</h3>
+            <p>{t("about.ecosystem.items.minegocio.desc")}</p>
+            <a href={`https://minegocio.iruzlabs.com/${lang}`} target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+          <div class="ecosystem-card">
+            <img
+              src="/images/logos/iruzlabs-ciee-logo.png"
+              alt="Iruz CIEE"
+              class="ecosystem-card__logo"
+              loading="lazy"
+            />
+            <h3>{t("about.ecosystem.items.ciee.name")}</h3>
+            <p>{t("about.ecosystem.items.ciee.desc")}</p>
+            <a href="https://ciee.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+          <div class="ecosystem-card">
+            <span class="ecosystem-card__wordmark gradient-text">SYSTEMS</span>
+            <h3>{t("about.ecosystem.items.systems.name")}</h3>
+            <p>{t("about.ecosystem.items.systems.desc")}</p>
+            <a href="https://systems.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -109,11 +255,19 @@ const titleMap = {
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="about-cta">
-      <div class="container about-cta__inner">
-        <h2 set:html={t("cta.title")} />
-        <a href={t("cta.link")} class="btn-primary">{t("cta.primary")}</a>
+    <section id="contacto" class="about-contact">
+      <div class="container about-contact__inner">
+        <div class="about-contact__copy">
+          <p class="about-contact__eyebrow"><span aria-hidden="true"></span>{contactCopy.eyebrow}</p>
+          <h2>{contactCopy.title}</h2>
+          <p>{contactCopy.text}</p>
+          <a href={`/${lang}/contacto`} class="about-contact__route">
+            {lang === "es" ? "Abrir página de contacto" : "Open contact page"} <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <div class="about-contact__form">
+          <ContactForm lang={lang} />
+        </div>
       </div>
     </section>
   </main>
@@ -140,7 +294,7 @@ const titleMap = {
     text-align: center;
     background: radial-gradient(
       circle at 50% 0%,
-      rgba(124, 58, 237, 0.15),
+      rgba(8, 145, 178, 0.15),
       transparent 70%
     );
   }
@@ -160,10 +314,10 @@ const titleMap = {
     font-weight: var(--weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    background: rgba(124, 58, 237, 0.1);
+    background: rgba(8, 145, 178, 0.1);
     padding: 6px 12px;
     border-radius: 99px;
-    border: 1px solid rgba(124, 58, 237, 0.2);
+    border: 1px solid rgba(8, 145, 178, 0.2);
   }
 
   .about-hero__title {
@@ -185,6 +339,276 @@ const titleMap = {
     margin-top: var(--space-8);
     border-left: 4px solid var(--color-brand);
     padding-left: var(--space-6);
+  }
+
+  /* Team / Founder */
+  .about-team {
+    padding: var(--space-20) 0;
+  }
+
+  .about-team__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    gap: var(--space-4);
+  }
+
+  .about-team__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+    max-width: 640px;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-6);
+    width: 100%;
+  }
+
+  .team-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: transform var(--duration-normal), border-color var(--duration-normal);
+  }
+
+  .team-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-brand);
+  }
+
+  .team-card__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+  }
+
+  .team-card__photo {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 2px solid var(--color-brand);
+    margin-bottom: var(--space-4);
+  }
+
+  .team-card__name {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    font-weight: var(--weight-bold);
+  }
+
+  .team-card__role {
+    color: var(--color-brand);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-3);
+  }
+
+  .team-card__bio {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+  }
+
+  .team-card__socials {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .team-card__social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    transition:
+      border-color var(--duration-fast),
+      color var(--duration-fast),
+      transform var(--duration-fast);
+  }
+
+  .team-card__social:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+    transform: translateY(-2px);
+  }
+
+  /* Ecosystem */
+  .about-ecosystem {
+    padding: var(--space-20) 0;
+    background: rgba(255, 255, 255, 0.02);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .about-ecosystem__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    gap: var(--space-4);
+  }
+
+  .about-ecosystem__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+    max-width: 640px;
+  }
+
+  .ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-6);
+    width: 100%;
+  }
+
+  .ecosystem-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    transition: transform var(--duration-normal), border-color var(--duration-normal);
+    grid-column: span 2;
+  }
+
+  .ecosystem-card:nth-child(4),
+  .ecosystem-card:nth-child(5) {
+    grid-column: span 3;
+  }
+
+  .ecosystem-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-brand);
+  }
+
+  .ecosystem-card__logo {
+    height: 40px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left center;
+    margin-bottom: var(--space-4);
+  }
+
+  .ecosystem-card__wordmark {
+    display: block;
+    font-family: var(--font-brand);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-3xl);
+    letter-spacing: 0.01em;
+    margin-bottom: var(--space-4);
+  }
+
+  .ecosystem-card__wordmark--minegocio {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    color: #59bdd7;
+    line-height: 1;
+  }
+
+  .ecosystem-card__wordmark--minegocio small {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.16em;
+  }
+
+  .ecosystem-card__wordmark--minegocio strong {
+    font-family: var(--font-brand);
+    font-size: clamp(1.45rem, 2vw, 1.9rem);
+    font-weight: var(--weight-semibold);
+    letter-spacing: -0.035em;
+    white-space: nowrap;
+  }
+
+  .ecosystem-card--minegocio {
+    background:
+      radial-gradient(circle at 92% 8%, rgba(89, 189, 215, 0.14), transparent 38%),
+      rgba(255, 255, 255, 0.03);
+  }
+
+  @media (max-width: 900px) {
+    .ecosystem-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ecosystem-card,
+    .ecosystem-card:nth-child(4) {
+      grid-column: span 1;
+    }
+
+    .ecosystem-card:nth-child(5) {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ecosystem-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ecosystem-card,
+    .ecosystem-card:nth-child(4),
+    .ecosystem-card:nth-child(5) {
+      grid-column: span 1;
+    }
+  }
+
+  .ecosystem-card h3 {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+    font-weight: var(--weight-bold);
+  }
+
+  .ecosystem-card p {
+    color: var(--color-text-muted);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+    flex-grow: 1;
+  }
+
+  .ecosystem-card__link {
+    color: var(--color-brand);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    text-decoration: none;
+    transition: color var(--duration-fast);
+  }
+
+  .ecosystem-card__link:hover {
+    color: var(--color-glow);
   }
 
   /* Vision */
@@ -266,7 +690,7 @@ const titleMap = {
     border-left: 2px solid var(--color-brand);
     background: linear-gradient(
       to right,
-      rgba(124, 58, 237, 0.05),
+      rgba(8, 145, 178, 0.05),
       transparent
     );
   }
@@ -333,5 +757,216 @@ const titleMap = {
 
   .btn-primary:hover {
     filter: brightness(1.1);
+  }
+
+  /* ── Reframed company story ── */
+  .about-page {
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+  }
+
+  .about-page::before {
+    position: absolute;
+    top: -18rem;
+    right: -12rem;
+    width: 45rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-brand) 20%, transparent), transparent 68%);
+    content: "";
+    filter: blur(20px);
+    pointer-events: none;
+  }
+
+  .about-hero {
+    position: relative;
+    padding: clamp(4rem, 7vw, 6.5rem) 0 clamp(4rem, 7vw, 6rem);
+    text-align: left;
+    background: transparent;
+  }
+
+  .about-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 0.72fr);
+    align-items: center;
+    max-width: var(--container-xl);
+    gap: clamp(2rem, 7vw, 8rem);
+  }
+
+  .about-hero__copy { align-items: flex-start; max-width: 48rem; }
+
+  .about-hero__eyebrow,
+  .about-contact__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--color-brand);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .about-hero__eyebrow span,
+  .about-contact__eyebrow span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-brand);
+    box-shadow: 0 0 14px var(--color-brand);
+  }
+
+  .about-hero__title {
+    max-width: 20ch;
+    margin-top: 1rem;
+    font-size: clamp(var(--text-4xl), 4vw, var(--text-5xl));
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+
+  .about-hero__subtitle {
+    max-width: 58ch;
+    margin-top: 1.55rem;
+    font-size: 1rem;
+    line-height: 1.68;
+  }
+
+  .about-hero__contact-link,
+  .about-contact__route {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.8rem;
+    color: var(--color-brand);
+    font-weight: 780;
+  }
+
+  .about-hero__contact-link span,
+  .about-contact__route span { font-size: 1.2em; }
+
+  .about-hero__statement {
+    position: relative;
+    display: grid;
+    gap: 1.4rem;
+    min-height: 18rem;
+    padding: clamp(1.4rem, 2.5vw, 2rem);
+    border: 1px solid var(--color-border);
+    border-radius: 1.5rem;
+    background:
+      radial-gradient(circle at 76% 16%, color-mix(in srgb, var(--color-brand) 22%, transparent), transparent 38%),
+      var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  .about-hero__statement-index {
+    color: var(--color-brand);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+  }
+
+  .about-hero__statement blockquote {
+    align-self: center;
+    max-width: 12ch;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--color-text);
+    font-family: var(--font-brand);
+    font-size: clamp(1.6rem, 2.15vw, 2.25rem);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+  }
+
+  .about-hero__statement-lines {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.8rem;
+    border-top: 1px solid var(--color-border-subtle);
+    padding-top: 1rem;
+  }
+
+  .about-hero__statement-lines span {
+    color: var(--color-text-faint);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+  }
+
+  .about-ecosystem,
+  .about-vision,
+  .about-personality { background: transparent; }
+
+  .about-ecosystem { border-block: 1px solid var(--color-border-subtle); }
+  .about-ecosystem__inner { align-items: flex-start; text-align: left; }
+  .about-ecosystem__subtitle { max-width: 58ch; }
+  .ecosystem-card { border-radius: 1.15rem; background: var(--color-surface); }
+  .ecosystem-card:hover { box-shadow: var(--shadow-md); }
+
+  .about-vision__inner { max-width: 60rem; text-align: left; }
+  .about-vision .section-title,
+  .about-values .section-title,
+  .about-personality .section-title,
+  .about-tone .section-title { text-align: left; }
+  .vision-text { max-width: 45ch; font-size: clamp(1.35rem, 2vw, 1.9rem); color: var(--color-text); }
+
+  .value-card { border-radius: 1.15rem; background: var(--color-surface); }
+  .value-icon { color: var(--color-brand); font-size: 1.2rem; }
+  .value-icon { font-size: 0; }
+  .value-icon::after { font-size: 1.2rem; content: "✦"; }
+  .personality-card { border-left-width: 1px; }
+
+  .about-contact {
+    padding: clamp(4.5rem, 9vw, 8rem) 0;
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .about-contact__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(25rem, 0.9fr);
+    align-items: start;
+    gap: clamp(2.5rem, 8vw, 9rem);
+  }
+
+  .about-contact__copy { max-width: 36rem; }
+
+  .about-contact__copy h2 {
+    max-width: 16ch;
+    margin-top: 1rem;
+    font-size: clamp(var(--text-3xl), 3vw, var(--text-5xl));
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .about-contact__copy > p:not(.about-contact__eyebrow) {
+    margin-top: 1.3rem;
+    font-size: 1.05rem;
+  }
+
+  .about-contact__form {
+    padding: clamp(1.3rem, 3vw, 2.25rem);
+    border: 1px solid var(--color-border);
+    border-radius: 1.4rem;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (max-width: 850px) {
+    .about-hero__inner,
+    .about-contact__inner { grid-template-columns: 1fr; }
+    .about-hero__statement { max-width: 34rem; min-height: 16rem; }
+    .about-contact__form { max-width: 42rem; }
+  }
+
+  @media (max-width: 640px) {
+    .about-hero { padding-block: 4.25rem 3.75rem; }
+    .about-hero__title { font-size: clamp(2.3rem, 11vw, var(--text-5xl)); }
+    .about-hero__statement { min-height: 14rem; border-radius: 1rem; }
+    .about-hero__statement blockquote { font-size: 1.7rem; }
+    .about-contact__form { padding: 1.2rem; border-radius: 1rem; }
   }
 </style>

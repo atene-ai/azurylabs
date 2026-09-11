@@ -1,269 +1,104 @@
 ---
-import { useTranslations } from "../../i18n/utils";
-import StatCard from "../ui/StatCard.astro";
-import ActivityFeedItem from "../ui/ActivityFeedItem.astro";
-import Tag from "../ui/Tag.astro";
-
 export interface Props {
   lang: string;
 }
 
 const { lang } = Astro.props;
-const t = useTranslations(lang);
+const es = lang === "es";
 ---
 
-<div class="hero__screen">
-  <!-- Simulated dashboard -->
-  <div class="screen__header">
-    <div class="screen__dots">
-      <span></span><span></span><span></span>
-    </div>
-    <span class="screen__title">{t("hero.visual.title")}</span>
+<div class="sales-os-visual">
+  <div class="visual__chrome">
+    <div class="visual__dots"><i></i><i></i><i></i></div>
+    <strong>Iruz Sales OS</strong>
+    <span><i></i>{es ? "Operando" : "Operating"}</span>
   </div>
-  <div class="screen__body">
-    <div class="screen__left">
-      <!-- Stat cards -->
-      <div class="screen__stats">
-        <StatCard label={t("hero.visual.start")} value="247" delta="+12%" />
-        <StatCard
-          label={t("hero.visual.conversions")}
-          value="3.8k"
-          delta="+24%"
-        />
-        <StatCard label={t("hero.visual.respTime")} value="1.2s" delta="-40%" />
-      </div>
 
-      <!-- Product pills -->
-      <div class="screen__pills">
-        <Tag color="brand">{t("hero.visual.pills.re")}</Tag>
-        <Tag color="blue">{t("hero.visual.pills.hc")}</Tag>
-        <Tag color="glow">{t("hero.visual.pills.crm")}</Tag>
-        <Tag color="success">{t("hero.visual.pills.sw")}</Tag>
-      </div>
+  <div class="visual__canvas">
+    <div class="visual__grid" aria-hidden="true"></div>
+    <span class="visual__eyebrow">{es ? "OPERACIÓN COMERCIAL" : "REVENUE OPERATION"}</span>
+
+    <div class="signal signal--wa">WA</div>
+    <div class="signal signal--web">WEB</div>
+    <div class="signal signal--call">CALL</div>
+    <div class="visual__path visual__path--one" aria-hidden="true"><i></i></div>
+    <div class="visual__path visual__path--two" aria-hidden="true"><i></i></div>
+
+    <div class="intelligence-core">
+      <span>IA</span>
+      <i></i><i></i><i></i>
+      <small>{es ? "PERFILA · PRIORIZA · EJECUTA" : "PROFILE · PRIORITIZE · EXECUTE"}</small>
     </div>
 
-    <div class="screen__right">
-      <!-- Agent activity feed -->
-      <div class="screen__feed">
-        <div class="feed__label">{t("hero.visual.activity")}</div>
-        <ActivityFeedItem
-          dotColor="brand"
-          text={t("hero.visual.feed.re")}
-          time="ahora"
-        />
-        <ActivityFeedItem
-          dotColor="blue"
-          text={t("hero.visual.feed.hc")}
-          time="2s"
-        />
-        <ActivityFeedItem
-          dotColor="glow"
-          text={t("hero.visual.feed.crm")}
-          time="5s"
-        />
-        <ActivityFeedItem
-          dotColor="brand"
-          text={t("hero.visual.feed.re2")}
-          time="12s"
-        />
-      </div>
+    <div class="handoff-card">
+      <div class="handoff-card__avatar">MR</div>
+      <div><small>HANDOFF</small><strong>{es ? "Asesor con contexto" : "Context-ready advisor"}</strong></div>
+      <span>✓</span>
+    </div>
+
+    <div class="roi-card">
+      <div class="roi-card__copy"><small>{es ? "IMPACTO COMERCIAL" : "COMMERCIAL IMPACT"}</small><strong>ROI <span>↗</span></strong></div>
+      <div class="roi-card__bars"><i></i><i></i><i></i><i></i></div>
+      <p>{es ? "Productividad que impulsa ingresos" : "Productivity that drives revenue"}</p>
     </div>
   </div>
-  
-  <div class="screen__fog"></div>
 </div>
 
 <style>
-  .hero__screen {
-    width: 100%;
-    max-width: 900px;
-    background: var(--color-surface);
-    border: 1px solid rgba(167, 139, 250, 0.3);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    position: relative;
-    box-shadow:
-      0 20px 80px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(255, 255, 255, 0.05),
-      0 -20px 80px rgba(139, 92, 246, 0.15);
-    animation: screen-float 6s ease-in-out infinite;
+  .sales-os-visual {
+    width: 100%; max-width: 860px; position: relative; overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--color-brand) 35%, var(--color-border));
+    border-radius: 28px; background: #061522;
+    box-shadow: 0 38px 100px rgba(1,14,25,.5),0 0 0 1px rgba(255,255,255,.05),0 0 80px rgba(8,145,178,.16);
+    transform: perspective(1400px) rotateY(-2deg) rotateX(1deg);
+    animation: visual-arrive 1s cubic-bezier(.16,1,.3,1) both,visual-float 7s 1s ease-in-out infinite;
   }
-
-  .hero__screen::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; height: 180px;
-    background: radial-gradient(ellipse at 50% 0%, rgba(167, 139, 250, 0.15), transparent 70%);
-    pointer-events: none;
-    z-index: 10;
+  .visual__chrome { height:48px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:0 18px; border-bottom:1px solid rgba(129,210,228,.14); background:rgba(5,19,30,.92); }
+  .visual__chrome > strong { color:rgba(236,250,253,.82); font-size:11px; letter-spacing:.02em; }
+  .visual__chrome > span { justify-self:end; display:flex; align-items:center; gap:7px; color:#65d9ac; font-size:9px; font-weight:750; letter-spacing:.12em; text-transform:uppercase; }
+  .visual__chrome > span i { width:6px; height:6px; border-radius:50%; background:currentColor; box-shadow:0 0 12px currentColor; }
+  .visual__dots { display:flex; gap:6px; }
+  .visual__dots i { width:7px; height:7px; border-radius:50%; background:rgba(166,211,222,.28); }
+  .visual__canvas { position:relative; min-height:470px; overflow:hidden; background:radial-gradient(circle at 48% 48%,rgba(15,143,171,.24),transparent 30%),radial-gradient(circle at 88% 82%,rgba(79,211,158,.12),transparent 28%),linear-gradient(145deg,#071927,#04111c); }
+  .visual__grid { position:absolute; inset:0; opacity:.22; background-image:linear-gradient(rgba(117,191,209,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(117,191,209,.13) 1px,transparent 1px); background-size:36px 36px; mask-image:linear-gradient(to bottom,black,transparent 92%); }
+  .visual__eyebrow { position:absolute; top:25px; left:28px; color:#65d6e8; font-size:9px; font-weight:750; letter-spacing:.18em; }
+  .signal { position:absolute; left:8%; width:52px; height:52px; display:grid; place-items:center; border:1px solid rgba(125,216,233,.26); border-radius:16px; background:rgba(8,39,54,.76); box-shadow:0 14px 35px rgba(0,0,0,.28); color:rgba(220,248,253,.8); font-size:9px; font-weight:750; backdrop-filter:blur(12px); animation:signal-pulse 2.2s ease-in-out infinite alternate; }
+  .signal--wa { top:25%; } .signal--web { top:46%; animation-delay:.28s; } .signal--call { top:67%; animation-delay:.56s; }
+  .visual__path { position:absolute; left:14%; width:29%; height:1px; background:linear-gradient(90deg,rgba(40,184,210,.12),#39c2da); box-shadow:0 0 13px rgba(50,195,219,.5); transform-origin:right; }
+  .visual__path--one { top:36%; transform:rotate(14deg); } .visual__path--two { top:63%; transform:rotate(-13deg); }
+  .visual__path i { position:absolute; top:50%; width:7px; height:7px; border-radius:50%; background:#adf2fb; box-shadow:0 0 15px #36c7df; animation:data-travel 1.8s linear infinite; }
+  .intelligence-core { position:absolute; top:39%; left:43%; width:116px; aspect-ratio:1; display:grid; place-items:center; border:1px solid rgba(122,222,237,.5); border-radius:50%; background:radial-gradient(circle at 35% 30%,#26bad3,#08748c 70%); box-shadow:0 0 0 18px rgba(25,173,199,.07),0 0 55px rgba(29,184,209,.34); transform:translate(-50%,-50%); }
+  .intelligence-core > span { color:#effdff; font-size:25px; font-weight:780; }
+  .intelligence-core > i { position:absolute; inset:-15px; border:1px solid rgba(98,215,233,.15); border-radius:50%; animation:core-orbit 5s linear infinite; }
+  .intelligence-core > i:nth-of-type(2) { inset:-30px; animation-direction:reverse; animation-duration:7s; } .intelligence-core > i:nth-of-type(3) { inset:-45px; animation-duration:9s; }
+  .intelligence-core > small { position:absolute; top:calc(100% + 28px); width:220px; color:rgba(190,231,238,.58); font-size:8px; font-weight:700; letter-spacing:.13em; text-align:center; }
+  .handoff-card { position:absolute; top:19%; right:6%; width:34%; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; padding:14px; border:1px solid rgba(129,219,231,.18); border-radius:18px; background:rgba(9,31,43,.72); box-shadow:0 18px 48px rgba(0,0,0,.25); backdrop-filter:blur(14px); }
+  .handoff-card__avatar { width:38px; height:38px; display:grid; place-items:center; border-radius:50%; background:linear-gradient(145deg,#ddfff2,#74d9b5); color:#075c55; font-size:10px; font-weight:800; }
+  .handoff-card div:nth-child(2) { min-width:0; display:flex; flex-direction:column; gap:3px; }
+  .handoff-card small { color:#66d6e7; font-size:7px; font-weight:750; letter-spacing:.14em; }
+  .handoff-card strong { overflow:hidden; color:rgba(239,251,253,.9); font-size:11px; text-overflow:ellipsis; white-space:nowrap; }
+  .handoff-card > span { width:24px; height:24px; display:grid; place-items:center; border-radius:50%; background:rgba(82,211,161,.13); color:#67dda9; font-size:11px; }
+  .roi-card { position:absolute; right:6%; bottom:7%; width:43%; display:grid; grid-template-columns:1fr 1fr; align-items:end; gap:12px 18px; padding:20px; border:1px solid rgba(117,226,183,.25); border-radius:21px; background:linear-gradient(135deg,rgba(7,36,43,.91),rgba(8,52,48,.76)); box-shadow:0 25px 65px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.07); backdrop-filter:blur(16px); }
+  .roi-card__copy { display:flex; flex-direction:column; gap:6px; }
+  .roi-card__copy small { color:rgba(173,232,209,.64); font-size:7px; font-weight:750; letter-spacing:.14em; }
+  .roi-card__copy strong { color:#effff8; font-size:34px; line-height:1; letter-spacing:-.06em; }
+  .roi-card__copy strong span { color:#6be0ac; }
+  .roi-card__bars { height:64px; display:flex; align-items:flex-end; justify-content:flex-end; gap:7px; border-bottom:1px solid rgba(129,229,190,.24); }
+  .roi-card__bars i { width:20%; height:var(--h,28%); border-radius:5px 5px 1px 1px; background:linear-gradient(#78e2b4,#138d7b); box-shadow:0 0 15px rgba(86,220,169,.18); animation:bar-grow 2s cubic-bezier(.16,1,.3,1) infinite alternate; }
+  .roi-card__bars i:nth-child(2) { --h:45%; animation-delay:.15s; } .roi-card__bars i:nth-child(3) { --h:68%; animation-delay:.3s; } .roi-card__bars i:nth-child(4) { --h:92%; animation-delay:.45s; }
+  .roi-card p { grid-column:1/-1; margin:0; color:rgba(225,246,238,.72); font-size:10px; }
+  @keyframes visual-arrive { from { opacity:0; transform:perspective(1400px) rotateY(-7deg) rotateX(2deg) translateY(35px) scale(.96); } }
+  @keyframes visual-float { 50% { transform:perspective(1400px) rotateY(-1deg) rotateX(.5deg) translateY(-7px); } }
+  @keyframes signal-pulse { to { transform:translateX(5px); border-color:rgba(122,222,237,.58); box-shadow:0 16px 38px rgba(18,160,187,.22); } }
+  @keyframes data-travel { from { left:0; transform:translate(-50%,-50%); } to { left:100%; transform:translate(-50%,-50%); } }
+  @keyframes core-orbit { to { transform:rotate(360deg); } }
+  @keyframes bar-grow { from { transform:scaleY(.68); transform-origin:bottom; opacity:.65; } to { transform:scaleY(1); transform-origin:bottom; opacity:1; } }
+  @media (max-width:768px) { .sales-os-visual { max-width:640px; margin-inline:auto; transform:none; animation:visual-arrive .9s ease-out both; } .visual__canvas { min-height:420px; } }
+  @media (max-width:520px) {
+    .visual__canvas { min-height:360px; } .signal { left:5%; width:40px; height:40px; border-radius:12px; font-size:7px; }
+    .intelligence-core { left:38%; width:84px; } .intelligence-core > small { width:150px; font-size:6px; }
+    .handoff-card { top:16%; right:4%; width:43%; padding:10px; } .handoff-card__avatar { width:30px; height:30px; } .handoff-card strong { font-size:8px; } .handoff-card > span { display:none; }
+    .roi-card { right:4%; bottom:6%; width:52%; padding:14px; } .roi-card__copy strong { font-size:27px; }
   }
-
-  .screen__fog {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 120px;
-    background: linear-gradient(to top, var(--color-bg) 0%, transparent 100%);
-    pointer-events: none;
-    z-index: 10;
-  }
-
-  @keyframes screen-float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .screen__header {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-3) var(--space-4);
-    background: var(--color-surface-2);
-    border-bottom: 1px solid var(--color-border-subtle);
-  }
-
-  .screen__dots {
-    display: flex;
-    gap: 5px;
-  }
-
-  .screen__dots span {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--color-border);
-  }
-
-  .screen__dots span:nth-child(1) {
-    background: #ef4444;
-  }
-  .screen__dots span:nth-child(2) {
-    background: #f59e0b;
-  }
-  .screen__dots span:nth-child(3) {
-    background: #10b981;
-  }
-
-  .screen__title {
-    font-family: var(--font-body);
-    font-size: var(--text-xs);
-    color: var(--color-text-faint);
-    letter-spacing: var(--tracking-wide);
-  }
-
-  .screen__body {
-    padding: var(--space-6);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-8);
-  }
-
-  .screen__left {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-
-  .screen__stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-2);
-  }
-
-  .screen__feed {
-    background: var(--color-surface-2);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius-md);
-    padding: var(--space-3);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-  }
-
-  .feed__label {
-    font-size: 9px;
-    font-family: var(--font-body);
-    color: var(--color-text-faint);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: var(--space-1);
-  }
-
-  .screen__pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  @media (max-width: 768px) {
-    .screen__body {
-      grid-template-columns: 1fr;
-      gap: var(--space-4);
-      padding: var(--space-4);
-    }
-    .hero__screen {
-      max-width: 100%;
-      animation: none;
-    }
-
-    .screen__fog {
-      height: 84px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .screen__header {
-      padding: var(--space-2) var(--space-3);
-    }
-
-    .screen__title {
-      font-size: 10px;
-    }
-
-    .screen__stats {
-      grid-template-columns: 1fr;
-      gap: var(--space-2);
-    }
-
-    .screen__feed {
-      padding: var(--space-2);
-    }
-
-    .screen__left {
-      gap: var(--space-3);
-    }
-
-    .screen__pills {
-      gap: 6px;
-    }
-
-    .screen__fog {
-      display: none;
-    }
-  }
-
-  :global(:root[data-theme="light"]) .hero__screen {
-    border-color: rgba(124, 58, 237, 0.22);
-    box-shadow:
-      0 16px 44px rgba(15, 23, 42, 0.14),
-      0 0 0 1px rgba(15, 23, 42, 0.06),
-      0 -12px 36px rgba(124, 58, 237, 0.12);
-  }
-
-  :global(:root[data-theme="light"]) .hero__screen::before {
-    background: radial-gradient(ellipse at 50% 0%, rgba(124, 58, 237, 0.14), transparent 72%);
-  }
-
-  :global(:root[data-theme="light"]) .screen__fog {
-    background: linear-gradient(to top, rgba(246, 247, 251, 0.94) 0%, transparent 100%);
-  }
-
-  :global(:root[data-theme="light"]) .screen__feed {
-    background: rgba(255, 255, 255, 0.78);
-    border-color: rgba(15, 23, 42, 0.1);
-  }
+  @media (prefers-reduced-motion:reduce) { .sales-os-visual,.signal,.visual__path i,.intelligence-core > i,.roi-card__bars i { animation:none; } }
 </style>

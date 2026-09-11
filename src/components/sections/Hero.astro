@@ -1,8 +1,6 @@
 ---
 import Button from "../ui/Button.astro";
-import Badge from "../ui/Badge.astro";
 import BackgroundGlow from "../ui/BackgroundGlow.astro";
-import HeroDashboard from "./HeroDashboard.astro";
 import { useTranslations } from "../../i18n/utils";
 
 export interface Props {
@@ -11,465 +9,544 @@ export interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const conciseSubtext =
-  lang === "es"
-    ? "Escuadrones de agentes IA para revenue, operación y atención 24/7 con supervisión humana y SLA empresarial."
-    : "AI agent squads for revenue, operations, and customer care 24/7 with human supervision and enterprise SLA.";
-
-const quickPoints =
-  lang === "es"
-    ? ["Tiempo real", "Handoff humano"]
-    : [
-        "Real-time", "Human handoff",
-      ];
-
-const reviews =
-  lang === "es"
-    ? [
-        {
-          company: "REALTY OPS",
-          quote:
-            "Subimos 34% la velocidad de contacto y ventas se enfoca solo en oportunidades listas.",
-          metric: "+34% velocidad de contacto",
-        },
-        {
-          company: "HEALTHFLOW",
-          quote:
-            "Agentes 24/7 con escalación ordenada y consistencia operativa en todos los turnos.",
-          metric: "24/7 con SLA",
-        },
-        {
-          company: "NOVA SALES",
-          quote:
-            "Reactivamos pipeline sin ampliar headcount ni comprometer la experiencia de cliente.",
-          metric: "+28% reactivación",
-        },
-        {
-          company: "URBAN CORE",
-          quote:
-            "En días pasamos de procesos manuales a una célula multiagente conectada al CRM.",
-          metric: "Implementación en 7 días",
-        },
-      ]
-    : [
-        {
-          company: "REALTY OPS",
-          quote:
-            "We improved contact speed by 34% while sales focuses only on close-ready opportunities.",
-          metric: "+34% contact speed",
-        },
-        {
-          company: "HEALTHFLOW",
-          quote:
-            "24/7 agents with structured escalation and consistent operations across every shift.",
-          metric: "24/7 SLA",
-        },
-        {
-          company: "NOVA SALES",
-          quote:
-            "We reactivated pipeline without increasing headcount or harming customer experience.",
-          metric: "+28% reactivation",
-        },
-        {
-          company: "URBAN CORE",
-          quote:
-            "In days, we moved from manual workflows to a CRM-connected multi-agent cell.",
-          metric: "7-day implementation",
-        },
-      ];
+const modules = lang === "es"
+  ? [
+      ["01", "ATENEA", "AGENTES DE IA"],
+      ["02", "SALES OS", "VENTAS"],
+      ["03", "MI NEGOCIO", "OPERACIÓN"],
+      ["04", "CIEE", "DATOS"],
+      ["05", "SYSTEMS", "SOFTWARE"],
+    ]
+  : [
+      ["01", "ATENEA", "AI AGENTS"],
+      ["02", "SALES OS", "SALES"],
+      ["03", "MI NEGOCIO", "OPERATIONS"],
+      ["04", "CIEE", "DATA"],
+      ["05", "SYSTEMS", "SOFTWARE"],
+    ];
 ---
 
 <section class="hero" id="inicio">
   <div class="bg-grid" aria-hidden="true"></div>
-  <!-- Background glow orbs -->
-  <BackgroundGlow
-    role="brand"
-    size="600px"
-    top="-100px"
-    right="-100px"
-    animation="orb-float 8s ease-in-out infinite"
-  />
-  <BackgroundGlow
-    role="blue"
-    size="400px"
-    bottom="0"
-    left="-80px"
-    animation="orb-float 10s ease-in-out infinite reverse"
-  />
-  <BackgroundGlow
-    role="glow"
-    size="300px"
-    top="40%"
-    left="40%"
-    animation="orb-float 12s ease-in-out infinite 2s"
-  />
+  <BackgroundGlow role="brand" size="720px" top="-220px" right="-180px" />
+  <BackgroundGlow role="blue" size="500px" bottom="-180px" left="-160px" />
 
   <div class="container hero__inner">
     <div class="hero__copy">
-      <div class="reveal reveal-fade">
-        <Badge variant="brand" class="hero__eyebrow">{t("hero.eyebrow")}</Badge>
-      </div>
-
-      <h1 class="hero__headline reveal reveal-delay-100" set:html={t("hero.headline")} />
-
-      <p class="hero__sub reveal reveal-delay-200">
-        {conciseSubtext}
+      <p class="hero__eyebrow">
+        <span aria-hidden="true"></span>
+        {t("hero.eyebrow")}
       </p>
 
-      <div class="hero__actions reveal reveal-delay-300">
-        <Button variant="primary" size="lg" href="#productos"
-          >{t("hero.ctaPrimary")}</Button
-        >
-        <Button variant="ghost" size="lg" href={t("cta.link")}
-          >{t("hero.ctaSecondary")}</Button
-        >
+      <h1 class="hero__headline" set:html={t("hero.headline")} />
+      <p class="hero__sub">{t("hero.subtext")}</p>
+
+      <div class="hero__actions">
+        <Button variant="primary" size="lg" href="#productos">{t("hero.ctaPrimary")}</Button>
+        <Button variant="ghost" size="lg" href={t("cta.link")}>{t("hero.ctaSecondary")}</Button>
       </div>
 
-      <!-- Trust bar -->
-      <div class="hero__trust reveal reveal-fade reveal-delay-400">
-        <span class="trust__dot"></span>
-        <span class="trust__text">{t("hero.trust")}</span>
-      </div>
-
-      <div class="hero__quick-points reveal reveal-delay-400">
-        {
-          quickPoints.map((point) => (
-            <div class="hero__quick-item">
-              <span class="hero__quick-dot" aria-hidden="true"></span>
-              <span>{point}</span>
-            </div>
-          ))
-        }
-      </div>
+      <p class="hero__presence">
+        <span aria-hidden="true"></span>
+        {t("hero.trust")}
+      </p>
     </div>
 
-    <div class="hero__visual reveal reveal-delay-200" aria-hidden="true">
-      <HeroDashboard lang={lang} />
-    </div>
-  </div>
+    <div class="hero__visual" aria-label={lang === "es" ? "Ecosistema de productos Iruz" : "Iruz product ecosystem"}>
+      <div class="system" aria-hidden="true">
+        <div class="system__field"></div>
+        <div class="system__orbit system__orbit--outer"></div>
+        <div class="system__orbit system__orbit--inner"></div>
+        <div class="system__axis system__axis--horizontal"></div>
+        <div class="system__axis system__axis--vertical"></div>
+        <div class="system__atom" data-hero-atom>
+          <img
+            class="system__fallback"
+            src="/images/logos/iruzlabs-isotipo-white.png"
+            alt=""
+            width="512"
+            height="512"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
 
-  <div class="container hero__social reveal reveal-delay-300">
-    <p class="hero__social-label">
-      {lang === "es" ? "Equipos que ya operan con azury" : "Teams already operating with azury"}
-    </p>
-    <div class="hero__marquee" aria-label={lang === "es" ? "Carrusel de reseñas" : "Reviews carousel"}>
-      <div class="hero__marquee-track">
-        {reviews.concat(reviews).map((review) => (
-          <article class="hero__review-card">
-            <p class="hero__review-quote">"{review.quote}"</p>
-            <div class="hero__review-meta">
-              <span class="hero__review-company">{review.company}</span>
-              <span class="hero__review-metric">{review.metric}</span>
-            </div>
-          </article>
+        <div class="system__core">
+          <span class="system__core-kicker">IRUZ LABS</span>
+          <span class="system__core-label">INTELLIGENCE / IN ACTION</span>
+        </div>
+
+        {modules.map(([number, name, category], index) => (
+          <div class={`system__module system__module--${index + 1}`}>
+            <span>{number}</span>
+            <strong>{name}</strong>
+            <small>{category}</small>
+          </div>
         ))}
       </div>
+
+      <p class="hero__visual-note">
+        <span aria-hidden="true"></span>
+        {lang === "es" ? "Productos, datos, IA y software conectados." : "Connected products, data, AI and software."}
+      </p>
     </div>
   </div>
 </section>
 
+<script>
+  import "../../scripts/hero-atom.js";
+</script>
+
 <style>
   .hero {
     position: relative;
-    min-height: 100vh;
-    display: block;
+    min-height: 100svh;
     overflow: hidden;
-    padding-top: 68px; /* navbar height */
+    padding-top: 68px;
+    isolation: isolate;
   }
 
-  /* ── Layout ── */
   .hero__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    align-items: center;
-    gap: var(--space-12);
-    padding-block: var(--space-16) var(--space-10);
-    width: 100%;
     position: relative;
     z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(440px, 0.95fr) minmax(500px, 1.05fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 5.5rem);
+    min-height: calc(100svh - 68px);
+    padding-block: clamp(3.5rem, 7vh, 6rem);
   }
 
-  /* ── Copy ── */
   .hero__copy {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-5);
-    z-index: 1;
-    max-width: 680px;
+    gap: clamp(1.1rem, 1.5vw, 1.45rem);
+    max-width: 650px;
   }
 
   .hero__eyebrow {
-    margin-bottom: var(--space-2);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0;
+    color: var(--color-brand);
+    font-size: 0.75rem;
+    font-weight: 760;
+    letter-spacing: 0.15em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .hero__eyebrow span,
+  .hero__presence > span,
+  .hero__visual-note > span {
+    width: 7px;
+    height: 7px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--color-brand);
+    box-shadow: 0 0 15px var(--color-brand);
   }
 
   .hero__headline {
-    font-family: var(--font-brand);
-    font-size: clamp(2.1rem, 4.2vw, 4.15rem);
-    font-weight: var(--weight-bold);
-    line-height: 1.08;
-    letter-spacing: -0.03em;
+    max-width: 10ch;
+    margin: 0;
     color: var(--color-text);
+    font-family: var(--font-brand);
+    font-size: clamp(3.8rem, 5.55vw, 6.5rem);
+    font-weight: var(--weight-bold);
+    line-height: 0.91;
+    letter-spacing: -0.07em;
+    text-wrap: balance;
   }
 
   :global(.hero__headline--accent) {
-    background: linear-gradient(
-      135deg,
-      var(--color-brand) 0%,
-      var(--color-glow) 60%,
-      var(--color-blue) 100%
-    );
+    background: linear-gradient(115deg, var(--color-brand), var(--color-glow) 58%, var(--color-blue));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 
   .hero__sub {
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    line-height: var(--leading-relaxed);
+    max-width: 56ch;
+    margin: 0;
     color: var(--color-text-muted);
-    max-width: 580px;
+    font-size: clamp(1.02rem, 1.22vw, 1.16rem);
+    line-height: 1.65;
   }
 
   .hero__actions {
     display: flex;
-    justify-content: flex-start;
-    gap: var(--space-4);
     flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: 0.3rem;
   }
 
-  /* ── Trust ── */
-  .hero__trust {
+  .hero__presence,
+  .hero__visual-note {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: var(--space-2);
-    margin-top: var(--space-2);
-  }
-
-  .hero__quick-points {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-top: var(--space-1);
-  }
-
-  .hero__quick-item {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    line-height: 1;
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius-full);
-    padding: 7px 12px;
-    background: rgba(255, 255, 255, 0.02);
-  }
-
-  .hero__quick-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--color-blue);
-    flex-shrink: 0;
-  }
-
-  .trust__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-brand);
-    box-shadow: 0 0 8px var(--color-brand);
-    animation: trust-pulse 2s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-
-  @keyframes trust-pulse {
-    0%,
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.6;
-      transform: scale(1.3);
-    }
-  }
-
-  .trust__text {
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
+    gap: 0.65rem;
+    margin: 0;
     color: var(--color-text-faint);
+    font-size: var(--text-sm);
   }
 
-  /* ── Visual ── */
   .hero__visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    width: 100%;
-    margin-top: var(--space-2);
-  }
-
-  .hero__social {
     position: relative;
+    width: min(100%, 670px);
+    justify-self: end;
+  }
+
+  .system {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    isolation: isolate;
+  }
+
+  .system__field {
+    position: absolute;
+    z-index: -2;
+    inset: 14%;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle, color-mix(in srgb, var(--color-brand) 15%, transparent) 0 1px, transparent 1.5px) 0 0 / 18px 18px,
+      radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-brand) 17%, transparent), transparent 61%);
+    mask-image: radial-gradient(circle, black 0 45%, transparent 73%);
+    opacity: 0.75;
+    animation: atom-field 11s ease-in-out infinite;
+  }
+
+  .system__orbit,
+  .system__axis {
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .system__orbit {
+    border: 1px solid color-mix(in srgb, var(--color-brand) 33%, transparent);
+    border-radius: 50%;
+  }
+
+  .system__orbit--outer {
+    inset: 7%;
+    opacity: 0.75;
+    animation: atom-orbit-outer 28s linear infinite;
+  }
+
+  .system__orbit--inner {
+    inset: 22%;
+    border-color: color-mix(in srgb, var(--color-blue) 30%, transparent);
+    animation: atom-orbit-inner 19s linear infinite;
+  }
+
+  .system__axis--horizontal {
+    top: 50%;
+    right: 1%;
+    left: 1%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-brand) 35%, transparent) 15% 85%, transparent);
+    animation: atom-axis-horizontal 24s linear infinite;
+  }
+
+  .system__axis--vertical {
+    top: 1%;
+    bottom: 1%;
+    left: 50%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--color-brand) 28%, transparent) 15% 85%, transparent);
+    animation: atom-axis-vertical 30s linear infinite;
+  }
+
+  .system__atom {
+    position: absolute;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    margin-top: var(--space-8);
-    padding-bottom: var(--space-16);
+    inset: 0;
+    pointer-events: none;
   }
 
-  .hero__social-label {
-    font-size: var(--text-xs);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
+  .system__atom :global(canvas) {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .system__fallback {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 25.5%;
+    height: 25.5%;
+    object-fit: contain;
+    opacity: 0.94;
+    transform: translate(-50%, -50%);
+    transition: opacity 400ms ease;
+  }
+
+  .system__atom.is-ready .system__fallback { opacity: 0; }
+
+  :global(:root[data-theme="light"]) .system__fallback {
+    content: url("/images/logos/iruzlabs-isotipo-black.png");
+  }
+
+  .system__core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: 44%;
+    aspect-ratio: 1;
+    place-items: center;
+    z-index: 2;
+    border: 1px solid color-mix(in srgb, var(--color-brand) 58%, transparent);
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-bg) 18%, transparent), transparent 68%);
+    box-shadow: 0 0 60px color-mix(in srgb, var(--color-brand) 18%, transparent), inset 0 0 36px color-mix(in srgb, var(--color-brand) 8%, transparent);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .system__core::before,
+  .system__core::after {
+    position: absolute;
+    border: 1px solid color-mix(in srgb, var(--color-brand) 32%, transparent);
+    border-radius: inherit;
+    content: "";
+  }
+
+  .system__core::before { inset: 7%; }
+  .system__core::after {
+    inset: -10%;
+    opacity: 0.5;
+    animation: atom-core-ring 9s ease-in-out infinite;
+  }
+
+  .system__core-kicker,
+  .system__core-label {
+    position: absolute;
+    left: 50%;
     color: var(--color-text-faint);
+    font-size: clamp(0.48rem, 0.65vw, 0.62rem);
+    font-weight: 760;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+    transform: translateX(-50%);
   }
 
-  .hero__marquee {
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-  }
+  .system__core-kicker { top: 11%; color: var(--color-brand); }
+  .system__core-label { bottom: 11%; }
 
-  .hero__marquee-track {
-    display: flex;
-    gap: var(--space-4);
-    width: max-content;
-    animation: reviews-scroll 34s linear infinite;
-  }
-
-  .hero__marquee:hover .hero__marquee-track {
-    animation-play-state: paused;
-  }
-
-  .hero__review-card {
-    width: min(340px, calc(100vw - 3rem));
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius-lg);
-    padding: var(--space-4);
-    background: linear-gradient(165deg, rgba(17, 19, 24, 0.88), rgba(10, 12, 16, 0.9));
-    transition: transform var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
-  }
-
-  .hero__review-card:hover {
-    transform: translateY(-4px);
-    border-color: color-mix(in srgb, var(--color-brand) 45%, transparent);
-  }
-
-  .hero__review-quote {
-    font-size: var(--text-sm);
+  .system__module {
+    position: absolute;
+    display: grid;
+    gap: 0.13rem;
+    min-width: 8.1rem;
+    padding-left: 0.9rem;
     color: var(--color-text-muted);
-    line-height: var(--leading-relaxed);
-    min-height: 4.6em;
-    margin-bottom: var(--space-3);
+    will-change: transform;
   }
 
-  .hero__review-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-3);
+  .system__module::before {
+    position: absolute;
+    top: 0.18rem;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    border: 1px solid var(--color-brand);
+    border-radius: 50%;
+    box-shadow: 0 0 10px color-mix(in srgb, var(--color-brand) 65%, transparent);
+    content: "";
+    animation: atom-signal 2.8s ease-in-out infinite;
   }
 
-  .hero__review-company {
-    font-family: var(--font-solid);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-text);
-  }
-
-  .hero__review-metric {
-    font-size: var(--text-xs);
-    font-weight: var(--weight-semibold);
+  .system__module span {
     color: var(--color-brand);
+    font-size: clamp(0.58rem, 0.72vw, 0.68rem);
+    font-weight: 800;
+    letter-spacing: 0.12em;
   }
 
-  @keyframes reviews-scroll {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
+  .system__module strong {
+    color: var(--color-text);
+    font-size: clamp(0.76rem, 1.05vw, 0.98rem);
+    font-weight: 780;
+    letter-spacing: 0.05em;
+    line-height: 1.1;
   }
 
-  /* ── Responsive ── */
-  @media (max-width: 900px) {
+  .system__module small {
+    color: var(--color-text-faint);
+    font-size: clamp(0.55rem, 0.7vw, 0.66rem);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .system__module--1 {
+    top: 8%;
+    left: 10%;
+    animation: atom-module-1 8s ease-in-out infinite;
+  }
+
+  .system__module--2 {
+    top: 21%;
+    right: 1%;
+    animation: atom-module-2 9s ease-in-out infinite;
+  }
+
+  .system__module--3 {
+    right: 0;
+    bottom: 25%;
+    animation: atom-module-3 10s ease-in-out infinite;
+  }
+
+  .system__module--4 {
+    bottom: 9%;
+    left: 16%;
+    animation: atom-module-4 8.5s ease-in-out infinite;
+  }
+
+  .system__module--5 {
+    top: 28%;
+    left: 0;
+    animation: atom-module-5 9.5s ease-in-out infinite;
+  }
+
+  .hero__visual-note {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    justify-content: center;
+    width: 100%;
+    font-size: clamp(0.69rem, 0.82vw, 0.78rem);
+    letter-spacing: 0.03em;
+    text-align: center;
+    transform: translateX(-50%);
+    animation: atom-note 7s ease-in-out infinite;
+  }
+
+  @keyframes atom-field {
+    0%, 100% { opacity: 0.5; background-position: 0 0, center; transform: scale(0.96); }
+    50% { opacity: 0.9; background-position: 18px 18px, center; transform: scale(1.04); }
+  }
+
+  @keyframes atom-orbit-outer {
+    from { transform: rotate(-18deg) scaleY(0.67); }
+    to { transform: rotate(342deg) scaleY(0.67); }
+  }
+
+  @keyframes atom-orbit-inner {
+    from { transform: rotate(35deg) scaleY(0.68); }
+    to { transform: rotate(-325deg) scaleY(0.68); }
+  }
+
+  @keyframes atom-axis-horizontal {
+    from { transform: rotate(0deg); opacity: 0.55; }
+    50% { opacity: 1; }
+    to { transform: rotate(360deg); opacity: 0.55; }
+  }
+
+  @keyframes atom-axis-vertical {
+    from { transform: rotate(0deg); opacity: 0.38; }
+    50% { opacity: 0.85; }
+    to { transform: rotate(-360deg); opacity: 0.38; }
+  }
+
+  @keyframes atom-core-ring {
+    0%, 100% { transform: scale(0.94) rotate(0deg); opacity: 0.28; }
+    50% { transform: scale(1.11) rotate(180deg); opacity: 0.78; }
+  }
+
+  @keyframes atom-signal {
+    0%, 100% { box-shadow: 0 0 5px color-mix(in srgb, var(--color-brand) 45%, transparent); transform: scale(0.8); }
+    50% { box-shadow: 0 0 16px color-mix(in srgb, var(--color-brand) 90%, transparent); transform: scale(1.18); }
+  }
+
+  @keyframes atom-module-1 {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(14px, 10px, 0); }
+  }
+
+  @keyframes atom-module-2 {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(-12px, 14px, 0); }
+  }
+
+  @keyframes atom-module-3 {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(-16px, -8px, 0); }
+  }
+
+  @keyframes atom-module-4 {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(12px, -14px, 0); }
+  }
+
+  @keyframes atom-module-5 {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(15px, 3px, 0); }
+  }
+
+  @keyframes atom-note {
+    0%, 100% { opacity: 0.65; transform: translate(-50%, 0); }
+    50% { opacity: 1; transform: translate(-50%, -5px); }
+  }
+
+  @media (max-width: 1080px) {
+    .hero__inner {
+      grid-template-columns: minmax(390px, 0.95fr) minmax(420px, 1.05fr);
+      gap: clamp(1.5rem, 3vw, 3rem);
+    }
+
+    .hero__headline { font-size: clamp(3.35rem, 5.7vw, 5rem); }
+  }
+
+  @media (max-width: 820px) {
+    .hero { min-height: auto; }
     .hero__inner {
       grid-template-columns: 1fr;
-      gap: var(--space-12);
-      padding-block: var(--space-12);
+      gap: var(--space-7);
+      min-height: auto;
+      padding-block: var(--space-14) var(--space-10);
     }
 
-    .hero__copy {
-      align-items: center;
-      text-align: center;
-      margin-inline: auto;
+    .hero__visual {
+      width: min(100%, 640px);
+      justify-self: center;
     }
+  }
 
-    .hero__actions,
-    .hero__trust {
-      justify-content: center;
-    }
-
-    .hero__quick-points {
-      max-width: 560px;
-      text-align: left;
-    }
-
-    .hero__social {
-      text-align: center;
-      align-items: center;
-      margin-top: var(--space-6);
-      padding-bottom: var(--space-12);
-    }
-
-    .hero__headline {
-      font-size: clamp(2rem, 8vw, 3rem);
-    }
+  @media (max-width: 520px) {
+    .hero__inner { padding-block: var(--space-10) var(--space-8); }
+    .hero__eyebrow { font-size: 0.65rem; letter-spacing: 0.12em; }
+    .hero__headline { max-width: 10ch; font-size: clamp(3.15rem, 14.2vw, 4.15rem); }
+    .hero__sub { font-size: 1rem; }
+    .hero__actions { flex-direction: column; width: 100%; }
+    .hero__actions > :global(a),
+    .hero__actions > :global(button) { width: 100%; }
+    .hero__presence { align-items: flex-start; line-height: 1.5; }
+    .hero__visual { width: 112%; margin-left: -6%; }
+    .system__module { min-width: 6.25rem; padding-left: 0.65rem; }
+    .system__module--1 { top: 6%; left: 7%; }
+    .system__module--2 { top: 17%; right: -1%; }
+    .system__module--3 { right: -1%; bottom: 25%; }
+    .system__module--4 { bottom: 8%; left: 11%; }
+    .system__module--5 { top: 31%; left: -1%; }
+    .system__module strong { font-size: 0.7rem; }
+    .system__module small,
+    .system__module span { font-size: 0.5rem; }
+    .hero__visual-note { bottom: -1%; font-size: 0.62rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero__marquee-track {
-      animation: none;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .hero__actions {
-      flex-direction: column;
-      width: 100%;
-    }
-    .hero__actions > :global(a),
-    .hero__actions > :global(button) {
-      width: 100%;
-    }
-  }
-
-  :global(:root[data-theme="light"]) .hero__review-card {
-    background: linear-gradient(165deg, rgba(255, 255, 255, 0.95), rgba(237, 241, 248, 0.95));
-    border-color: rgba(15, 23, 42, 0.12);
-  }
-
-  :global(:root[data-theme="light"]) .hero__review-quote {
-    color: var(--color-text-muted);
-  }
-
-  :global(:root[data-theme="light"]) .hero__quick-item {
-    background: rgba(15, 23, 42, 0.03);
-    border-color: rgba(15, 23, 42, 0.1);
-    color: var(--color-text);
-  }
-
-  :global(:root[data-theme="light"]) .hero__marquee {
-    mask-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.95) 8%, rgba(0, 0, 0, 0.95) 92%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.95) 8%, rgba(0, 0, 0, 0.95) 92%, transparent);
+    .system__field,
+    .system__orbit,
+    .system__axis,
+    .system__core::after,
+    .system__module,
+    .system__module::before,
+    .hero__visual-note { animation: none; }
   }
 </style>

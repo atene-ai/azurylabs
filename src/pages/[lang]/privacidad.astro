@@ -12,6 +12,7 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
+const htmlLang = lang === "en" ? "en" : "es-MX";
 const t = useTranslations(lang);
 const lastUpdated =
   lang === "es" ? "19 de febrero de 2026" : "February 19, 2026";
@@ -26,7 +27,7 @@ const desc =
     : "Azury Labs LLC Privacy Policy. Learn how we collect, use, and protect your personal information.";
 ---
 
-<BaseLayout title={title} description={desc}>
+<BaseLayout title={title} description={desc} lang={htmlLang}>
   <Navbar lang={lang} />
 
   <main class="legal-page">
@@ -60,11 +61,11 @@ const desc =
                   <p>
                     <strong>Sitio web:</strong>{" "}
                     <a
-                      href="https://iruzlabs.com"
+                      href="https://azurylabs.com"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      https://iruzlabs.com
+                      https://azurylabs.com
                     </a>
                   </p>
                 </div>
@@ -136,8 +137,8 @@ const desc =
                 <p>
                   Para ejercer cualquiera de los derechos ARCO, deberá presentar
                   la solicitud respectiva enviando un correo electrónico a:{" "}
-                  <a href="mailto:privacidad@iruzlabs.com">
-                    privacidad@iruzlabs.com
+                  <a href="mailto:privacidad@azurylabs.com">
+                    privacidad@azurylabs.com
                   </a>
                   .
                 </p>
@@ -173,8 +174,8 @@ const desc =
               <section class="legal-section">
                 <h2>1. Identity and Address of the Data Controller</h2>
                 <p>
-                  <strong>Azury Labs LLC</strong> (hereinafter, "Azury Labs" or
-                  "We"), with address for the purposes of this
+                  <strong>Azury Labs LLC</strong> (hereinafter, "Azury Labs
+                  SAS de CV" or "We"), with address for the purposes of this
                   notice in Mexico City, is responsible for the use and
                   protection of your personal data, and in this regard we inform
                   you as follows:
@@ -186,11 +187,11 @@ const desc =
                   <p>
                     <strong>Website:</strong>{" "}
                     <a
-                      href="https://iruzlabs.com"
+                      href="https://azurylabs.com"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      https://iruzlabs.com
+                      https://azurylabs.com
                     </a>
                   </p>
                 </div>

@@ -1,28 +1,37 @@
 /* ============================================================
-   AZURY LABS — DESIGN TOKENS
-   Cromatismo Vital · Dark Theme
+   IRUZ LABS — DESIGN TOKENS
+   Paleta de Marca · Tecnología · Innovación · Futuro
+   Dark Theme (por defecto)
    ============================================================ */
 
 :root {
+  /* ── Brand palette (Manual de Marca) ────────────────────── */
+  --brand-turquesa: #00c8ff; /* Turquesa — acento principal      */
+  --brand-azul: #0891b2; /* Azul Principal — acción          */
+  --brand-azul-oscuro: #0a4a6a; /* Azul Oscuro — profundidad        */
+  --brand-negro-azulado: #1a2a3a; /* Negro Azulado — superficie base  */
+  --brand-plata: #7a8a9a; /* Plata — texto secundario         */
+  --brand-claro: #e6f7ff; /* Azul Claro — apoyo / detalles    */
+
   /* ── Colors ─────────────────────────────────────────────── */
-  --color-bg: #0a0c10; /* Deep Space — Primary Background  */
-  --color-surface: #111318; /* Elevated surface (cards)         */
-  --color-surface-2: #1a1d26; /* Higher elevation                 */
+  --color-bg: #070c12; /* Deep Space — Primary Background  */
+  --color-surface: #101922; /* Elevated surface (cards)         */
+  --color-surface-2: #1a2a3a; /* Higher elevation (Negro Azulado) */
 
-  --color-brand: #8b5cf6; /* Neural Violet — Action & Brand   */
-  --color-brand-dim: rgba(139, 92, 246, 0.15);
-  --color-brand-glow: rgba(139, 92, 246, 0.35);
+  --color-brand: #0891b2; /* Azul Principal — Action & Brand  */
+  --color-brand-dim: rgba(8, 145, 178, 0.15);
+  --color-brand-glow: rgba(0, 200, 255, 0.35);
 
-  --color-blue: #3b82f6; /* Synthetic Blue — Connectivity    */
-  --color-blue-dim: rgba(59, 130, 246, 0.15);
+  --color-blue: #00c8ff; /* Turquesa — Connectivity & UI     */
+  --color-blue-dim: rgba(0, 200, 255, 0.15);
 
-  --color-glow: #a78bfa; /* azury Glow — Highlights & States  */
+  --color-glow: #00c8ff; /* Iruz Glow — Highlights & States  */
 
-  --color-text: #f0f0f5; /* Primary text                     */
-  --color-text-muted: #9ca3af; /* Secondary / muted text           */
-  --color-text-faint: #4b5563; /* Placeholder / disabled           */
+  --color-text: #eaf4fb; /* Primary text                     */
+  --color-text-muted: #7a8a9a; /* Plata — Secondary / muted text   */
+  --color-text-faint: #4a5b6b; /* Placeholder / disabled           */
 
-  --color-border: rgba(139, 92, 246, 0.25);
+  --color-border: rgba(8, 145, 178, 0.28);
   --color-border-subtle: rgba(255, 255, 255, 0.1);
 
   --color-success: #10b981;
@@ -30,9 +39,9 @@
   --color-error: #ef4444;
 
   /* ── Typography ─────────────────────────────────────────── */
-  --font-brand: "Space Grotesk", sans-serif; /* Headings / brand */
-  --font-body: "Inter", sans-serif; /* UI / precision   */
-  --font-solid: "Work Sans", sans-serif; /* Institutional    */
+  --font-brand: "Montserrat", sans-serif; /* Headings / brand */
+  --font-body: "Montserrat", sans-serif; /* UI / precision   */
+  --font-solid: "Montserrat", sans-serif; /* Institutional    */
 
   --text-xs: 0.75rem; /* 12px */
   --text-sm: 0.875rem; /* 14px */
@@ -88,9 +97,9 @@
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
-  --shadow-brand: 0 0 24px rgba(139, 92, 246, 0.3);
+  --shadow-brand: 0 0 24px rgba(8, 145, 178, 0.32);
   --shadow-glow:
-    0 0 40px rgba(139, 92, 246, 0.2), 0 0 80px rgba(167, 139, 250, 0.1);
+    0 0 40px rgba(0, 200, 255, 0.22), 0 0 80px rgba(8, 145, 178, 0.12);
 
   /* ── Transitions ─────────────────────────────────────────── */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

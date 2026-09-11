@@ -1,20 +1,22 @@
 nav:
-  products: "Squads"
-  solutions: "Orchestration"
-  howItWorks: "How it works"
-  company: "Who we are"
+  products: "Products"
+  solutions: "Capabilities"
+  howItWorks: "How we work"
+  company: "Iruz Labs"
+  team: "Team"
+  blog: "Blog"
 
-  scheduleDemo: "Design My Team"
+  scheduleDemo: "Let's talk"
 
 hero:
-  eyebrow: "Artificial Agents as a Service"
-  headline: "Don't buy software.<br />Deploy an<br /><span class='hero__headline--accent'>agent workforce</span>"
-  subtext: "We build specialized agent squads that execute real work across revenue, operations, and customer care 24/7 with human supervision and enterprise SLA."
-  ctaPrimary: "Design My Squad"
-  ctaSecondary: "See Agents in Action"
-  trust: "Measurable outcomes · Multi-agent orchestration · Instant scalability"
+  eyebrow: "Iruz Labs · Products, AI and software"
+  headline: "Intelligence becomes<br /><span class='hero__headline--accent'>your operation.</span>"
+  subtext: "We create proprietary products, AI agents and custom software to help you sell, operate and decide with data."
+  ctaPrimary: "Explore products"
+  ctaSecondary: "Let's talk"
+  trust: "Operating in Mexico, Colombia and the United States"
   visual:
-    title: "azury labs — Dashboard"
+    title: "Iruz Labs — Dashboard"
     start: "Active Agents"
     conversions: "Conversions"
     respTime: "Resp. Time"
@@ -32,9 +34,9 @@ hero:
 
 products:
   header:
-    badge: "Agent Squads"
-    title: "Digital teams built to<br /><span class='products__title--accent'>operate outcomes</span>"
-    sub: "Each squad combines specialist agents, business rules, and supervision to execute critical workflows end-to-end."
+    badge: "Products and solutions"
+    title: "Five product lines.<br /><span class='products__title--accent'>One mission: produce results.</span>"
+    sub: "Each Iruz business unit solves a distinct challenge: building intelligence, selling, operating, researching or creating custom technology."
   stack:
     title: "Connect your productive tools"
     sub: "We integrate channels, messaging, voice, and scheduling so your agents can operate without friction."
@@ -44,109 +46,121 @@ products:
       instagram: "Instagram Messenger"
       calls: "Calls"
       calendar: "Google Calendar"
-  ai:
-    badge: "Revenue Squad"
-    title: "Capture and Close Squad"
-    desc: "Agents that qualify leads, prioritize opportunities, schedule meetings, and follow up until your team receives a close-ready pipeline."
-    visualAlt: "Revenue Squad visual showing lead capture, qualification, and close pipeline"
+  atenea:
+    badge: "01 · AI platform"
+    title: "Iruz Atenea"
+    desc: "The platform we use to create AI agents that understand your business, connect to your systems and execute real processes."
     features:
-      - "Agents for Real Estate"
-      - "Agents for Healthcare"
-      - "Reactive and proactive"
-      - "Omnichannel: WhatsApp, email, SMS"
-    cta: "View squad"
-  crm:
-    badge: "Operations Squad"
-    title: "Operations Execution Squad"
-    desc: "Agents that coordinate tasks, update systems, trigger automations, and remove operational bottlenecks every day."
-    visualAlt: "Operations Squad visual showing workflow routing, automations, and system sync"
+      - "Specialized agents"
+      - "Custom workflows and knowledge"
+      - "Tailored integrations"
+    cta: "Explore Atenea"
+  salesOs:
+    badge: "02 · Sales OS"
+    title: "Iruz Sales OS"
+    desc: "More than a CRM: it connects channels, AI agents and human teams to engage, qualify and advance every opportunity."
     features:
-      - "Intelligent visual pipeline"
-      - "Predictive lead scoring"
-      - "Flow automation"
-      - "Advanced analytics and reports"
-    cta: "View squad"
-  sw:
-    badge: "Care Squad"
-    title: "Customer Care Squad"
-    desc: "Agents that handle omnichannel requests, resolve common cases, escalate complex issues, and keep service quality consistent."
-    visualAlt: "Care Squad visual showing omnichannel service hub and smart escalation"
+      - "Omnichannel conversation"
+      - "AI agents and human teams"
+      - "Sales follow-up and control"
+    cta: "Explore Sales OS"
+  miNegocio:
+    badge: "03 · Business management"
+    title: "Iruz Mi Negocio"
+    desc: "Customers, quotes, orders and follow-up in one simple operation for businesses that need to grow without adding complexity."
     features:
-      - "Clean and scalable architecture"
-      - "Integrations with existing systems"
-      - "MVPs and digital products"
-      - "Continuous support and maintenance"
-    cta: "View squad"
+      - "Centralized service"
+      - "Practical automation"
+      - "Visibility to decide"
+    cta: "Explore Mi Negocio"
+  ciee:
+    badge: "04 · Data and research"
+    title: "Iruz CIEE"
+    desc: "AI surveys, opinion studies and political or market polling to decide with evidence and understand what is changing."
+    features:
+      - "Intelligent surveys"
+      - "Market research"
+      - "Actionable analysis"
+    cta: "Explore CIEE"
+  systems:
+    badge: "05 · Professional services"
+    title: "Iruz Systems"
+    desc: "We design and develop the software your operation needs when an off-the-shelf tool is no longer enough."
+    features:
+      - "Custom software"
+      - "Technology consulting"
+      - "Guided implementation"
+    cta: "Talk to Systems"
 
 features:
   header:
-    badge: "AAAS Orchestration"
-    title: "Control infrastructure<br /><span class='features__title--accent'>for agent teams</span>"
-    sub: "Define rules, monitor performance, and improve outcomes without fragile manual operations."
+    badge: "How we work"
+    title: "We do not start with the tool.<br /><span class='features__title--accent'>We start with the outcome.</span>"
+    sub: "We choose product, AI, data or custom development based on the problem, then support the solution until it truly operates."
   items:
     reactive:
-      title: "Reactive Execution"
-      desc: "Agents react in seconds to business events and customer actions with consistent operational quality."
+      title: "Product when it accelerates"
+      desc: "We use our platforms when a proven foundation can get the business to results faster."
     proactive:
-      title: "Proactive Execution"
-      desc: "Agents detect signals, trigger sequences, and open opportunities before your pipeline cools down."
+      title: "Custom when it differentiates"
+      desc: "We build a proprietary solution when your process, data or competitive advantage requires it."
     omnichannel:
-      title: "Omnichannel Operations"
-      desc: "WhatsApp, email, SMS, and web in one operational layer to keep every conversation continuous."
+      title: "AI inside the process"
+      desc: "Intelligence becomes part of daily work: it understands context, executes and preserves continuity."
     integrations:
-      title: "Stack Integrations"
-      desc: "Connect CRMs, EHRs, ERPs, and calendars so agents work directly inside your real workflows."
+      title: "Integration without starting over"
+      desc: "We connect the tools that already work with the capabilities that are currently missing."
     analytics:
-      title: "Control Tower and SLA"
-      desc: "Full visibility into productivity, response times, resolution rates, and SLA compliance by squad."
+      title: "Data that changes decisions"
+      desc: "We measure, research and analyze so evidence transforms the next action."
     custom:
-      title: "Custom Playbooks"
-      desc: "We design industry-specific playbooks per process and objective to accelerate outcomes from week one."
+      title: "Support through operation"
+      desc: "We do not stop at delivery: we implement, measure and evolve the solution."
 
 howItWorks:
   header:
-    badge: "Deployment"
-    title: "From brief to production<br /><span class='how__title--accent'>in three phases</span>"
+    badge: "How we work"
+    title: "From an operational challenge<br /><span class='how__title--accent'>to a solution that evolves.</span>"
   steps:
     connect:
-      title: "Map your operation"
-      desc: "We align goals, bottlenecks, and data sources to design the right squad for your business."
-      detail: "Goals · Processes · Systems · Rules"
+      title: "We understand the challenge"
+      desc: "We start with the people, processes and data currently slowing progress down."
+      detail: "People · Process · Data"
     configure:
-      title: "Configure and train"
-      desc: "We define playbooks, handoffs, escalation protocols, and autonomy boundaries for each agent."
-      detail: "Playbooks · QA · Human handoff"
+      title: "We design the solution"
+      desc: "We choose the right blend of product, AI, integrations and professional services."
+      detail: "Product · AI · Integration"
     scale:
-      title: "Operate and optimize"
-      desc: "We launch your squad in production and improve continuously using outcome metrics and SLA targets."
-      detail: "SLA · Continuous improvement · Scale"
+      title: "We implement and improve"
+      desc: "We put the solution into operation, measure its impact and make it evolve with your team."
+      detail: "Adoption · Measurement · Evolution"
 
 stats:
   conversations:
-    label: "Interactions operated"
-    desc: "Executed daily by agents in production"
+    label: "Applied intelligence"
+    desc: "Technology connected to a business outcome"
   responseTime:
-    label: "Reaction time"
-    desc: "Average activation time on critical events"
+    label: "Product lines"
+    desc: "An ecosystem for distinct challenges and stages"
   industries:
-    label: "Active squads"
-    desc: "Multi-agent cells running business-critical workflows"
+    label: "Active markets"
+    desc: "Mexico, Colombia and the United States"
   uptime:
-    label: "SLA compliance"
-    desc: "Enterprise operations with monitoring and continuous support"
+    label: "Custom solutions"
+    desc: "Product and service shaped around each company"
 
 cta:
-  overline: "Design your AAAS operation"
-  title: "Your next team<br /><span class='cta__title--accent'>does not need hiring</span>"
-  sub: "Launch agent squads in days, not months. Start with one critical workflow and scale by outcomes."
-  primary: "Design My Agent Team"
-  secondary: "Explore Squads"
-  disclaimer: "Executive discovery · 7-day roadmap · Guided implementation"
-  link: "https://calendly.com/admin-iruzlabs/we-re-going-to-transform-your-business-zuri-labs"
+  overline: "Iruz Labs"
+  title: "Let's build the next<br /><span class='cta__title--accent'>advance for your business.</span>"
+  sub: "Tell us what you want to move forward. We design the product, AI and technology that makes it possible."
+  primary: "Talk to Iruz"
+  secondary: "View products"
+  disclaimer: "Diagnosis · Design · Implementation"
+  link: "https://calendly.com/admin-azurylabs/we-re-going-to-transform-your-business-azury-labs"
 
 footer:
-  tagline: "Agent teams that execute measurable outcomes."
-  status: "All systems operational"
+  tagline: "Applied artificial intelligence, own products and custom solutions."
+  status: "Building smarter operations"
   copy: "© {year} Azury Labs LLC. All rights reserved."
   cols:
     products: "Products"
@@ -156,12 +170,14 @@ footer:
   links:
     aiRE: "Real Estate Agents"
     aiHC: "Healthcare Agents"
-    crm: "Neural CRM"
+    crm: "Iruz CRM"
     reactive: "Reactive Agents"
     proactive: "Proactive Agents"
     omni: "Omnichannel"
     about: "About"
+    team: "Team"
     contact: "Contact"
+    help: "Get in touch"
     blog: "Blog"
     privacy: "Privacy"
     terms: "Terms"
@@ -170,45 +186,81 @@ footer:
     api: "Neural API"
     internal: "Internal Access"
 
+contactPage:
+  title: "Get in touch"
+  subtitle: "Have a question or an issue? Write to us and we'll get back to you as soon as possible. You don't need to be a customer to reach out."
+  nameLabel: "Name"
+  emailLabel: "Email"
+  messageLabel: "Message"
+  submit: "Send message"
+  sending: "Sending..."
+  success: "Thanks! We received your message and will get back to you soon."
+  error: "Couldn't send the message. Try again in a few minutes."
+
 legal:
   back: "← Back to home"
   updated: "Last updated: {date}"
 
 about:
   hero:
-    title: "Mission"
-    subtitle: "Empower sales teams by eliminating noise and inefficiency. Our mission is to deploy autonomous AI agents that centralize, profile, and reactivate leads across all channels, delivering only ready-to-close opportunities to humans."
-    quote: "“Transforming disconnected leads into imminent closes via autonomous artificial intelligence.”"
+    title: "Intelligence that becomes progress"
+    subtitle: "Iruz Labs is a software company specialized in applied artificial intelligence. We build our own products and custom solutions so companies can sell more, operate better and make data-driven decisions. We operate in Mexico, Colombia and the United States."
+    quote: "“Applied AI for what matters most.”"
+  team:
+    badge: "Team"
+    title: "Who's behind Iruz Labs"
+    subtitle: "The people who design useful products, intelligence and experiences behind Iruz."
+  ecosystem:
+    badge: "Ecosystem"
+    title: "Our Products"
+    subtitle: "An ecosystem of applied AI products and professional services that turns scattered signals into decisions, actions and more productive operations."
+    cta: "Visit"
+    items:
+      atenea:
+        name: "Iruz Atenea"
+        desc: "Our AI agent creation engine: the technology base we build every custom assistant on."
+      crm:
+        name: "Iruz Sales OS"
+        desc: "The omnichannel sales operating system that connects channels, AI agents and human teams to advance every opportunity."
+      minegocio:
+        name: "Iruz My Business"
+        desc: "An AI-powered omnichannel operation that centralizes customer conversations and accelerates sales."
+      ciee:
+        name: "Iruz CIEE"
+        desc: "Data analysis and research: AI-driven surveys, popularity studies, and political and market polling."
+      systems:
+        name: "Iruz Systems"
+        desc: "Custom software development, consulting, and professional services for individuals and businesses."
   vision:
     title: "Vision"
-    text: "To become the central nervous system of modern sales, redefining the standard of customer service where immediacy and personalization are the norm, and where no business opportunity is lost due to lack of human capacity."
+    text: "To be the technology partner that turns artificial intelligence, data and software into clearer operations, sounder decisions and businesses that move forward."
   values:
     title: "Values"
     v1:
-      title: "Radical Immediacy"
-      desc: "Time is the most expensive asset in sales."
+      title: "Utility before novelty"
+      desc: "Technology matters when it solves a real problem and enables a better outcome."
     v2:
-      title: "Clarity over Noise"
-      desc: "We hate inefficiency and disorder."
+      title: "Clarity to decide"
+      desc: "We turn scattered information into signals, priorities and actionable decisions."
     v3:
-      title: "Organic Omnipresence"
-      desc: "We are where the customer is, without being invasive."
+      title: "AI with human judgment"
+      desc: "We design intelligence that expands people’s capacity and respects their judgment."
     v4:
-      title: "Excellence Standardization"
-      desc: "Quality of service should not depend on human mood."
+      title: "Measurable impact"
+      desc: "Technology should translate into productivity, learning and observable progress."
   personality:
     title: "Brand Personality"
     items:
       p1:
-        title: "Technical Authority (The Sage)"
-        desc: "Speaks with precision. Doesn't 'believe' a lead is good; profiles it with data. An expert brand in efficiency and workflows."
+        title: "Technical authority"
+        desc: "We explain precisely how intelligence, data and software solve business problems."
       p2:
-        title: "Sophisticated Simplicity (The Magician)"
-        desc: "Internal technology is complex, but user experience is magical and fluid. Transforms 'noise' into 'opportunities' almost invisibly."
+        title: "Sophisticated simplicity"
+        desc: "The technology behind the scenes may be complex; the team experience should feel clear and natural."
       p3:
         title: "Human Empowerment"
-        desc: "Doesn't seek to replace the salesperson, but turn them into a 'super-closer'. An allied brand, warm in treatment but relentless in execution."
-    slogan: "We manage the complexity; you close the deal."
+        desc: "AI expands team capacity so every person can intervene with better judgment."
+    slogan: "Intelligence that becomes progress."
   tone:
     title: "Tone and Voice"
-    desc: "We are not a simple chatbot; we are Sales Infrastructure. We are the 'brain' that filters, qualifies, and reactivates, allowing humans to focus on closing."
+    desc: "We speak like a technology partner: clear, precise and outcome-oriented. Iruz builds products, intelligence and software so technology becomes real progress."

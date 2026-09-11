@@ -1,0 +1,210 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/sections/Navbar.astro";
+import Footer from "../../components/sections/Footer.astro";
+import ContactForm from "../../components/sections/ContactForm.astro";
+import { useTranslations } from "../../i18n/utils";
+
+export const prerender = false;
+
+const { lang: rawLang } = Astro.params;
+const lang = rawLang === "en" ? "en" : "es";
+const htmlLang = lang === "en" ? "en" : "es-MX";
+const t = useTranslations(lang);
+const copy = lang === "es"
+  ? {
+      eyebrow: "HABLEMOS DE LO QUE SIGUE",
+      title: "Hagamos que tu operación avance.",
+      text: "Cuéntanos dónde está el cuello de botella. Revisamos contigo si conviene producto, agentes de IA, datos o software a medida.",
+      signals: ["Productos propios", "Agentes de IA", "Software a medida"],
+      response: "Te responderemos con el siguiente paso más útil, no con un discurso genérico.",
+    }
+  : {
+      eyebrow: "LET'S TALK ABOUT WHAT'S NEXT",
+      title: "Move your operation forward.",
+      text: "Tell us where the bottleneck is. Together, we will assess whether a product, AI agents, data or custom software is the right move.",
+      signals: ["Proprietary products", "AI agents", "Custom software"],
+      response: "We will respond with the most useful next step, not a generic pitch.",
+    };
+---
+
+<BaseLayout title={lang === "es" ? "Contacto — Azury Labs" : "Contact — Azury Labs"} description={copy.text} lang={htmlLang}>
+  <Navbar lang={lang} page="contact" />
+
+  <main class="contact-page">
+    <div class="bg-grid" aria-hidden="true"></div>
+    <section class="contact" id="contacto">
+      <div class="container contact__layout">
+        <header class="contact__intro">
+          <p class="contact__eyebrow"><span aria-hidden="true"></span>{copy.eyebrow}</p>
+          <h1>{copy.title}</h1>
+          <p class="contact__text">{copy.text}</p>
+          <ul class="contact__signals">
+            {copy.signals.map((signal, index) => (
+              <li><span>0{index + 1}</span>{signal}</li>
+            ))}
+          </ul>
+          <p class="contact__response"><span aria-hidden="true"></span>{copy.response}</p>
+        </header>
+
+        <div class="contact__form-shell">
+          <div class="contact__form-heading">
+            <span>IRUZ / INQUIRY</span>
+            <strong>{t("contactPage.title")}</strong>
+          </div>
+          <ContactForm lang={lang} />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>
+
+<style>
+  .contact-page {
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    padding-top: 80px;
+  }
+
+  .contact-page::before {
+    position: absolute;
+    top: -15rem;
+    right: -18rem;
+    width: 42rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-brand) 23%, transparent), transparent 67%);
+    content: "";
+    filter: blur(12px);
+  }
+
+  .contact {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    align-items: center;
+    min-height: calc(100svh - 80px);
+    padding-block: clamp(4rem, 9vh, 8rem);
+  }
+
+  .contact__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(27rem, 0.85fr);
+    align-items: center;
+    gap: clamp(3rem, 8vw, 9rem);
+  }
+
+  .contact__intro { max-width: 44rem; }
+
+  .contact__eyebrow,
+  .contact__response {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--color-brand);
+    font-size: 0.75rem;
+    font-weight: 780;
+    letter-spacing: 0.15em;
+  }
+
+  .contact__eyebrow span,
+  .contact__response span {
+    width: 7px;
+    height: 7px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--color-brand);
+    box-shadow: 0 0 14px var(--color-brand);
+  }
+
+  .contact__intro h1 {
+    max-width: 17ch;
+    margin-top: 1rem;
+    font-size: clamp(var(--text-4xl), 4vw, var(--text-5xl));
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+
+  .contact__text {
+    max-width: 48ch;
+    margin-top: 1.5rem;
+    font-size: clamp(1.02rem, 1.25vw, 1.15rem);
+    line-height: 1.7;
+  }
+
+  .contact__signals {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 2.25rem;
+  }
+
+  .contact__signals li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  .contact__signals span {
+    color: var(--color-brand);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+  }
+
+  .contact__response {
+    max-width: 42ch;
+    margin-top: 2rem;
+    color: var(--color-text-faint);
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.55;
+  }
+
+  .contact__form-shell {
+    padding: clamp(1.4rem, 3vw, 2.4rem);
+    border: 1px solid var(--color-border);
+    border-radius: 1.5rem;
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--color-brand) 7%, var(--color-surface)), var(--color-surface) 54%),
+      var(--color-surface);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .contact__form-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .contact__form-heading span {
+    color: var(--color-brand);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+  }
+
+  .contact__form-heading strong { font-size: 1.25rem; }
+
+  @media (max-width: 900px) {
+    .contact { min-height: auto; }
+    .contact__layout { grid-template-columns: 1fr; gap: 3rem; }
+    .contact__intro h1 { max-width: 12ch; }
+    .contact__form-shell { max-width: 42rem; }
+  }
+
+  @media (max-width: 540px) {
+    .contact { padding-block: 3.5rem 4rem; }
+    .contact__intro h1 { font-size: clamp(2.3rem, 11vw, var(--text-5xl)); }
+    .contact__form-shell { margin-inline: -0.15rem; border-radius: 1rem; }
+  }
+</style>

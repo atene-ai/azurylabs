@@ -1,0 +1,859 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Navbar from "../../../components/sections/Navbar.astro";
+import Footer from "../../../components/sections/Footer.astro";
+import SocialIcon from "../../../components/ui/SocialIcon.astro";
+import { getEnv, getTeamMemberBySlug, mediaUrl } from "../../../lib/strapi";
+
+// SSR para que los cambios en Strapi se reflejen sin rebuild.
+export const prerender = false;
+
+const { lang: rawLang, slug } = Astro.params;
+const lang = rawLang === "en" ? "en" : "es";
+const htmlLang = lang === "en" ? "en" : "es-MX";
+
+const strapiBase = getEnv(Astro.locals, "STRAPI_URL").replace(/\/$/, "");
+const member = await getTeamMemberBySlug(slug ?? "", { locals: Astro.locals, lang });
+
+if (!member) {
+  Astro.response.status = 404;
+} else {
+  Astro.response.headers.set(
+    "Cache-Control",
+    "public, max-age=0, s-maxage=300, stale-while-revalidate=600",
+  );
+}
+
+const copy = {
+  es: {
+    notFound: "Integrante no encontrado",
+    notFoundBody: "Puede que el perfil se haya despublicado o que la URL sea incorrecta.",
+    back: "← Volver al equipo",
+    talk: "Hablemos",
+    downloadCV: "Descargar CV",
+    about: "Sobre mí",
+    experience: "Experiencia",
+    present: "Presente",
+    visit: "Visitar",
+    skills: "Habilidades",
+    stack: "Stack tecnológico",
+    activity: "Actividad en GitHub",
+    activitySub: "Constancia en construir, día a día",
+    viewGithub: "Ver perfil completo en GitHub",
+    education: "Educación",
+    certifications: "Certificaciones",
+    featured: "Destacado",
+    contact: "Contacto",
+  },
+  en: {
+    notFound: "Team member not found",
+    notFoundBody: "The profile may have been unpublished, or the URL is incorrect.",
+    back: "← Back to team",
+    talk: "Let's talk",
+    downloadCV: "Download CV",
+    about: "About",
+    experience: "Experience",
+    present: "Present",
+    visit: "Visit",
+    skills: "Skills",
+    stack: "Tech stack",
+    activity: "GitHub activity",
+    activitySub: "Consistency in building, day by day",
+    viewGithub: "View full GitHub profile",
+    education: "Education",
+    certifications: "Certifications",
+    featured: "Featured",
+    contact: "Contact",
+  },
+}[lang];
+
+const pageTitle = member ? `${member.name} — Azury Labs` : copy.notFound;
+const pageDescription = member ? member.tagline || member.bio : copy.notFoundBody;
+const avatarUrl = member?.avatar?.url ? mediaUrl(strapiBase, member.avatar.url) : undefined;
+const resumeUrl = member?.resume?.url ? mediaUrl(strapiBase, member.resume.url) : undefined;
+
+const site = Astro.site ?? Astro.url;
+const canonical = new URL(`/${lang}/equipo/${slug}`, site).toString();
+
+/** "highlights"/"techStack" se guardan como texto plano en Strapi: un bullet por linea, o lista separada por comas. */
+const lines = (text?: string | null) =>
+  (text ?? "").split("\n").map((l) => l.trim()).filter(Boolean);
+const commaList = (text?: string | null) =>
+  (text ?? "").split(",").map((l) => l.trim()).filter(Boolean);
+
+const monthFmt = new Intl.DateTimeFormat(htmlLang, { month: "short", year: "numeric" });
+const formatDate = (iso?: string | null) => (iso ? monthFmt.format(new Date(`${iso}T00:00:00`)) : "");
+const dateRange = (start: string, end?: string | null) =>
+  `${formatDate(start)} – ${end ? formatDate(end) : copy.present}`;
+
+// Roles en curso (sin endDate) siempre van primero; el resto por fecha de inicio descendente.
+const experience = [...(member?.experience ?? [])].sort((a, b) => {
+  if (!a.endDate && b.endDate) return -1;
+  if (a.endDate && !b.endDate) return 1;
+  return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+});
+
+const personJsonLd = member && {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: member.name,
+  jobTitle: member.role,
+  description: member.bio,
+  ...(avatarUrl && { image: avatarUrl }),
+  ...(member.email && { email: member.email }),
+  ...(member.location && { address: member.location }),
+  ...(member.socials &&
+    member.socials.length > 0 && {
+      sameAs: member.socials.map((s) => s.url),
+    }),
+  worksFor: { "@type": "Organization", name: "Azury Labs", url: site.toString() },
+  mainEntityOfPage: { "@type": "ProfilePage", "@id": canonical },
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={htmlLang}
+  canonical={canonical}
+  image={avatarUrl}
+  noindex={!member}
+>
+  <Fragment slot="head">
+    {personJsonLd && (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(personJsonLd)} />
+    )}
+  </Fragment>
+
+  <Navbar lang={lang} page="about" />
+
+  <main class="profile-page">
+    {
+      !member ? (
+        <div class="container profile-missing">
+          <h1>{copy.notFound}</h1>
+          <p>{copy.notFoundBody}</p>
+          <a href={`/${lang}/acerca#equipo`}>{copy.back}</a>
+        </div>
+      ) : (
+        <div class="container profile-inner">
+          <a href={`/${lang}/acerca#equipo`} class="profile-back">
+            {copy.back}
+          </a>
+
+          {/* ── Hero ── */}
+          <header class="profile-header">
+            {avatarUrl && (
+              <img
+                class="profile-photo"
+                src={avatarUrl}
+                alt={member.avatar?.alternativeText || member.name}
+                width="180"
+                height="180"
+                decoding="async"
+              />
+            )}
+            <h1 class="profile-name">{member.name}</h1>
+            <p class="profile-role">{member.role}</p>
+            {member.previousCompanies && <p class="profile-prev">{member.previousCompanies}</p>}
+            {member.tagline && <p class="profile-tagline">{member.tagline}</p>}
+
+            <div class="profile-cta-row">
+              <a href={`/${lang}/acerca#contacto`} class="profile-btn profile-btn--primary">
+                {copy.talk}
+              </a>
+              {resumeUrl && (
+                <a href={resumeUrl} target="_blank" rel="noopener noreferrer" class="profile-btn">
+                  {copy.downloadCV}
+                </a>
+              )}
+            </div>
+
+            {member.socials && member.socials.length > 0 && (
+              <div class="profile-socials">
+                {member.socials.map((social) => (
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="profile-social"
+                    aria-label={social.platform}
+                  >
+                    <SocialIcon platform={social.platform} size={20} />
+                  </a>
+                ))}
+              </div>
+            )}
+
+            {member.stats && member.stats.length > 0 && (
+              <div class="profile-stats">
+                {member.stats.map((stat) => (
+                  <div class="profile-stat">
+                    <span class="profile-stat__value">{stat.value}</span>
+                    <span class="profile-stat__label">{stat.label}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </header>
+
+          {/* ── Bio ── */}
+          <section class="profile-section">
+            <h2 class="profile-section__title">{copy.about}</h2>
+            <p class="profile-bio">{member.bio}</p>
+          </section>
+
+          {/* ── Experience ── */}
+          {experience.length > 0 && (
+            <section class="profile-section">
+              <h2 class="profile-section__title">{copy.experience}</h2>
+              <div class="timeline">
+                {experience.map((job) => (
+                  <article class="timeline-item">
+                    <div class="timeline-item__head">
+                      {job.companyLogo?.url && (
+                        <img
+                          class="timeline-item__logo"
+                          src={mediaUrl(strapiBase, job.companyLogo.url)}
+                          alt={job.company}
+                          width="36"
+                          height="36"
+                          loading="lazy"
+                        />
+                      )}
+                      <div>
+                        <h3 class="timeline-item__role">{job.role}</h3>
+                        <p class="timeline-item__company">
+                          {job.companyUrl ? (
+                            <a href={job.companyUrl} target="_blank" rel="noopener noreferrer">
+                              {job.company}
+                            </a>
+                          ) : (
+                            job.company
+                          )}
+                          {job.location && <span> · {job.location}</span>}
+                        </p>
+                      </div>
+                      <span class="timeline-item__dates">{dateRange(job.startDate, job.endDate)}</span>
+                    </div>
+
+                    {lines(job.highlights).length > 0 && (
+                      <ul class="timeline-item__highlights">
+                        {lines(job.highlights).map((line) => (
+                          <li>{line}</li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {commaList(job.techStack).length > 0 && (
+                      <div class="tag-row">
+                        {commaList(job.techStack).map((tech) => (
+                          <span class="tag-pill">{tech}</span>
+                        ))}
+                      </div>
+                    )}
+
+                    {job.projects && job.projects.length > 0 && (
+                      <div class="timeline-item__projects">
+                        {job.projects.map((project) => (
+                          <div class="project-card">
+                            <strong>{project.name}</strong>
+                            {project.description && <p>{project.description}</p>}
+                            {project.url && (
+                              <a href={project.url} target="_blank" rel="noopener noreferrer">
+                                {copy.visit} →
+                              </a>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* ── Skills ── */}
+          {(commaList(member.techStack).length > 0 || (member.skillGroups && member.skillGroups.length > 0)) && (
+            <section class="profile-section">
+              <h2 class="profile-section__title">{copy.skills}</h2>
+
+              {commaList(member.techStack).length > 0 && (
+                <>
+                  <h3 class="profile-subtitle">{copy.stack}</h3>
+                  <div class="tag-row tag-row--lg">
+                    {commaList(member.techStack).map((tech) => (
+                      <span class="tag-pill">{tech}</span>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {member.skillGroups && member.skillGroups.length > 0 && (
+                <div class="skill-grid">
+                  {member.skillGroups.map((group) => (
+                    <div class="skill-group">
+                      <h4>{group.title}</h4>
+                      <ul>
+                        {commaList(group.items).map((item) => (
+                          <li>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+          )}
+
+          {/* ── Activity (GitHub) ── */}
+          {member.githubUsername && (
+            <section class="profile-section">
+              <h2 class="profile-section__title">{copy.activity}</h2>
+              <p class="profile-subtitle">{copy.activitySub}</p>
+              <img
+                class="github-graph"
+                src={`https://ghchart.rshah.org/0891b2/${member.githubUsername}`}
+                alt={`${member.name} — GitHub contributions`}
+                loading="lazy"
+                width="800"
+                height="112"
+              />
+              <a
+                href={`https://github.com/${member.githubUsername}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="profile-link"
+              >
+                {copy.viewGithub} →
+              </a>
+            </section>
+          )}
+
+          {/* ── Education ── */}
+          {((member.education && member.education.length > 0) ||
+            (member.certifications && member.certifications.length > 0)) && (
+            <section class="profile-section">
+              <h2 class="profile-section__title">{copy.education}</h2>
+
+              {member.education?.map((deg) => (
+                <div class="degree">
+                  <strong>{deg.institution}</strong>
+                  <span>{deg.degree}</span>
+                  {(deg.startYear || deg.endYear) && (
+                    <span class="degree__years">
+                      {deg.startYear} – {deg.endYear}
+                    </span>
+                  )}
+                </div>
+              ))}
+
+              {member.certifications && member.certifications.length > 0 && (
+                <ul class="cert-list">
+                  {member.certifications.map((cert) => (
+                    <li>
+                      {cert.featured && <span class="cert-badge">{copy.featured}</span>}
+                      {cert.url ? (
+                        <a href={cert.url} target="_blank" rel="noopener noreferrer">
+                          {cert.name}
+                        </a>
+                      ) : (
+                        <span>{cert.name}</span>
+                      )}
+                      {cert.issuer && <span class="cert-meta"> — {cert.issuer}</span>}
+                      {cert.year && <span class="cert-meta"> · {cert.year}</span>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          )}
+
+          {/* ── Contact ── */}
+          {(member.contactIntro || member.email || member.phone || member.location) && (
+            <section class="profile-section" id="contacto">
+              <h2 class="profile-section__title">{copy.contact}</h2>
+              {member.contactIntro && <p class="profile-bio">{member.contactIntro}</p>}
+              <div class="contact-row">
+                {member.email && (
+                  <a href={`mailto:${member.email}`} class="profile-btn">
+                    {member.email}
+                  </a>
+                )}
+                {member.phone && (
+                  <a
+                    href={`https://wa.me/${member.phone.replace(/[^\d]/g, "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="profile-btn"
+                  >
+                    {member.phone}
+                  </a>
+                )}
+                {member.location && <span class="profile-location">{member.location}</span>}
+              </div>
+            </section>
+          )}
+        </div>
+      )
+    }
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>
+
+<style>
+  .profile-page {
+    padding-top: 140px;
+    padding-bottom: var(--space-20);
+    background: var(--color-bg);
+    min-height: 60vh;
+  }
+
+  .profile-missing {
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .profile-missing h1 {
+    font-size: var(--text-3xl);
+    color: var(--color-text);
+    margin-bottom: var(--space-3);
+  }
+
+  .profile-missing p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .profile-missing a {
+    color: var(--color-brand);
+    font-weight: var(--weight-semibold);
+  }
+
+  .profile-inner {
+    max-width: 760px;
+  }
+
+  .profile-back {
+    display: inline-block;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    text-decoration: none;
+    margin-bottom: var(--space-10);
+    transition: color var(--duration-fast);
+  }
+
+  .profile-back:hover {
+    color: var(--color-brand);
+  }
+
+  /* ── Hero ── */
+  .profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: var(--space-16);
+  }
+
+  .profile-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    object-position: center top;
+    border: 4px solid var(--color-surface);
+    box-shadow:
+      0 0 0 3px var(--color-brand),
+      var(--shadow-brand);
+    margin-bottom: var(--space-6);
+  }
+
+  .profile-name {
+    font-size: var(--text-4xl);
+    color: var(--color-text);
+    line-height: 1.15;
+  }
+
+  .profile-role {
+    color: var(--color-brand);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: var(--space-2);
+  }
+
+  .profile-prev {
+    color: var(--color-text-faint);
+    font-size: var(--text-sm);
+    margin-top: var(--space-2);
+  }
+
+  .profile-tagline {
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    max-width: 520px;
+    margin-top: var(--space-5);
+  }
+
+  .profile-cta-row {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  .profile-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 22px;
+    border-radius: 99px;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    text-decoration: none;
+    transition:
+      border-color var(--duration-fast),
+      color var(--duration-fast),
+      background var(--duration-fast);
+  }
+
+  .profile-btn:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+    background: rgba(8, 145, 178, 0.08);
+  }
+
+  .profile-btn--primary {
+    background: var(--color-brand);
+    color: white;
+    border-color: var(--color-brand);
+  }
+
+  .profile-btn--primary:hover {
+    filter: brightness(1.1);
+    color: white;
+    background: var(--color-brand);
+  }
+
+  .profile-socials {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .profile-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    transition:
+      border-color var(--duration-fast),
+      color var(--duration-fast),
+      transform var(--duration-fast);
+  }
+
+  .profile-social:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+    transform: translateY(-2px);
+  }
+
+  .profile-stats {
+    display: flex;
+    gap: var(--space-8);
+    margin-top: var(--space-10);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .profile-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-stat__value {
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-brand);
+  }
+
+  .profile-stat__label {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    max-width: 12ch;
+    text-align: center;
+  }
+
+  /* ── Sections ── */
+  .profile-section {
+    padding-block: var(--space-10);
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .profile-section__title {
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+    margin-bottom: var(--space-5);
+  }
+
+  .profile-subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-faint);
+    margin-bottom: var(--space-4);
+  }
+
+  .profile-bio {
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+    line-height: 1.8;
+  }
+
+  .profile-link {
+    display: inline-block;
+    color: var(--color-brand);
+    font-weight: var(--weight-semibold);
+    text-decoration: none;
+    margin-top: var(--space-4);
+  }
+
+  /* ── Timeline ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .timeline-item {
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .timeline-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .timeline-item__head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    margin-bottom: var(--space-3);
+  }
+
+  .timeline-item__logo {
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .timeline-item__head > div {
+    flex: 1;
+  }
+
+  .timeline-item__role {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    font-weight: var(--weight-bold);
+  }
+
+  .timeline-item__company {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .timeline-item__company a {
+    color: var(--color-brand);
+  }
+
+  .timeline-item__dates {
+    color: var(--color-text-faint);
+    font-size: var(--text-xs);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .timeline-item__highlights {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    padding-left: 1.2em;
+    margin-bottom: var(--space-3);
+  }
+
+  .timeline-item__projects {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .project-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .project-card strong {
+    color: var(--color-text);
+  }
+
+  .project-card p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin: var(--space-1) 0 var(--space-2);
+  }
+
+  .project-card a {
+    color: var(--color-brand);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  /* ── Tags ── */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tag-row--lg {
+    margin-bottom: var(--space-8);
+  }
+
+  .tag-pill {
+    background: var(--color-brand-dim);
+    color: var(--color-brand);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    padding: 4px 12px;
+    border-radius: 99px;
+  }
+
+  /* ── Skills ── */
+  .skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .skill-group h4 {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+  }
+
+  .skill-group ul {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    line-height: 1.8;
+    padding-left: 1.2em;
+  }
+
+  /* ── Activity ── */
+  .github-graph {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.03);
+    padding: var(--space-4);
+    box-sizing: border-box;
+  }
+
+  /* ── Education ── */
+  .degree {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: baseline;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .degree strong {
+    color: var(--color-text);
+  }
+
+  .degree__years {
+    color: var(--color-text-faint);
+    font-size: var(--text-sm);
+    margin-left: auto;
+  }
+
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .cert-list a {
+    color: var(--color-brand);
+    font-weight: var(--weight-medium);
+  }
+
+  .cert-badge {
+    display: inline-block;
+    background: var(--color-brand-dim);
+    color: var(--color-brand);
+    font-size: 10px;
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin-right: var(--space-2);
+  }
+
+  .cert-meta {
+    color: var(--color-text-faint);
+  }
+
+  /* ── Contact ── */
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    margin-top: var(--space-5);
+  }
+
+  .profile-location {
+    color: var(--color-text-faint);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 640px) {
+    .timeline-item__head {
+      flex-wrap: wrap;
+    }
+
+    .timeline-item__dates {
+      order: -1;
+      width: 100%;
+    }
+
+    .degree {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .degree__years {
+      margin-left: 0;
+    }
+  }
+</style>

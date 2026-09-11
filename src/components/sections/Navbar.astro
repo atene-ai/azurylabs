@@ -11,26 +11,44 @@ const { transparent = false, page = "home" } = Astro.props;
 const lang = Astro.props.lang || getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const themeLabel = lang === "es" ? "Tema" : "Theme";
-const lightLabel = lang === "es" ? "Claro" : "Light";
-const darkLabel = lang === "es" ? "Oscuro" : "Dark";
+const languageLabel = lang === "es" ? "Seleccionar idioma" : "Select language";
 
 // Nav links per page
+const blogHref = `/${lang}/blog`;
+
 const homeLinks = [
   { label: t("nav.company"), href: `/${lang}/acerca` },
   { label: t("nav.products"), href: `/${lang}/#productos` },
   { label: t("nav.solutions"), href: `/${lang}/#capacidades` },
   { label: t("nav.howItWorks"), href: `/${lang}/#como-funciona` },
+  { label: t("nav.blog"), href: blogHref },
 ];
 
 const aboutLinks = [
   { label: lang === "es" ? "← Inicio" : "← Home", href: `/${lang}/` },
-  { label: t("about.hero.title"), href: "#mision" },
+  { label: lang === "es" ? "Nosotros" : "About", href: "#mision" },
+  { label: t("nav.team"), href: "#equipo" },
+  { label: lang === "es" ? "Productos" : "Products", href: "#ecosistema" },
   { label: t("about.vision.title"), href: "#vision" },
-  { label: t("about.values.title"), href: "#valores" },
-  { label: t("about.personality.title"), href: "#personalidad" },
+  { label: lang === "es" ? "Contacto" : "Contact", href: "#contacto" },
+  { label: t("nav.blog"), href: blogHref },
 ];
 
-const navLinks = page === "about" ? aboutLinks : homeLinks;
+// En el blog los anclas de la home no aplican: se navega a secciones reales.
+const blogLinks = [
+  { label: lang === "es" ? "← Inicio" : "← Home", href: `/${lang}/` },
+  { label: t("nav.company"), href: `/${lang}/acerca` },
+  { label: t("nav.blog"), href: blogHref },
+];
+
+const navLinks =
+  page === "about"
+    ? aboutLinks
+    : page === "blog"
+      ? blogLinks
+      : page === "contact"
+        ? blogLinks
+        : homeLinks;
 
 // Language switcher logic
 const nextLang = lang === "es" ? "en" : "es";
@@ -51,6 +69,9 @@ if (currentPath === "/" || currentPath === "/es/") {
     nextPath = `/${nextLang}${currentPath}`;
   }
 }
+
+const esPath = lang === "es" ? currentPath : nextPath;
+const enPath = lang === "en" ? currentPath : nextPath;
 ---
 
 <header
@@ -59,9 +80,15 @@ if (currentPath === "/" || currentPath === "/es/") {
 >
   <div class="navbar__inner container">
     <!-- Logo -->
-    <a href={`/${lang}/`} class="navbar__logo" aria-label="azury labs">
-      <span class="logo__iruz">azury</span>
-      <span class="logo__labs"> Labs</span>
+    <a href={`/${lang}/`} class="navbar__logo" aria-label="Azury Labs">
+      <img
+        src="/images/logos/azurylabs-logotipo-h-white.png"
+        alt="Azury Labs"
+        class="logo__mark"
+        width="180"
+        height="52"
+        loading="eager"
+      />
     </a>
 
     <!-- Nav links -->
@@ -77,32 +104,44 @@ if (currentPath === "/" || currentPath === "/es/") {
 
     <!-- Language Switcher & Actions -->
     <div class="navbar__actions">
-      <!-- Lang Switcher (Segmented Control) -->
-      <div class="lang-switch">
-        <a
-          href={lang === "es" ? "#" : nextPath}
-          class:list={["lang-option", { "lang-option--active": lang === "es" }]}
-          aria-label="Cambiar a español"
-          aria-current={lang === "es" ? "page" : undefined}
-        >
-          ES
-        </a>
-        <a
-          href={lang === "en" ? "#" : nextPath}
-          class:list={["lang-option", { "lang-option--active": lang === "en" }]}
-          aria-label="Switch to English"
-          aria-current={lang === "en" ? "page" : undefined}
-        >
-          EN
-        </a>
-      </div>
+      <button class="theme-toggle" type="button" aria-label={themeLabel}>
+        <span class="theme-toggle__icon" aria-hidden="true">
+          <svg class="sun-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24">
+            <path d="M20.7 15.1A8.5 8.5 0 0 1 8.9 3.3 8.5 8.5 0 1 0 20.7 15.1Z"></path>
+          </svg>
+        </span>
+      </button>
 
-      <div class="theme-switch" role="group" aria-label={themeLabel}>
-        <button class="theme-option" type="button" data-set-theme="dark">{darkLabel}</button>
-        <button class="theme-option" type="button" data-set-theme="light">{lightLabel}</button>
+      <div class="language-picker">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M3 12h18M12 3c2.3 2.5 3.5 5.5 3.5 9s-1.2 6.5-3.5 9c-2.3-2.5-3.5-5.5-3.5-9S9.7 5.5 12 3Z"></path>
+        </svg>
+        <select onchange="window.location.href=this.value" aria-label={languageLabel}>
+          <option value={esPath} selected={lang === "es"}>ES</option>
+          <option value={enPath} selected={lang === "en"}>EN</option>
+        </select>
       </div>
 
       <a href={t("cta.link")} class="navbar__cta">{t("nav.scheduleDemo")}</a>
+    </div>
+
+    <div class="navbar__compact-utilities">
+      <button class="theme-toggle" type="button" aria-label={themeLabel}>
+        <span class="theme-toggle__icon" aria-hidden="true">
+          <svg class="sun-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24">
+            <path d="M20.7 15.1A8.5 8.5 0 0 1 8.9 3.3 8.5 8.5 0 1 0 20.7 15.1Z"></path>
+          </svg>
+        </span>
+      </button>
     </div>
 
     <!-- Mobile toggle -->
@@ -130,25 +169,17 @@ if (currentPath === "/" || currentPath === "/es/") {
   </nav>
 
   <div class="navbar__mobile-actions">
-    <div class="lang-switch lang-switch--mobile">
-      <a
-        href={lang === "es" ? "#" : nextPath}
-        class:list={["lang-option", { "lang-option--active": lang === "es" }]}
-      >
-        Español
-      </a>
-      <a
-        href={lang === "en" ? "#" : nextPath}
-        class:list={["lang-option", { "lang-option--active": lang === "en" }]}
-      >
-        English
-      </a>
+    <div class="language-picker language-picker--mobile">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M3 12h18M12 3c2.3 2.5 3.5 5.5 3.5 9s-1.2 6.5-3.5 9c-2.3-2.5-3.5-5.5-3.5-9S9.7 5.5 12 3Z"></path>
+      </svg>
+      <select onchange="window.location.href=this.value" aria-label={languageLabel}>
+        <option value={esPath} selected={lang === "es"}>Español</option>
+        <option value={enPath} selected={lang === "en"}>English</option>
+      </select>
     </div>
     <a href={t("cta.link")} class="navbar__cta">{t("nav.scheduleDemo")}</a>
-    <div class="theme-switch theme-switch--mobile" role="group" aria-label={themeLabel}>
-      <button class="theme-option" type="button" data-set-theme="dark">{darkLabel}</button>
-      <button class="theme-option" type="button" data-set-theme="light">{lightLabel}</button>
-    </div>
   </div>
 </div>
 
@@ -194,30 +225,17 @@ if (currentPath === "/" || currentPath === "/es/") {
     });
   });
 
-  /** @type {(activeTheme: "light" | "dark") => void} */
-  const updateThemeButtons = (activeTheme) => {
-    document.querySelectorAll(".theme-option").forEach((button) => {
-      const buttonTheme = button.getAttribute("data-set-theme");
-      const isActive = buttonTheme === activeTheme;
-      button.classList.toggle("theme-option--active", isActive);
-      button.setAttribute("aria-pressed", String(isActive));
-    });
-  };
-
   /** @type {(theme: string) => void} */
   const applyTheme = (theme) => {
     const normalized = theme === "light" ? "light" : "dark";
     document.documentElement.dataset.theme = normalized;
-    localStorage.setItem("iruz-theme", normalized);
-    updateThemeButtons(normalized);
+    localStorage.setItem("azury-theme", normalized);
   };
 
-  updateThemeButtons(document.documentElement.dataset.theme || "dark");
-
-  document.querySelectorAll("[data-set-theme]").forEach((button) => {
+  document.querySelectorAll(".theme-toggle").forEach((button) => {
     button.addEventListener("click", () => {
-      const theme = button.getAttribute("data-set-theme") || "dark";
-      applyTheme(theme);
+      const currentTheme = document.documentElement.dataset.theme || "dark";
+      applyTheme(currentTheme === "dark" ? "light" : "dark");
     });
   });
 </script>
@@ -247,40 +265,90 @@ if (currentPath === "/" || currentPath === "/es/") {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 48px; /* Fixed height for content */
+    gap: clamp(0.75rem, 1.4vw, 1.5rem);
+    height: 56px; /* Fixed height for content */
+    min-width: 0;
   }
 
   /* ── Logo ── */
-  .navbar__logo {
-    font-family: var(--font-brand);
-    font-size: var(--text-xl);
-    font-weight: var(--weight-bold);
+      .navbar__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
     text-decoration: none;
     flex-shrink: 0;
-    letter-spacing: -0.02em;
     z-index: 10;
   }
 
-  .logo__iruz {
-    color: var(--color-text);
+  .logo__mark {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 14px rgba(0, 200, 255, 0.28));
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      filter var(--duration-normal) var(--ease-out),
+      height var(--duration-normal) var(--ease-out);
   }
-  .logo__labs {
-    color: var(--color-brand);
+
+  .navbar__logo:hover .logo__mark {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 20px rgba(0, 200, 255, 0.5));
+  }
+
+  /* Horizontal logotype swaps to dark version on light theme */
+  :global(:root[data-theme="light"]) .logo__mark {
+    content: url("/images/logos/azurylabs-logotipo-h-black.png");
+    filter: drop-shadow(0 0 12px rgba(8, 145, 178, 0.22));
+  }
+
+  /* Compact when navbar shrinks on scroll */
+  .navbar--scrolled .logo__mark {
+    height: 36px;
+  }
+
+  @media (max-width: 480px) {
+    .logo__mark {
+      height: 40px;
+    }
+  }
+
+  
+  
+
+  
+
+  .navbar__logo:hover 
+
+  /* Horizontal logotype swaps to dark version on light theme */
+  :global(:root[data-theme="light"]) 
+
+  /* Compact when navbar shrinks on scroll */
+  .navbar--scrolled 
+
+  @media (max-width: 480px) {
+    
   }
 
   /* ── Nav ── */
   .navbar__nav {
     display: none;
     align-items: center;
-    gap: var(--space-5);
+    gap: clamp(0.65rem, 1.15vw, var(--space-5));
     background: rgba(255, 255, 255, 0.03);
     padding: 8px 18px;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(8px);
+    flex: 1 1 auto;
+    justify-content: center;
+    min-width: 0;
+    overflow: hidden;
   }
 
-  @media (min-width: 768px) {
+  /* The full navigation needs real desktop width. Until then, use the
+     complete mobile menu instead of squeezing or clipping controls. */
+  @media (min-width: 1180px) {
     .navbar__nav {
       display: flex;
     }
@@ -288,7 +356,7 @@ if (currentPath === "/" || currentPath === "/es/") {
 
   .navbar__link {
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: clamp(0.72rem, 0.82vw, var(--text-sm));
     font-weight: var(--weight-medium);
     color: var(--color-text-muted);
     text-decoration: none;
@@ -306,80 +374,170 @@ if (currentPath === "/" || currentPath === "/es/") {
   .navbar__actions {
     display: none;
     align-items: center;
-    gap: var(--space-3);
+    gap: clamp(0.5rem, 0.8vw, var(--space-3));
+    flex-shrink: 0;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1180px) {
     .navbar__actions {
       display: flex;
     }
   }
 
-  /* Language Switcher */
-  .lang-switch {
+  /* Compact utilities shared with Sales OS */
+  .navbar__compact-utilities {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 99px;
-    padding: 3px;
-    gap: 2px;
+    margin-left: auto;
   }
 
-  .theme-switch {
+  @media (min-width: 1180px) {
+    .navbar__compact-utilities { display: none; }
+  }
+
+  .theme-toggle {
+    position: relative;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    place-items: center;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-surface) 78%, transparent);
+    color: var(--color-text-muted);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    cursor: pointer;
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      background var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  .theme-toggle:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-border);
+    background: var(--color-brand-dim);
+    color: var(--color-brand);
+  }
+
+  .theme-toggle:focus-visible,
+  .language-picker:focus-within {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+
+  .theme-toggle__icon {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .theme-toggle__icon svg {
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.65;
+    transition:
+      opacity 0.35s var(--ease-out),
+      transform 0.35s var(--ease-out);
+  }
+
+  :global(:root[data-theme="light"]) .sun-icon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  :global(:root[data-theme="light"]) .moon-icon {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.55);
+  }
+
+  :global(:root[data-theme="dark"]) .sun-icon {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.55);
+  }
+
+  :global(:root[data-theme="dark"]) .moon-icon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  .language-picker {
+    position: relative;
     display: flex;
+    height: 38px;
     align-items: center;
-    gap: 2px;
-    padding: 3px;
+    gap: 0.35rem;
+    padding-left: 0.7rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border-subtle);
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.03);
-  }
-
-  .theme-option {
-    border: none;
-    border-radius: 999px;
-    padding: 4px 10px;
-    font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: var(--weight-semibold);
-    line-height: 1;
+    background: color-mix(in srgb, var(--color-surface) 78%, transparent);
     color: var(--color-text-muted);
-    transition: all var(--duration-fast) var(--ease-out);
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      background var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
   }
 
-  .theme-option:hover {
-    color: var(--color-text);
-  }
-
-  .theme-option--active {
-    background: var(--color-brand);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.28);
-  }
-
-  .lang-option {
-    font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: var(--weight-bold);
-    color: var(--color-text-muted);
-    text-decoration: none;
-    padding: 4px 10px;
-    border-radius: 99px;
-    transition: all var(--duration-fast);
-    line-height: 1;
-  }
-
-  .lang-option:hover:not(.lang-option--active) {
-    color: var(--color-text);
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  .lang-option--active {
-    background: var(--color-brand);
-    color: white;
-    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  .language-picker::after {
+    position: absolute;
+    right: 0.65rem;
+    width: 5px;
+    height: 5px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    content: "";
     pointer-events: none;
+    transform: translateY(-2px) rotate(45deg);
+  }
+
+  .language-picker:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-border);
+    background: var(--color-brand-dim);
+    color: var(--color-brand);
+  }
+
+  .language-picker > svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.55;
+    pointer-events: none;
+  }
+
+  .language-picker select {
+    width: 48px;
+    height: 100%;
+    padding: 0 1.1rem 0 0;
+    border: 0;
+    outline: none;
+    appearance: none;
+    background: transparent;
+    color: currentColor;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .language-picker option {
+    background: var(--color-bg);
+    color: var(--color-text);
   }
 
   /* CTAs */
@@ -403,17 +561,19 @@ if (currentPath === "/" || currentPath === "/es/") {
     font-weight: var(--weight-semibold);
     color: #fff;
     text-decoration: none;
-    background: linear-gradient(135deg, var(--color-brand) 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, var(--color-brand) 0%, #00c8ff 100%);
     padding: 8px 20px;
     border-radius: 99px;
     transition: all var(--duration-fast);
-    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .navbar__cta:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4);
+    box-shadow: 0 6px 16px rgba(8, 145, 178, 0.4);
     filter: brightness(1.1);
   }
 
@@ -429,9 +589,39 @@ if (currentPath === "/" || currentPath === "/es/") {
     z-index: 20;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1180px) {
     .navbar__burger {
       display: none;
+    }
+  }
+
+  /* Compact desktop mode: keeps the about navigation balanced without
+     letting the logo or segmented controls compete with the links. */
+  @media (min-width: 1180px) and (max-width: 1450px) {
+    .navbar__inner {
+      gap: 10px;
+    }
+
+    
+
+    .navbar--scrolled 
+
+    .navbar__nav {
+      gap: 8px;
+      padding: 7px 10px;
+    }
+
+    .navbar__link {
+      font-size: 11.5px;
+    }
+
+    .navbar__actions {
+      gap: 6px;
+    }
+
+    .navbar__cta {
+      padding: 8px 14px;
+      font-size: 12px;
     }
   }
 
@@ -500,18 +690,15 @@ if (currentPath === "/" || currentPath === "/es/") {
     gap: var(--space-6);
   }
 
-  .theme-switch--mobile {
-    justify-content: center;
+  .language-picker--mobile {
+    width: 100%;
+    height: 44px;
   }
 
-  .lang-switch--mobile {
-    justify-content: center;
-    padding: 6px;
-  }
-
-  .lang-switch--mobile .lang-option {
+  .language-picker--mobile select {
+    width: 100%;
+    flex: 1;
     font-size: var(--text-sm);
-    padding: 8px 24px;
   }
 
   .navbar__mobile .navbar__cta {
@@ -527,8 +714,8 @@ if (currentPath === "/" || currentPath === "/es/") {
   }
 
   :global(:root[data-theme="light"]) .navbar__nav,
-  :global(:root[data-theme="light"]) .lang-switch,
-  :global(:root[data-theme="light"]) .theme-switch {
+  :global(:root[data-theme="light"]) .language-picker,
+  :global(:root[data-theme="light"]) .theme-toggle {
     background: rgba(255, 255, 255, 0.9);
     border-color: rgba(15, 23, 42, 0.12);
   }

@@ -17,21 +17,23 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
+const htmlLang = lang === "en" ? "en" : "es-MX";
 
 const titleMap = {
-  es: "azury labs — Artificial Agents as a Service",
-  en: "azury labs — Artificial Agents as a Service",
+  es: "Azury Labs — Inteligencia artificial aplicada, productos y soluciones a medida",
+  en: "Azury Labs — Applied AI, products and custom solutions",
 };
 
 const descMap = {
-  es: "Escuadrones de agentes de IA para revenue, operaciones y atención. Orquestación multiagente con supervisión humana y SLA empresarial.",
-  en: "AI agent squads for revenue, operations, and customer care. Multi-agent orchestration with human supervision and enterprise SLA.",
+  es: "Azury Labs crea productos propios y soluciones de inteligencia artificial aplicada para que las empresas vendan más, operen mejor y tomen decisiones con datos.",
+  en: "Azury Labs creates its own applied artificial intelligence products and custom solutions so companies can sell more, operate better and make data-driven decisions.",
 };
 ---
 
 <BaseLayout
   title={titleMap[lang as keyof typeof titleMap]}
   description={descMap[lang as keyof typeof descMap]}
+  lang={htmlLang}
 >
   <Navbar lang={lang} />
   <main>

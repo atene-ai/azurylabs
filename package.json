@@ -15,7 +15,8 @@
     "@types/js-yaml": "^4.0.9",
     "astro": "^5.17.1",
     "js-yaml": "^4.1.1",
-    "simple-icons": "^16.22.0"
+    "simple-icons": "^16.22.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@types/node": "^25.3.0"

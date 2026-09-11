@@ -1,0 +1,167 @@
+---
+export interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const ecosystemLabel = lang === "es" ? "ECOSISTEMA EN MOVIMIENTO" : "ECOSYSTEM IN MOTION";
+---
+
+<figure class="hero-media">
+  <div
+    class="hero-media__scene"
+    data-hero-ecosystem-scene
+    aria-hidden="true"
+  ></div>
+
+  <img
+    class="hero-media__fallback"
+    src="/images/logos/iruzlabs-logotipo-h-white.png"
+    alt=""
+    width="1138"
+    height="360"
+    loading="eager"
+    decoding="async"
+  />
+
+  <figcaption class="hero-media__caption" aria-hidden="true">
+    <span class="hero-media__caption-kicker">{ecosystemLabel}</span>
+    <strong data-hero-brand-name>IRUZ LABS</strong>
+    <b data-hero-brand-index>01 / 06</b>
+  </figcaption>
+</figure>
+
+<script>
+  import "../../scripts/hero-ecosystem.js";
+</script>
+
+<style>
+  .hero-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1.16 / 1;
+    margin: 0;
+    isolation: isolate;
+    overflow: visible;
+  }
+
+  .hero-media::before {
+    position: absolute;
+    z-index: -1;
+    inset: -12%;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 48% 46%, color-mix(in srgb, var(--color-brand) 28%, transparent), transparent 39%),
+      radial-gradient(circle at 54% 52%, color-mix(in srgb, var(--color-blue) 20%, transparent), transparent 64%);
+    content: "";
+    filter: blur(20px);
+    opacity: 1;
+  }
+
+  .hero-media::after {
+    position: absolute;
+    z-index: 0;
+    inset: 12% 5% 17%;
+    border: 1px solid color-mix(in srgb, var(--color-brand) 26%, transparent);
+    border-radius: 50%;
+    content: "";
+    opacity: 0.72;
+    pointer-events: none;
+    transform: rotate(-11deg);
+  }
+
+  .hero-media__scene,
+  .hero-media__fallback {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-media__scene {
+    z-index: 1;
+    inset: -7%;
+    touch-action: none;
+  }
+
+  .hero-media__scene :global(canvas) {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .hero-media__fallback {
+    z-index: 0;
+    inset: 0;
+    box-sizing: border-box;
+    object-fit: contain;
+    padding: 35% 11%;
+    opacity: 0.82;
+    transition: opacity 500ms ease;
+  }
+
+  .hero-media.is-ready .hero-media__fallback {
+    opacity: 0;
+  }
+
+  :global(:root[data-theme="light"]) .hero-media__fallback {
+    content: url("/images/logos/iruzlabs-logotipo-h-black.png");
+  }
+
+  .hero-media__caption {
+    position: absolute;
+    z-index: 2;
+    bottom: 7.5%;
+    left: 7%;
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    pointer-events: none;
+  }
+
+  .hero-media__caption-kicker {
+    color: var(--color-brand);
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.16em;
+  }
+
+  .hero-media__caption strong {
+    color: var(--color-text);
+    font-size: 0.86rem;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-media__caption b {
+    color: var(--color-text-faint);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 860px) {
+    .hero-media {
+      aspect-ratio: 1.42 / 1;
+    }
+
+    .hero-media::after { inset: 8% 4% 18%; }
+    .hero-media__fallback { padding: 28% 16%; }
+  }
+
+  @media (max-width: 520px) {
+    .hero-media { aspect-ratio: 1.08 / 1; }
+    .hero-media::after { inset: 13% 2% 19%; }
+    .hero-media__fallback { padding: 39% 9%; }
+    .hero-media__caption { gap: 0.45rem; }
+    .hero-media__caption-kicker { font-size: 0.6rem; }
+    .hero-media__caption strong { font-size: 0.72rem; }
+    .hero-media__caption b { font-size: 0.6rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-media__fallback { transition: none; }
+  }
+</style>

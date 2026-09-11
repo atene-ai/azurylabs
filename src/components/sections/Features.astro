@@ -10,12 +10,12 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const featuresData = [
-  { key: "reactive", icon: "⚡", color: "brand" },
-  { key: "proactive", icon: "🧠", color: "blue" },
-  { key: "omnichannel", icon: "🔗", color: "glow" },
-  { key: "integrations", icon: "🔌", color: "brand" },
-  { key: "analytics", icon: "📊", color: "blue" },
-  { key: "custom", icon: "🛠️", color: "glow" },
+  { key: "reactive", icon: "01", color: "brand" },
+  { key: "proactive", icon: "02", color: "blue" },
+  { key: "omnichannel", icon: "03", color: "glow" },
+  { key: "integrations", icon: "04", color: "brand" },
+  { key: "analytics", icon: "05", color: "blue" },
+  { key: "custom", icon: "06", color: "glow" },
 ];
 
 const features = featuresData.map((f) => ({
@@ -105,7 +105,7 @@ const dimMap: Record<string, string> = {
   .features__sub {
     font-size: var(--text-lg);
     color: var(--color-text-muted);
-    max-width: 480px;
+    max-width: 680px;
     line-height: var(--leading-relaxed);
   }
 
@@ -144,7 +144,10 @@ const dimMap: Record<string, string> = {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--text-xl);
+    color: var(--fc);
+    font-size: 0.7rem;
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.08em;
     border: 1px solid color-mix(in srgb, var(--fc) 25%, transparent);
   }
 

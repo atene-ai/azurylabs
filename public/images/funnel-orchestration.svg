@@ -58,17 +58,17 @@
   <circle cx="138" cy="125" r="8" fill="#EF4444"/>
   <circle cx="164" cy="125" r="8" fill="#F59E0B"/>
   <circle cx="190" cy="125" r="8" fill="#10B981"/>
-  <text x="230" y="132" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">Funnel Orchestration Map</text>
+  <text x="230" y="132" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">SALES OPERATION FLOW</text>
 
   <!-- Stage chips -->
   <rect x="150" y="186" width="180" height="44" rx="22" fill="rgba(167,139,250,0.2)" stroke="rgba(167,139,250,0.5)"/>
-  <text x="196" y="214" fill="#DDD6FE" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Awareness</text>
+  <text x="196" y="214" fill="#DDD6FE" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">CAPTURE</text>
 
   <rect x="710" y="186" width="180" height="44" rx="22" fill="rgba(96,165,250,0.2)" stroke="rgba(96,165,250,0.5)"/>
-  <text x="763" y="214" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Qualify</text>
+  <text x="763" y="214" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">UNDERSTAND</text>
 
   <rect x="1270" y="186" width="180" height="44" rx="22" fill="rgba(59,130,246,0.2)" stroke="rgba(59,130,246,0.5)"/>
-  <text x="1321" y="214" fill="#93C5FD" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Close</text>
+  <text x="1321" y="214" fill="#93C5FD" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">CONVERT</text>
 
   <!-- Funnel body -->
   <path d="M220 260 L1380 260 L1110 520 L490 520 Z" fill="url(#funnelTop)" opacity="0.32"/>
@@ -105,14 +105,14 @@
 
   <!-- Side metrics -->
   <rect x="170" y="570" width="320" height="160" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(148,163,184,0.35)"/>
-  <text x="198" y="610" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Lead Intake</text>
-  <text x="198" y="646" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">8,420 interactions / day</text>
-  <text x="198" y="678" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">Response latency &lt; 2.0s</text>
+  <text x="198" y="610" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">SIGNAL CAPTURED</text>
+  <text x="198" y="646" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">Channels + identity</text>
+  <text x="198" y="678" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">History unified</text>
 
   <rect x="1110" y="570" width="320" height="160" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(148,163,184,0.35)"/>
-  <text x="1138" y="610" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Conversion Cell</text>
-  <text x="1138" y="646" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">Qualified to close-ready: +29%</text>
-  <text x="1138" y="678" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">SLA compliance: 98%</text>
+  <text x="1138" y="610" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">HUMAN HANDOFF</text>
+  <text x="1138" y="646" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">Context ready</text>
+  <text x="1138" y="678" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">Next action defined</text>
 
-  <text x="710" y="787" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Outcome Engine</text>
+  <text x="710" y="787" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">ROI ENGINE</text>
 </svg>

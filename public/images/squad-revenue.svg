@@ -1,6 +1,6 @@
 <svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">Revenue Squad visual</title>
-  <desc id="desc">Lead capture, qualification, and close workflow with agent skills.</desc>
+  <title id="title">Capture and profiling flow</title>
+  <desc id="desc">Commercial signals converge into unified context and lead scoring.</desc>
   <defs>
     <linearGradient id="bg" x1="120" y1="80" x2="1080" y2="640" gradientUnits="userSpaceOnUse">
       <stop stop-color="#0B1222"/>
@@ -49,20 +49,20 @@
 
   <g>
     <rect x="454" y="495" width="292" height="66" rx="18" fill="url(#pill)"/>
-    <text x="600" y="537" fill="#EEF2FF" font-family="Arial, sans-serif" font-size="30" text-anchor="middle" font-weight="700">Close-Ready Pipeline</text>
+    <text x="600" y="537" fill="#EEF2FF" font-family="Arial, sans-serif" font-size="30" text-anchor="middle" font-weight="700">CONTEXT + SCORE</text>
   </g>
 
   <g>
     <rect x="112" y="422" width="286" height="156" rx="18" fill="#18223A" fill-opacity="0.78" stroke="#314062"/>
-    <text x="142" y="466" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="30" font-weight="700">Skills</text>
-    <text x="142" y="506" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">Lead qualification</text>
-    <text x="142" y="540" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">Meeting booking</text>
-    <text x="142" y="574" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">Follow-up sequences</text>
+    <text x="142" y="466" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="30" font-weight="700">SIGNALS</text>
+    <text x="142" y="506" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">Identity</text>
+    <text x="142" y="540" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">Intent</text>
+    <text x="142" y="574" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="25">History</text>
   </g>
 
   <g>
     <rect x="802" y="422" width="286" height="156" rx="18" fill="#18223A" fill-opacity="0.78" stroke="#314062"/>
-    <text x="832" y="466" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="30" font-weight="700">Channels</text>
+    <text x="832" y="466" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="30" font-weight="700">CHANNELS</text>
     <text x="832" y="506" fill="#93C5FD" font-family="Arial, sans-serif" font-size="25">WhatsApp</text>
     <text x="832" y="540" fill="#93C5FD" font-family="Arial, sans-serif" font-size="25">Email</text>
     <text x="832" y="574" fill="#93C5FD" font-family="Arial, sans-serif" font-size="25">SMS + Web</text>

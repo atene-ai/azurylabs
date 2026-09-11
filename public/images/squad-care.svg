@@ -1,6 +1,6 @@
 <svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">Care Squad visual</title>
-  <desc id="desc">Customer care multi-agent hub with channels, escalation, and quality skills.</desc>
+  <title id="title">Human handoff flow</title>
+  <desc id="desc">AI transfers complete opportunity context to the right advisor.</desc>
   <defs>
     <linearGradient id="bg" x1="120" y1="80" x2="1080" y2="640" gradientUnits="userSpaceOnUse">
       <stop stop-color="#111827"/>
@@ -19,7 +19,7 @@
   <rect x="24" y="24" width="1152" height="672" rx="36" stroke="#3A3765"/>
 
   <rect x="100" y="92" width="1000" height="84" rx="18" fill="#211F3E" stroke="#4C4A7A"/>
-  <text x="140" y="145" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="34" font-weight="700">Care Squad Service Hub</text>
+  <text x="140" y="145" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="34" font-weight="700">HUMAN HANDOFF</text>
 
   <g opacity="0.22">
     <path d="M96 230H1104" stroke="#44406A"/>
@@ -32,20 +32,20 @@
   <g>
     <circle cx="600" cy="366" r="102" fill="url(#hub)"/>
     <circle cx="600" cy="366" r="102" stroke="#DDD6FE" stroke-opacity="0.5"/>
-    <text x="600" y="357" fill="#312E81" font-family="Arial, sans-serif" font-size="30" text-anchor="middle" font-weight="700">Agent Hub</text>
-    <text x="600" y="392" fill="#312E81" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">Routing + QA</text>
+    <text x="600" y="357" fill="#312E81" font-family="Arial, sans-serif" font-size="30" text-anchor="middle" font-weight="700">CONTEXT</text>
+    <text x="600" y="392" fill="#312E81" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">AI + HUMAN</text>
 
     <circle cx="310" cy="294" r="52" fill="#312E81" stroke="#A78BFA"/>
-    <text x="310" y="302" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">Chat</text>
+    <text x="310" y="302" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">WA</text>
 
     <circle cx="890" cy="294" r="52" fill="#312E81" stroke="#A78BFA"/>
-    <text x="890" y="302" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">Email</text>
+    <text x="890" y="302" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">WEB</text>
 
     <circle cx="310" cy="466" r="52" fill="#312E81" stroke="#A78BFA"/>
-    <text x="310" y="474" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">Voice</text>
+    <text x="310" y="474" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">CALL</text>
 
     <circle cx="890" cy="466" r="52" fill="#312E81" stroke="#A78BFA"/>
-    <text x="890" y="474" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">Tickets</text>
+    <text x="890" y="474" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">ADS</text>
 
     <path d="M352 305L508 345" stroke="#A78BFA" stroke-width="3"/>
     <path d="M848 305L692 345" stroke="#A78BFA" stroke-width="3"/>
@@ -55,11 +55,11 @@
 
   <g>
     <rect x="104" y="548" width="992" height="114" rx="16" fill="#211F3E" stroke="#4C4A7A"/>
-    <text x="136" y="590" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="28" font-weight="700">Skills</text>
-    <text x="300" y="590" fill="#C4B5FD" font-family="Arial, sans-serif" font-size="24">Case resolution</text>
-    <text x="520" y="590" fill="#C4B5FD" font-family="Arial, sans-serif" font-size="24">Smart escalation</text>
-    <text x="754" y="590" fill="#C4B5FD" font-family="Arial, sans-serif" font-size="24">Knowledge retrieval</text>
-    <text x="982" y="590" fill="#C4B5FD" font-family="Arial, sans-serif" font-size="24" text-anchor="end">SLA consistency</text>
+    <text x="136" y="590" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="28" font-weight="700">READY</text>
+    <text x="300" y="590" fill="#C4B5FD" font-family="Arial, sans-serif" font-size="24">PROFILE</text>
+    <text x="520" y="590" fill="#C4B5FD" font-family="Arial, sans-serif" font-size="24">SCORE</text>
+    <text x="754" y="590" fill="#C4B5FD" font-family="Arial, sans-serif" font-size="24">HISTORY</text>
+    <text x="982" y="590" fill="#C4B5FD" font-family="Arial, sans-serif" font-size="24" text-anchor="end">NEXT ACTION</text>
   </g>
 
   <g filter="url(#soft)" opacity="0.22">

@@ -1,0 +1,33 @@
+# Iruz Labs
+
+> Iruz Labs is an Artificial Agents as a Service (AAaaS) company. It builds and
+> operates squads of specialized AI agents that execute real work in revenue,
+> operations, and customer care — with human supervision and enterprise SLAs.
+> Multi-agent orchestration, not a self-serve SaaS tool.
+
+Iruz Labs deploys three agent squads:
+
+- **Revenue Squad** — qualifies leads, prioritizes opportunities, books
+  meetings, and follows up until pipeline is ready to close. Omnichannel
+  (WhatsApp, email, SMS, voice), used in Real Estate and Healthcare.
+- **Operations Squad** — coordinates tasks, updates internal systems,
+  triggers automations, and removes bottlenecks in day-to-day operations.
+- **Care Squad** — handles customer support across channels, resolves
+  requests, escalates complex cases, and keeps a consistent experience.
+
+Agents connect to Telegram, WhatsApp Business, Instagram Messenger, phone
+calls, and Google Calendar, and integrate with existing CRM/business systems.
+
+## Key pages
+
+- [Home (Spanish)](https://iruzlabs.com/es/): overview of the three agent
+  squads and how orchestration works.
+- [Home (English)](https://iruzlabs.com/en/): English version of the above.
+- [About](https://iruzlabs.com/es/acerca): mission, vision, and values.
+- [Blog](https://iruzlabs.com/es/blog): articles on agents, automation, and
+  applied engineering.
+
+## Company
+
+Iruz Labs SAS de CV, based in Mexico City. Social: LinkedIn
+(linkedin.com/company/iruzlabs), Instagram (@iruzlabsmx), Facebook.

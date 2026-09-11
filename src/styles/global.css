@@ -1,9 +1,41 @@
 /* ============================================================
-   AZURY LABS — GLOBAL STYLES
+   IRUZ LABS — GLOBAL STYLES
    ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap");
 @import "./tokens.css";
+
+/* ── Montserrat (local · Manual de Marca) ────────────────── */
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Montserrat-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/Montserrat-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Montserrat-Bold.woff2") format("woff2");
+}
 
 /* ── Reset ───────────────────────────────────────────────── */
 *,
@@ -121,30 +153,30 @@ ol {
 
 /* Light theme override (dark remains default). */
 :root[data-theme="light"] {
-  --color-bg: #f6f7fb;
+  --color-bg: #f2f7fb;
   --color-surface: #ffffff;
-  --color-surface-2: #edf1f8;
+  --color-surface-2: #e6f1f8;
 
-  --color-brand: #7c3aed;
-  --color-brand-dim: rgba(124, 58, 237, 0.14);
-  --color-brand-glow: rgba(124, 58, 237, 0.26);
-  --color-blue: #2563eb;
-  --color-blue-dim: rgba(37, 99, 235, 0.14);
-  --color-glow: #8b5cf6;
+  --color-brand: #0891b2;
+  --color-brand-dim: rgba(8, 145, 178, 0.14);
+  --color-brand-glow: rgba(8, 145, 178, 0.26);
+  --color-blue: #0a4a6a;
+  --color-blue-dim: rgba(10, 74, 106, 0.14);
+  --color-glow: #00c8ff;
 
-  --color-text: #121826;
-  --color-text-muted: #475569;
-  --color-text-faint: #64748b;
+  --color-text: #0f1e29;
+  --color-text-muted: #4a5b6b;
+  --color-text-faint: #7a8a9a;
 
-  --color-border: rgba(124, 58, 237, 0.2);
-  --color-border-subtle: rgba(15, 23, 42, 0.1);
+  --color-border: rgba(8, 145, 178, 0.22);
+  --color-border-subtle: rgba(10, 30, 41, 0.1);
 
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.12);
-  --shadow-lg: 0 14px 30px rgba(15, 23, 42, 0.14);
-  --shadow-brand: 0 0 22px rgba(124, 58, 237, 0.22);
+  --shadow-sm: 0 1px 3px rgba(10, 30, 41, 0.08);
+  --shadow-md: 0 6px 20px rgba(10, 30, 41, 0.12);
+  --shadow-lg: 0 14px 30px rgba(10, 30, 41, 0.14);
+  --shadow-brand: 0 0 22px rgba(8, 145, 178, 0.22);
 
-  --grid-line: rgba(15, 23, 42, 0.06);
+  --grid-line: rgba(10, 30, 41, 0.06);
 }
 
 /* ── Utility classes ─────────────────────────────────────── */
@@ -177,9 +209,9 @@ ol {
 .gradient-text {
   background: linear-gradient(
     135deg,
-    var(--color-brand) 0%,
-    var(--color-glow) 50%,
-    var(--color-blue) 100%
+    var(--brand-azul-oscuro) 0%,
+    var(--brand-azul) 45%,
+    var(--brand-turquesa) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
