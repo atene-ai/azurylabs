@@ -150,10 +150,10 @@ stats:
     desc: "Producto y servicio según la realidad de cada empresa"
 
 cta:
-  overline: "Iruz Labs"
+  overline: "Azury Labs"
   title: "Construyamos el siguiente<br /><span class='cta__title--accent'>avance de tu negocio.</span>"
   sub: "Cuéntanos qué quieres hacer avanzar. Diseñamos el producto, la IA y la tecnología que lo hace posible."
-  primary: "Hablar con Iruz"
+  primary: "Hablar con Azury"
   secondary: "Ver productos"
   disclaimer: "Diagnóstico · Diseño · Implementación"
   link: "https://calendly.com/admin-azurylabs/we-re-going-to-transform-your-business-azury-labs"
