@@ -23,7 +23,7 @@ export interface Props {
 const {
   title = "Azury Labs",
   description = "",
-  lang = "es-MX",
+  lang = "en",
   canonical,
   image = DEFAULT_OG_IMAGE,
   ogType = "website",
@@ -46,7 +46,7 @@ const hreflangAlternates = langMatch
       return [
         { hreflang: "es", href: esHref },
         { hreflang: "en", href: enHref },
-        { hreflang: "x-default", href: esHref },
+        { hreflang: "x-default", href: enHref },
       ];
     })()
   : [];
