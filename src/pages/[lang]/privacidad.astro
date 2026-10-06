@@ -15,15 +15,15 @@ const { lang } = Astro.params;
 const htmlLang = lang === "en" ? "en" : "es-MX";
 const t = useTranslations(lang);
 const lastUpdated =
-  lang === "es" ? "19 de febrero de 2026" : "February 19, 2026";
+  lang === "es" ? "6 de octubre de 2026" : "October 6, 2026";
 
 const title =
   lang === "es"
-    ? "Aviso de Privacidad — Azury Labs LLC"
+    ? "Política de Privacidad — Azury Labs LLC"
     : "Privacy Policy — Azury Labs LLC";
 const desc =
   lang === "es"
-    ? "Aviso de Privacidad de Azury Labs LLC. Conoce cómo recopilamos, usamos y protegemos tu información personal."
+    ? "Política de Privacidad de Azury Labs LLC. Conoce cómo recopilamos, usamos y protegemos tu información personal."
     : "Azury Labs LLC Privacy Policy. Learn how we collect, use, and protect your personal information.";
 ---
 
@@ -35,7 +35,7 @@ const desc =
       <header class="legal-page__header">
         <a href={`/${lang}/`} class="legal-page__back">{t("legal.back")}</a>
         <h1 class="legal-page__title">
-          {lang === "es" ? "Aviso de Privacidad" : "Privacy Policy"}
+          {lang === "es" ? "Política de Privacidad" : "Privacy Policy"}
         </h1>
         <p class="legal-page__meta">
           {t("legal.updated").replace("{date}", lastUpdated)}
@@ -47,16 +47,14 @@ const desc =
           lang === "es" ? (
             <>
               <section class="legal-section">
-                <h2>1. Identidad y Domicilio del Responsable</h2>
-                <p>
-                  <strong>Azury Labs LLC</strong> (en adelante, "Azury Labs"
-                  o "Nosotros"), con domicilio para efectos de este aviso en
-                  Idaho, Estados Unidos, es responsable del uso y protección de sus
-                  datos personales, y al respecto le informamos lo siguiente:
-                </p>
+                <h2>1. Quiénes Somos</h2>
+                <p><strong>Azury Labs LLC</strong> ("Azury Labs", "nosotros" o "nuestro") es una compañía de responsabilidad limitada constituida en el Estado de Idaho, Estados Unidos. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos la información personal cuando visitas azurylabs.online (el "Sitio"), nos contactas, usas nuestro chat o herramientas de soporte, o interactúas de cualquier otra forma con nuestros productos y servicios (en conjunto, los "Servicios").</p>
                 <div class="legal-responsible">
                   <p>
                     <strong>Responsable:</strong> Azury Labs LLC
+                  </p>
+                  <p>
+                    <strong>Estado de constitución:</strong> Idaho, Estados Unidos
                   </p>
                   <p>
                     <strong>Sitio web:</strong>{" "}
@@ -72,116 +70,110 @@ const desc =
               </section>
 
               <section class="legal-section">
-                <h2>2. Datos Personales que Recabamos</h2>
-                <p>
-                  Para llevar a cabo las finalidades descritas en este aviso de
-                  privacidad, utilizaremos los siguientes datos personales:
-                  datos de identificación (nombre completo), datos de contacto
-                  (correo electrónico, teléfono), datos laborales (cargo,
-                  empresa) y datos de facturación.
-                </p>
-              </section>
-
-              <section class="legal-section">
-                <h2>3. Finalidades del Tratamiento</h2>
-                <p>
-                  Utilizaremos sus datos personales para las siguientes
-                  finalidades necesarias para el servicio que solicita:
-                </p>
+                <h2>2. Información que Recopilamos</h2>
+                <p>Recopilamos las siguientes categorías de información personal:</p>
                 <ul>
-                  <li>
-                    Proveer los servicios de agentes de IA, CRM y desarrollo de
-                    software contratados.
-                  </li>
-                  <li>Facturación y cobro.</li>
-                  <li>
-                    Dar cumplimiento a obligaciones y requerimientos legales.
-                  </li>
-                  <li>
-                    Mantener la seguridad de nuestra infraestructura y prevenir
-                    fraudes.
-                  </li>
+                  <li><strong>Información que nos proporcionas:</strong> nombre, correo electrónico, teléfono, empresa y cargo, y el contenido de cualquier mensaje, conversación de chat, solicitud de soporte o formulario que nos envíes.</li>
+                  <li><strong>Información de cuenta y facturación:</strong> si contratas o usas nuestros Servicios, los datos necesarios para crear tu cuenta, emitir facturas y procesar pagos. Los datos de tarjetas de pago los gestionan nuestros procesadores de pago y no se almacenan en nuestros servidores.</li>
+                  <li><strong>Información recopilada automáticamente:</strong> dirección IP, tipo de navegador y dispositivo, sistema operativo, idioma, páginas y enlaces de origen, páginas visitadas, ubicación aproximada derivada de la IP, y fecha y hora de tu visita.</li>
+                  <li><strong>Cookies y tecnologías similares:</strong> consulta la Sección 5.</li>
                 </ul>
-                <p>
-                  De manera adicional, utilizaremos su información para
-                  finalidades secundarias que nos permiten y facilitan brindarle
-                  una mejor atención: enviar información sobre nuevos productos,
-                  boletines y encuestas de calidad.
-                </p>
+                <p>No recopilamos de forma intencional información personal sensible a través del Sitio. Te pedimos no incluir información sensible (como números de identificación oficial, cuentas financieras o información de salud) en mensajes o formularios.</p>
               </section>
 
               <section class="legal-section">
-                <h2>4. Transferencia de Datos</h2>
-                <p>
-                  Le informamos que sus datos personales no serán vendidos ni
-                  compartidos con terceros ajenos a Azury Labs LLC para
-                  fines comerciales sin su consentimiento, salvo las excepciones
-                  previstas en el artículo 37 de la Ley Federal de Protección de
-                  Datos Personales en Posesión de los Particulares.
-                </p>
+                <h2>3. Cómo Usamos la Información</h2>
+                <p>Usamos la información personal para:</p>
+                <ul>
+                  <li>Responder tus consultas y brindar atención al cliente.</li>
+                  <li>Proveer, operar, proteger y mejorar el Sitio y nuestros Servicios, incluidos nuestros agentes de IA, CRM y desarrollo de software.</li>
+                  <li>Calificar y dar seguimiento a las consultas comerciales que nos envías por el formulario de contacto o el chat.</li>
+                  <li>Procesar transacciones, enviar facturas y administrar nuestra relación comercial contigo.</li>
+                  <li>Medir cómo llegan y usan el Sitio los visitantes para mejorarlo.</li>
+                  <li>Enviar novedades de producto, boletines y mensajes promocionales, cuando la ley lo permita. Puedes darte de baja en cualquier momento.</li>
+                  <li>Detectar, prevenir e investigar fraude, abuso e incidentes de seguridad.</li>
+                  <li>Cumplir obligaciones legales y hacer valer nuestros acuerdos.</li>
+                </ul>
               </section>
 
               <section class="legal-section">
-                <h2>5. Derechos ARCO</h2>
-                <p>
-                  Usted tiene derecho a conocer qué datos personales tenemos de
-                  usted, para qué los utilizamos y las condiciones del uso que
-                  les damos (Acceso). Asimismo, es su derecho solicitar la
-                  corrección de su información personal en caso de que esté
-                  desactualizada, sea inexacta o incompleta (Rectificación); que
-                  la eliminemos de nuestros registros o bases de datos cuando
-                  considere que la misma no está siendo utilizada adecuadamente
-                  (Cancelación); así como oponerse al uso de sus datos
-                  personales para fines específicos (Oposición).
-                </p>
-                <p>
-                  Para ejercer cualquiera de los derechos ARCO, deberá presentar
-                  la solicitud respectiva enviando un correo electrónico a:{" "}
-                  <a href="mailto:privacidad@azurylabs.online">
-                    privacidad@azurylabs.online
-                  </a>
-                  .
-                </p>
+                <h2>4. Cómo Divulgamos la Información</h2>
+                <p><strong>No vendemos tu información personal</strong> ni la compartimos con terceros para publicidad conductual entre contextos. Solo podemos divulgarla en estos casos:</p>
+                <ul>
+                  <li><strong>Proveedores de servicios</strong> que procesan información en nuestro nombre bajo contrato, como alojamiento e infraestructura, gestión de contenido, correo y comunicaciones, analítica y medición, atención al cliente y procesamiento de pagos.</li>
+                  <li><strong>Afiliadas:</strong> empresas bajo propiedad o control común con Azury Labs que apoyan la operación de nuestros Servicios.</li>
+                  <li><strong>Requerimientos legales y de seguridad:</strong> cuando lo exija la ley, una orden judicial o un proceso legal, o para proteger los derechos, la propiedad o la seguridad de Azury Labs, de nuestros usuarios o de terceros.</li>
+                  <li><strong>Transferencias corporativas:</strong> en relación con una fusión, adquisición, financiamiento, reorganización o venta de activos, en cuyo caso la información podrá transferirse a la entidad sucesora.</li>
+                  <li><strong>Con tu consentimiento</strong> o por instrucción tuya.</li>
+                </ul>
               </section>
 
               <section class="legal-section">
-                <h2>6. Uso de Tecnologías de Rastreo</h2>
-                <p>
-                  Le informamos que en nuestra página de internet utilizamos
-                  cookies y otras tecnologías, a través de las cuales es posible
-                  monitorear su comportamiento como usuario de internet, así
-                  como brindarle un mejor servicio y experiencia al navegar en
-                  nuestra página.
-                </p>
+                <h2>5. Cookies y Tecnologías de Rastreo</h2>
+                <p>El Sitio usa cookies, almacenamiento local y tecnologías similares para recordar preferencias (como el tema claro u oscuro y el idioma), mantener vinculadas tus solicitudes de soporte a tu navegador, y medir visitas y la efectividad de nuestros enlaces y campañas. Puedes controlar las cookies desde la configuración de tu navegador; desactivarlas puede afectar algunas funciones del Sitio.</p>
+                <p>Cuando la ley aplicable lo exige, respetamos las señales de preferencia de exclusión como Global Privacy Control (GPC). Actualmente el Sitio no responde a las señales "No Rastrear" (Do Not Track) de los navegadores porque no existe un estándar común para ellas.</p>
               </section>
 
               <section class="legal-section">
-                <h2>7. Cambios al Aviso de Privacidad</h2>
-                <p>
-                  El presente aviso de privacidad puede sufrir modificaciones,
-                  cambios o actualizaciones derivadas de nuevos requerimientos
-                  legales; de nuestras propias necesidades por los productos o
-                  servicios que ofrecemos; de nuestras prácticas de privacidad;
-                  de cambios en nuestro modelo de negocio, o por otras causas.
-                  Nos comprometemos a mantenerlo informado sobre los cambios que
-                  pueda sufrir este aviso de privacidad a través de nuestro
-                  sitio web.
-                </p>
+                <h2>6. Conservación de Datos</h2>
+                <p>Conservamos la información personal solo el tiempo necesario para los fines descritos en esta política, incluido proveer los Servicios, resolver disputas, mantener registros contables y fiscales, y cumplir obligaciones legales. Cuando ya no la necesitamos, la eliminamos o la anonimizamos.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>7. Seguridad</h2>
+                <p>Utilizamos medidas administrativas, técnicas y físicas razonables para proteger la información personal. Ningún método de transmisión o almacenamiento es completamente seguro, por lo que no podemos garantizar seguridad absoluta. Si crees que tu interacción con nosotros dejó de ser segura, contáctanos de inmediato.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>8. Tus Derechos de Privacidad</h2>
+                <p>Según el estado en el que vivas (por ejemplo, California y un número creciente de otros estados de EE. UU.), puedes tener derecho a:</p>
+                <ul>
+                  <li>Conocer y acceder a la información personal que hemos recopilado sobre ti, así como las categorías de fuentes, finalidades y destinatarios.</li>
+                  <li>Corregir información personal inexacta.</li>
+                  <li>Eliminar la información personal que tenemos sobre ti, sujeto a excepciones legales.</li>
+                  <li>Obtener una copia portable de tu información personal.</li>
+                  <li>Optar por no participar en la venta o el intercambio de información personal, la publicidad dirigida y ciertas elaboraciones de perfiles. Como se indicó, no vendemos ni compartimos información personal para estos fines.</li>
+                  <li>No ser discriminado por ejercer tus derechos.</li>
+                </ul>
+                <p>Para ejercer estos derechos, escríbenos a <a href="mailto:privacy@azurylabs.online">privacy@azurylabs.online</a> con tu solicitud y la información suficiente para verificar tu identidad. Puedes usar un agente autorizado para presentar una solicitud en tu nombre y podemos pedirte prueba de la autorización. Responderemos en un plazo de 45 días, que podemos extender una vez por otros 45 días cuando la ley lo permita. Si denegamos tu solicitud, puedes apelar respondiendo a nuestro mensaje; revisaremos el caso y te informaremos el resultado por escrito.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>9. Privacidad de Menores</h2>
+                <p>El Sitio y nuestros Servicios están dirigidos a empresas y adultos. No recopilamos de forma intencional información personal de menores de 13 años (o de 16 cuando la ley aplicable lo requiera). Si crees que un menor nos proporcionó información personal, contáctanos y la eliminaremos.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>10. Visitantes Internacionales</h2>
+                <p>Azury Labs tiene su sede en Estados Unidos y la información que recopilamos se procesa y almacena en Estados Unidos y en otros países donde operan nuestros proveedores. Si accedes al Sitio desde fuera de Estados Unidos, entiendes que tu información será transferida y procesada en Estados Unidos, donde las leyes de protección de datos pueden diferir de las de tu país.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>11. Enlaces de Terceros</h2>
+                <p>El Sitio puede enlazar a sitios y productos operados por terceros, incluidos otros productos de nuestro ecosistema. No somos responsables de sus prácticas de privacidad y te recomendamos leer sus políticas.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>12. Cambios a esta Política</h2>
+                <p>Podemos actualizar esta Política de Privacidad periódicamente. Publicaremos la versión actualizada en esta página y modificaremos la fecha de "Última actualización". Si los cambios son importantes, daremos aviso adicional según lo exija la ley.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>13. Contacto</h2>
+                <p>Para preguntas sobre esta Política de Privacidad o para ejercer tus derechos, contacta a Azury Labs LLC en <a href="mailto:privacy@azurylabs.online">privacy@azurylabs.online</a>.</p>
               </section>
             </>
           ) : (
             <>
               <section class="legal-section">
-                <h2>1. Identity and Address of the Data Controller</h2>
-                <p>
-                  <strong>Azury Labs LLC</strong> (hereinafter, "Azury Labs" or "We"), with address for the purposes of this
-                  notice in Idaho, United States, is responsible for the use and
-                  protection of your personal data, and in this regard we inform
-                  you as follows:
-                </p>
+                <h2>1. Who We Are</h2>
+                <p><strong>Azury Labs LLC</strong> ("Azury Labs," "we," "us" or "our") is a limited liability company organized in the State of Idaho, United States. This Privacy Policy explains how we collect, use, disclose and protect personal information when you visit azurylabs.online (the "Site"), contact us, use our chat or support tools, or otherwise interact with our products and services (together, the "Services").</p>
                 <div class="legal-responsible">
                   <p>
-                    <strong>Responsible:</strong> Azury Labs LLC
+                    <strong>Company:</strong> Azury Labs LLC
+                  </p>
+                  <p>
+                    <strong>State of organization:</strong> Idaho, United States
                   </p>
                   <p>
                     <strong>Website:</strong>{" "}
@@ -197,92 +189,97 @@ const desc =
               </section>
 
               <section class="legal-section">
-                <h2>2. Personal Data We Collect</h2>
-                <p>
-                  To carry out the purposes described in this privacy notice, we
-                  will use the following personal data: identification data
-                  (full name), contact data (email, phone), employment data (job
-                  title, company), and billing data.
-                </p>
-              </section>
-
-              <section class="legal-section">
-                <h2>3. Purposes of Processing</h2>
-                <p>
-                  We will use your personal data for the following purposes
-                  necessary for the service you request:
-                </p>
+                <h2>2. Information We Collect</h2>
+                <p>We collect the following categories of personal information:</p>
                 <ul>
-                  <li>
-                    Provide the contracted AI agents, CRM, and software
-                    development services.
-                  </li>
-                  <li>Billing and collection.</li>
-                  <li>Comply with legal obligations and requirements.</li>
-                  <li>
-                    Maintain the security of our infrastructure and prevent
-                    fraud.
-                  </li>
+                  <li><strong>Information you provide:</strong> name, email address, phone number, company and job title, and the content of any message, chat conversation, support request or form submission you send us.</li>
+                  <li><strong>Account and billing information:</strong> if you purchase or use our Services, the details needed to create your account, issue invoices and process payments. Payment card data is handled by our payment processors and is not stored on our servers.</li>
+                  <li><strong>Information collected automatically:</strong> IP address, browser and device type, operating system, language, referring pages and links, pages viewed, approximate location derived from IP address, and the date and time of your visit.</li>
+                  <li><strong>Cookies and similar technologies:</strong> see Section 5.</li>
                 </ul>
-                <p>
-                  Additionally, we will use your information for secondary
-                  purposes that allow us to provide better service: sending
-                  information about new products, newsletters, and quality
-                  surveys.
-                </p>
+                <p>We do not knowingly collect sensitive personal information through the Site. Please do not include sensitive information (such as government ID numbers, financial account numbers or health information) in messages or forms.</p>
               </section>
 
               <section class="legal-section">
-                <h2>4. Data Transfers</h2>
-                <p>
-                  We inform you that your personal data will not be sold or
-                  shared with third parties outside Azury Labs LLC for
-                  commercial purposes without your consent, except for the
-                  exceptions provided by law.
-                </p>
+                <h2>3. How We Use Information</h2>
+                <p>We use personal information to:</p>
+                <ul>
+                  <li>Respond to your inquiries and provide customer support.</li>
+                  <li>Provide, operate, secure and improve the Site and our Services, including our AI agent, CRM and software development offerings.</li>
+                  <li>Qualify and follow up on sales inquiries you send us through the contact form or chat.</li>
+                  <li>Process transactions, send invoices and manage our business relationship with you.</li>
+                  <li>Measure how visitors reach and use the Site so we can improve it.</li>
+                  <li>Send product updates, newsletters and promotional messages, where permitted by law. You can opt out at any time.</li>
+                  <li>Detect, prevent and investigate fraud, abuse and security incidents.</li>
+                  <li>Comply with legal obligations and enforce our agreements.</li>
+                </ul>
               </section>
 
               <section class="legal-section">
-                <h2>5. ARCO Rights</h2>
-                <p>
-                  You have the right to know what personal data we have about
-                  you, what we use it for, and the conditions of use (Access).
-                  Likewise, it is your right to request the correction of your
-                  personal information if it is outdated, inaccurate, or
-                  incomplete (Rectification); that we remove it from our records
-                  or databases when you consider that it is not being used
-                  properly (Cancellation); as well as to oppose the use of your
-                  personal data for specific purposes (Opposition).
-                </p>
-                <p>
-                  To exercise any of the ARCO rights, you must submit the
-                  respective request by sending an email to:{" "}
-                  <a href="mailto:privacy@azurylabs.online">privacy@azurylabs.online</a>
-                  .
-                </p>
+                <h2>4. How We Disclose Information</h2>
+                <p><strong>We do not sell your personal information</strong>, and we do not share it with third parties for cross-context behavioral advertising. We may disclose personal information only in these circumstances:</p>
+                <ul>
+                  <li><strong>Service providers</strong> that process information on our behalf under contract, such as hosting and infrastructure, content management, email and communications, analytics and measurement, customer support, and payment processing.</li>
+                  <li><strong>Affiliates:</strong> companies under common ownership or control with Azury Labs that support the operation of our Services.</li>
+                  <li><strong>Legal and safety:</strong> when required by law, subpoena or legal process, or to protect the rights, property or safety of Azury Labs, our users or others.</li>
+                  <li><strong>Business transfers:</strong> in connection with a merger, acquisition, financing, reorganization or sale of assets, in which case the information may be transferred to the successor entity.</li>
+                  <li><strong>With your consent</strong> or at your direction.</li>
+                </ul>
               </section>
 
               <section class="legal-section">
-                <h2>6. Use of Tracking Technologies</h2>
-                <p>
-                  We inform you that on our website we use cookies and other
-                  technologies, through which it is possible to monitor your
-                  behavior as an internet user, as well as to provide you with a
-                  better service and experience when browsing our page.
-                </p>
+                <h2>5. Cookies and Tracking Technologies</h2>
+                <p>The Site uses cookies, local storage and similar technologies to remember preferences (such as light or dark theme and language), keep support requests linked to your browser, and measure visits and the effectiveness of our links and campaigns. You can control cookies through your browser settings; disabling them may affect some features of the Site.</p>
+                <p>Where required by applicable law, we honor opt-out preference signals such as the Global Privacy Control (GPC). The Site does not currently respond to "Do Not Track" browser signals because there is no common standard for them.</p>
               </section>
 
               <section class="legal-section">
-                <h2>7. Changes to the Privacy Notice</h2>
-                <p>
-                  This privacy notice may suffer modifications, changes, or
-                  updates derived from new legal requirements; from our own
-                  needs regarding the products or services we offer; from our
-                  privacy practices; from changes in our business model, or for
-                  other reasons. We are committed to keeping you informed about
-                  the changes that this privacy notice may suffer through our
-                  website.
-                </p>
+                <h2>6. Data Retention</h2>
+                <p>We keep personal information only as long as needed for the purposes described in this policy, including to provide the Services, resolve disputes, keep business and tax records, and comply with legal obligations. When information is no longer needed, we delete or de-identify it.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>7. Security</h2>
+                <p>We use reasonable administrative, technical and physical safeguards designed to protect personal information. No method of transmission or storage is completely secure, so we cannot guarantee absolute security. If you believe your interaction with us is no longer secure, contact us immediately.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>8. Your Privacy Rights</h2>
+                <p>Depending on the state where you live (for example, California and a growing number of other U.S. states), you may have the right to:</p>
+                <ul>
+                  <li>Know and access the personal information we have collected about you, and the categories of sources, purposes and recipients.</li>
+                  <li>Correct inaccurate personal information.</li>
+                  <li>Delete personal information we hold about you, subject to legal exceptions.</li>
+                  <li>Obtain a portable copy of your personal information.</li>
+                  <li>Opt out of the sale or sharing of personal information, targeted advertising and certain profiling. As stated above, we do not sell or share personal information for these purposes.</li>
+                  <li>Not be discriminated against for exercising your rights.</li>
+                </ul>
+                <p>To exercise these rights, email us at <a href="mailto:privacy@azurylabs.online">privacy@azurylabs.online</a> with your request and enough information for us to verify your identity. You may use an authorized agent to submit a request on your behalf, and we may ask for proof of authorization. We will respond within 45 days, and may extend that period once by another 45 days where permitted by law. If we deny your request, you may appeal by replying to our response, and we will review it and tell you the outcome in writing.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>9. Children's Privacy</h2>
+                <p>The Site and our Services are intended for businesses and adults. We do not knowingly collect personal information from children under 13 (or under 16 where applicable law requires). If you believe a child has provided us personal information, contact us and we will delete it.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>10. International Visitors</h2>
+                <p>Azury Labs is based in the United States and information we collect is processed and stored in the United States and other countries where our providers operate. If you access the Site from outside the United States, you understand that your information will be transferred to, and processed in, the United States, where data protection laws may differ from those of your country.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>11. Third-Party Links</h2>
+                <p>The Site may link to websites and products operated by third parties, including other products in our ecosystem. We are not responsible for their privacy practices, and we encourage you to read their policies.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>12. Changes to This Policy</h2>
+                <p>We may update this Privacy Policy from time to time. We will post the updated version on this page and change the "Last updated" date. If changes are material, we will provide additional notice as required by law.</p>
+              </section>
+
+              <section class="legal-section">
+                <h2>13. Contact Us</h2>
+                <p>For questions about this Privacy Policy or to exercise your rights, contact Azury Labs LLC at <a href="mailto:privacy@azurylabs.online">privacy@azurylabs.online</a>.</p>
               </section>
             </>
           )
