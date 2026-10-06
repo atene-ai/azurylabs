@@ -59,7 +59,20 @@ const structuredData = {
       "@id": `${site}#organization`,
       name: SITE_NAME,
       url: site.toString(),
-      logo: new URL("/images/logos/iruzlabs-isotipo-light.png", site).toString(),
+      logo: new URL("/images/logos/azurylabs-isotipo-light.png", site).toString(),
+      description:
+        "Azury Labs builds applied AI and software products: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio (business management), CIEE (surveys and research), Systems (custom software), Connect (official WhatsApp API) and Tracking System (product analytics).",
+      areaServed: ["MX", "CO", "US"],
+      knowsAbout: [
+        "Applied artificial intelligence",
+        "AI agents",
+        "Autonomous software engineering",
+        "Omnichannel CRM",
+        "Market research",
+        "Custom software development",
+        "WhatsApp Business API",
+        "Marketing and campaign analytics",
+      ],
       sameAs: SAME_AS,
     },
     {
@@ -159,6 +172,8 @@ const structuredData = {
       observeElements();
       document.addEventListener("astro:page-load", observeElements);
     </script>
+    <!-- Iruz Links: mide las visitas que llegan desde nuestros links/QR (llave publicable, segura de publicar) -->
+    <script is:inline src="https://go.iruzlabs.com/t.js" data-key="iruz_pk_890da6448cd4ae3bf4d5e11b482f6d5e90d5275e180d5df3" defer></script>
   </body>
 </html>
 

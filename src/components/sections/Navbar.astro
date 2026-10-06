@@ -271,7 +271,7 @@ const enPath = lang === "en" ? currentPath : nextPath;
   }
 
   /* ── Logo ── */
-      .navbar__logo {
+  .navbar__logo {
     display: flex;
     align-items: center;
     gap: var(--space-3);
@@ -311,23 +311,6 @@ const enPath = lang === "en" ? currentPath : nextPath;
     .logo__mark {
       height: 40px;
     }
-  }
-
-  
-  
-
-  
-
-  .navbar__logo:hover 
-
-  /* Horizontal logotype swaps to dark version on light theme */
-  :global(:root[data-theme="light"]) 
-
-  /* Compact when navbar shrinks on scroll */
-  .navbar--scrolled 
-
-  @media (max-width: 480px) {
-    
   }
 
   /* ── Nav ── */
@@ -602,9 +585,13 @@ const enPath = lang === "en" ? currentPath : nextPath;
       gap: 10px;
     }
 
-    
+    .logo__mark {
+      height: 36px;
+    }
 
-    .navbar--scrolled 
+    .navbar--scrolled .logo__mark {
+      height: 34px;
+    }
 
     .navbar__nav {
       gap: 8px;

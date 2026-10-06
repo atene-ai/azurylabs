@@ -1,0 +1,713 @@
+---
+import { useTranslations } from "../../i18n/utils";
+
+export interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Guided lead-qualification flow: no AI involved, just a fixed sequence of
+// multiple-choice questions that ends in a name/email capture. Content lives
+// in the yaml dictionaries so both locales stay in sync.
+const flowConfig = {
+  steps: [
+    {
+      id: "interest",
+      question: t("chat.flow.interest.question"),
+      options: t("chat.flow.interest.options"),
+    },
+    {
+      id: "role",
+      question: t("chat.flow.role.question"),
+      options: t("chat.flow.role.options"),
+    },
+    {
+      id: "timeline",
+      question: t("chat.flow.timeline.question"),
+      options: t("chat.flow.timeline.options"),
+    },
+  ],
+  contact: {
+    question: t("chat.contact.question"),
+    nameLabel: t("chat.contact.nameLabel"),
+    namePlaceholder: t("chat.contact.namePlaceholder"),
+    emailLabel: t("chat.contact.emailLabel"),
+    emailPlaceholder: t("chat.contact.emailPlaceholder"),
+    submit: t("chat.contact.submit"),
+    sending: t("chat.contact.sending"),
+  },
+  success: t("chat.success"),
+  error: t("chat.error"),
+  restart: t("chat.restart"),
+};
+---
+
+<div id="chat-widget" class="chat-widget">
+  <!-- Chat Window -->
+  <div id="chat-window" class="chat-window">
+    <!-- Header -->
+    <div class="chat-window__header">
+      <div class="chat-window__identity">
+        <div class="chat-window__avatar">
+          <img
+            src="/images/logos/azurylabs-isotipo-white.png"
+            alt=""
+            width="22"
+            height="22"
+          />
+        </div>
+        <div>
+          <p class="chat-window__name">Azury Labs</p>
+          <p class="chat-window__status">{t("chat.status")}</p>
+        </div>
+      </div>
+      <button id="chat-close" class="chat-window__close" aria-label="Cerrar chat">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><line x1="18" y1="6" x2="6" y2="18"></line><line
+            x1="6"
+            y1="6"
+            x2="18"
+            y2="18"></line></svg
+        >
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div id="chat-messages" class="chat-window__messages">
+      <div class="chat-bubble chat-bubble--bot">
+        <p>
+          {t("chat.welcomePrefix")}
+          {" "}
+          <strong>Azury Labs</strong>.
+          {" "}
+          {t("chat.welcomeSuffix")}
+        </p>
+      </div>
+    </div>
+
+    <!-- Dynamic area: options for the current step, or the final contact form -->
+    <div id="chat-input-area" class="chat-window__input"></div>
+  </div>
+
+  <!-- Toggle button -->
+  <button id="chat-toggle" class="chat-toggle" aria-label="Abrir chat">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+      ></path>
+    </svg>
+  </button>
+</div>
+
+<script type="application/json" id="chat-flow-config" set:html={JSON.stringify(flowConfig)} />
+
+<style is:global>
+  /* Global on purpose: chat bubbles, options and the typing indicator are
+     created client-side via document.createElement, so they never receive
+     Astro's scoped data-astro-cid attribute and scoped selectors would
+     silently miss them. Class names are prefixed (chat-*) to avoid
+     collisions. */
+  .chat-widget {
+    position: fixed;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    /* Above the navbar's z-index (1000): the window is anchored to the
+       viewport bottom and grows upward, so on shorter viewports it reaches
+       high enough to overlap the navbar — it must win that overlap instead
+       of being hidden behind it. */
+    z-index: 1010;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: var(--font-body);
+  }
+
+  /* ── Toggle button ── */
+  .chat-toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-full);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      135deg,
+      var(--color-brand) 0%,
+      var(--color-glow) 100%
+    );
+    color: #fff;
+    box-shadow: var(--shadow-brand);
+    cursor: pointer;
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  .chat-toggle:hover {
+    transform: scale(1.08);
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* ── Window ── */
+  .chat-window {
+    display: none;
+    flex-direction: column;
+    width: min(400px, calc(100vw - 2 * var(--space-6)));
+    height: min(600px, calc(100vh - 140px));
+    margin-bottom: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+    transition:
+      opacity var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out);
+  }
+
+  .chat-window.is-open {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .chat-window__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    background: linear-gradient(
+      135deg,
+      var(--color-brand) 0%,
+      var(--color-blue) 100%
+    );
+    color: #fff;
+  }
+
+  .chat-window__identity {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .chat-window__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .chat-window__name {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: #fff;
+    margin: 0;
+  }
+
+  .chat-window__status {
+    font-size: var(--text-xs);
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+  }
+
+  .chat-window__close {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+
+  .chat-window__close:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+  }
+
+  .chat-window__messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    background: var(--color-bg);
+  }
+
+  .chat-bubble {
+    max-width: 80%;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+  }
+
+  .chat-bubble p {
+    margin: 0;
+    /* global.css sets `p { color: var(--color-text-muted) }`, which beats the
+       inherited bubble color since it's an explicit rule on the element
+       itself — restate the color here so it isn't silently overridden. */
+    color: inherit;
+  }
+
+  .chat-bubble--bot {
+    align-self: flex-start;
+    /* --color-surface is nearly identical to --color-bg in dark mode, so bot
+       bubbles blended into the messages panel; surface-2 + a real border
+       keep them legible in both themes. */
+    background: var(--color-surface-2);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-bottom-left-radius: var(--radius-sm);
+  }
+
+  .chat-bubble--user {
+    align-self: flex-end;
+    background: linear-gradient(
+      135deg,
+      var(--color-brand) 0%,
+      var(--color-blue) 100%
+    );
+    color: #fff;
+    border-bottom-right-radius: var(--radius-sm);
+  }
+
+  .chat-window__input {
+    flex-shrink: 0;
+    max-height: 45%;
+    overflow-y: auto;
+    padding: var(--space-4);
+    border-top: 1px solid var(--color-border-subtle);
+    background: var(--color-surface);
+  }
+
+  .chat-window__powered {
+    margin: var(--space-3) 0 0;
+    text-align: center;
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+  }
+
+  /* ── Option buttons ──
+     Compact by design: the longest step has 6 options, and they need to fit
+     without forcing a scroll inside the already-scrollable input area. */
+  .chat-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .chat-option {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-2);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    line-height: 1.3;
+    cursor: pointer;
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      background var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  .chat-option:hover {
+    border-color: var(--color-brand);
+    background: var(--color-brand-dim);
+    transform: translateY(-1px);
+  }
+
+  /* ── Contact form (final step) ── */
+  .chat-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .chat-contact-form label {
+    display: block;
+    margin-bottom: var(--space-1);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-muted);
+  }
+
+  .chat-contact-form input {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface-2);
+    color: var(--color-text);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+  }
+
+  .chat-contact-form input:focus {
+    outline: none;
+    border-color: var(--color-brand);
+  }
+
+  .chat-contact-form input::placeholder {
+    color: var(--color-text-faint);
+  }
+
+  .chat-contact-form button[type="submit"] {
+    padding: var(--space-3);
+    border: none;
+    border-radius: var(--radius-md);
+    background: linear-gradient(
+      135deg,
+      var(--color-brand) 0%,
+      var(--color-glow) 100%
+    );
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+    transition: filter var(--duration-fast) var(--ease-out);
+  }
+
+  .chat-contact-form button[type="submit"]:hover:not(:disabled) {
+    filter: brightness(1.05);
+  }
+
+  .chat-contact-form button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .chat-status-text {
+    margin: 0;
+    font-size: var(--text-xs);
+  }
+
+  .chat-status-text[data-state="error"] {
+    color: #ef4444;
+  }
+
+  /* ── Restart ── */
+  .chat-restart {
+    align-self: center;
+    background: transparent;
+    border: none;
+    color: var(--color-brand);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* ── Typing indicator ── */
+  .typing-dots {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    height: 1rem;
+  }
+
+  .typing-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--color-text-faint);
+    animation: typing-bounce 1.4s infinite ease-in-out;
+  }
+
+  .typing-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes typing-bounce {
+    0%,
+    60%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.6;
+    }
+    30% {
+      transform: translateY(-6px);
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .chat-widget {
+      right: var(--space-4);
+      bottom: var(--space-4);
+    }
+  }
+
+  /* On phones a fixed 400x600 desktop-sized panel either overflows the
+     viewport or overlaps the navbar/hero behind it. Below this breakpoint the
+     window takes over the full screen instead, same as most chat widgets. */
+  @media (max-width: 640px) {
+    .chat-window {
+      position: fixed;
+      inset: 0;
+      z-index: 1010;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      margin: 0;
+      border-radius: 0;
+      border: none;
+    }
+
+    .chat-window__input {
+      max-height: 65%;
+    }
+  }
+</style>
+
+<script>
+  interface FlowOption {
+    value: string;
+    label: string;
+  }
+
+  interface FlowStep {
+    id: string;
+    question: string;
+    options: FlowOption[];
+  }
+
+  interface FlowConfig {
+    steps: FlowStep[];
+    contact: {
+      question: string;
+      nameLabel: string;
+      namePlaceholder: string;
+      emailLabel: string;
+      emailPlaceholder: string;
+      submit: string;
+      sending: string;
+    };
+    success: string;
+    error: string;
+    restart: string;
+  }
+
+  const configEl = document.getElementById("chat-flow-config");
+  const flow: FlowConfig = JSON.parse(configEl?.textContent || "{}");
+
+  const chatWindow = document.getElementById("chat-window");
+  const chatToggle = document.getElementById("chat-toggle");
+  const chatClose = document.getElementById("chat-close");
+  const chatMessages = document.getElementById("chat-messages");
+  const inputArea = document.getElementById("chat-input-area");
+
+  let isOpen = false;
+  let stepIndex = 0;
+  const answers: { question: string; label: string }[] = [];
+
+  function toggleChat() {
+    if (!chatWindow) return;
+    isOpen = !isOpen;
+    chatWindow.classList.toggle("is-open", isOpen);
+  }
+
+  chatToggle?.addEventListener("click", toggleChat);
+  chatClose?.addEventListener("click", toggleChat);
+
+  function scrollToBottom() {
+    chatMessages?.scrollTo({ top: chatMessages.scrollHeight, behavior: "smooth" });
+  }
+
+  function addMessage(text: string, sender: "user" | "bot") {
+    if (!chatMessages) return null;
+    const bubble = document.createElement("div");
+    bubble.className = `chat-bubble chat-bubble--${sender}`;
+    const p = document.createElement("p");
+    p.textContent = text;
+    bubble.appendChild(p);
+    chatMessages.appendChild(bubble);
+    scrollToBottom();
+    return bubble;
+  }
+
+  async function showTypingThen(render: () => void) {
+    if (!chatMessages) return render();
+    const bubble = document.createElement("div");
+    bubble.className = "chat-bubble chat-bubble--bot";
+    const typing = document.createElement("div");
+    typing.className = "typing-dots";
+    for (let i = 0; i < 3; i++) typing.appendChild(document.createElement("span"));
+    bubble.appendChild(typing);
+    chatMessages.appendChild(bubble);
+    scrollToBottom();
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    bubble.remove();
+    render();
+  }
+
+  function renderOptions(step: FlowStep) {
+    if (!inputArea) return;
+    addMessage(step.question, "bot");
+
+    const container = document.createElement("div");
+    container.className = "chat-options";
+    step.options.forEach((option) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "chat-option";
+      button.textContent = option.label;
+      button.addEventListener("click", () => handleOptionSelected(step, option));
+      container.appendChild(button);
+    });
+
+    inputArea.innerHTML = "";
+    inputArea.appendChild(container);
+  }
+
+  function handleOptionSelected(step: FlowStep, option: FlowOption) {
+    addMessage(option.label, "user");
+    answers.push({ question: step.question, label: option.label });
+    stepIndex += 1;
+
+    const nextStep = flow.steps[stepIndex];
+    showTypingThen(() => {
+      if (nextStep) {
+        renderOptions(nextStep);
+      } else {
+        renderContactForm();
+      }
+    });
+  }
+
+  function renderContactForm() {
+    if (!inputArea) return;
+    addMessage(flow.contact.question, "bot");
+
+    inputArea.innerHTML = "";
+
+    const form = document.createElement("form");
+    form.className = "chat-contact-form";
+    form.innerHTML = `
+      <div>
+        <label for="chat-lead-name">${flow.contact.nameLabel}</label>
+        <input id="chat-lead-name" name="name" type="text" required maxlength="200" placeholder="${flow.contact.namePlaceholder}" autocomplete="name" />
+      </div>
+      <div>
+        <label for="chat-lead-email">${flow.contact.emailLabel}</label>
+        <input id="chat-lead-email" name="email" type="email" required maxlength="255" placeholder="${flow.contact.emailPlaceholder}" autocomplete="email" />
+      </div>
+      <p class="chat-status-text" role="status" aria-live="polite"></p>
+      <button type="submit">${flow.contact.submit}</button>
+    `;
+    inputArea.appendChild(form);
+
+    const nameInput = form.querySelector<HTMLInputElement>("#chat-lead-name");
+    const emailInput = form.querySelector<HTMLInputElement>("#chat-lead-email");
+    const status = form.querySelector<HTMLElement>(".chat-status-text");
+    const submitButton = form.querySelector<HTMLButtonElement>("button[type='submit']");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity() || !nameInput || !emailInput || !submitButton || !status) return;
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const baseUrl = import.meta.env.PUBLIC_ATENEAI_SUPPORT_BASE_URL || "";
+
+      status.textContent = "";
+      status.removeAttribute("data-state");
+      submitButton.disabled = true;
+      const originalLabel = submitButton.textContent;
+      submitButton.textContent = flow.contact.sending;
+
+      const summary = answers.map((a) => `${a.question} ${a.label}`).join("\n");
+
+      try {
+        if (!baseUrl) throw new Error("missing PUBLIC_ATENEAI_SUPPORT_BASE_URL");
+
+        const response = await fetch(`${baseUrl}/api/public/v1/contact`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, message: summary, website: "" }),
+        });
+        if (!response.ok) throw new Error(`status ${response.status}`);
+
+        renderSuccess(name, email);
+      } catch (error) {
+        console.error("Failed to submit chat lead", error);
+        status.textContent = flow.error;
+        status.dataset.state = "error";
+        submitButton.disabled = false;
+        submitButton.textContent = originalLabel;
+      }
+    });
+  }
+
+  function renderSuccess(name: string, email: string) {
+    if (!inputArea) return;
+    const message = flow.success
+      .replace("{name}", name)
+      .replace("{email}", email);
+    addMessage(message, "bot");
+
+    inputArea.innerHTML = "";
+    const restart = document.createElement("button");
+    restart.type = "button";
+    restart.className = "chat-restart";
+    restart.textContent = flow.restart;
+    restart.addEventListener("click", resetFlow);
+    inputArea.appendChild(restart);
+  }
+
+  function resetFlow() {
+    stepIndex = 0;
+    answers.length = 0;
+    if (chatMessages) {
+      // Keep only the initial welcome bubble.
+      while (chatMessages.children.length > 1) {
+        chatMessages.lastElementChild?.remove();
+      }
+    }
+    renderOptions(flow.steps[0]);
+  }
+
+  if (flow.steps?.length) {
+    renderOptions(flow.steps[0]);
+  }
+</script>

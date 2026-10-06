@@ -1,5 +1,5 @@
 /* ============================================================
-   IRUZ LABS — DESIGN TOKENS
+   AZURY LABS — DESIGN TOKENS
    Paleta de Marca · Tecnología · Innovación · Futuro
    Dark Theme (por defecto)
    ============================================================ */
@@ -25,7 +25,7 @@
   --color-blue: #00c8ff; /* Turquesa — Connectivity & UI     */
   --color-blue-dim: rgba(0, 200, 255, 0.15);
 
-  --color-glow: #00c8ff; /* Iruz Glow — Highlights & States  */
+  --color-glow: #00c8ff; /* Azury Glow — Highlights & States  */
 
   --color-text: #eaf4fb; /* Primary text                     */
   --color-text-muted: #7a8a9a; /* Plata — Secondary / muted text   */

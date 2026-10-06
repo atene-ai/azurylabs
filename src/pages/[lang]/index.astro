@@ -9,8 +9,11 @@ import Products from "../../components/sections/Products.astro";
 import Features from "../../components/sections/Features.astro";
 import HowItWorks from "../../components/sections/HowItWorks.astro";
 import Stats from "../../components/sections/Stats.astro";
+import FAQ from "../../components/sections/FAQ.astro";
 import CTA from "../../components/sections/CTA.astro";
 import Footer from "../../components/sections/Footer.astro";
+import { connectHref, trackingHref } from "../../lib/product-links";
+import ChatWidget from "../../components/widgets/ChatWidget.astro";
 
 export function getStaticPaths() {
   return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
@@ -20,13 +23,104 @@ const { lang } = Astro.params;
 const htmlLang = lang === "en" ? "en" : "es-MX";
 
 const titleMap = {
-  es: "Azury Labs — Inteligencia artificial aplicada, productos y soluciones a medida",
-  en: "Azury Labs — Applied AI, products and custom solutions",
+  es: "Azury Labs — Agentes de IA, CRM, ingeniería autónoma y software a medida",
+  en: "Azury Labs — AI agents, CRM, autonomous engineering and custom software",
 };
 
 const descMap = {
-  es: "Azury Labs crea productos propios y soluciones de inteligencia artificial aplicada para que las empresas vendan más, operen mejor y tomen decisiones con datos.",
-  en: "Azury Labs creates its own applied artificial intelligence products and custom solutions so companies can sell more, operate better and make data-driven decisions.",
+  es: "Azury Labs es una empresa de software e IA aplicada con ocho líneas: Atenea (agentes de IA para mensajes y voz en tiempo real), Lindex (ingeniería de software autónoma), Sales OS (CRM omnicanal), Mi Negocio, CIEE (encuestas e investigación), Systems (software a medida), Connect (API oficial de WhatsApp) y Tracking System (analítica de producto).",
+  en: "Azury Labs is an applied AI and software company with eight lines: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio, CIEE (surveys and research), Systems (custom software), Connect (official WhatsApp API) and Tracking System (product analytics).",
+};
+
+const products = [
+  {
+    name: "Iruz Atenea",
+    url: "https://v3.atenea.iruzlabs.com",
+    category: "AI agent platform",
+    description: lang === "en"
+      ? "Platform to create AI agents that handle messages and voice in real time, connect to business systems and execute real processes."
+      : "Plataforma para crear agentes de IA que atienden mensajes y voz en tiempo real, se conectan a los sistemas del negocio y ejecutan procesos reales.",
+  },
+  {
+    name: "Iruz Lindex",
+    url: "https://lindex.iruzlabs.com",
+    category: "Autonomous software engineering harness",
+    description: lang === "en"
+      ? "Harness that coordinates AI agents from ticket to code, tests and a deployed preview, with isolated execution, full traceability and per-task budget control."
+      : "Harness que coordina agentes de IA del ticket al código, las pruebas y un preview desplegado, con ejecución aislada, trazabilidad y control de presupuesto por tarea.",
+  },
+  {
+    name: "Iruz Sales OS",
+    url: "https://crm.iruzlabs.com",
+    category: "Omnichannel CRM",
+    description: lang === "en"
+      ? "Omnichannel sales operating system that connects channels, AI agents and human teams to qualify and advance every opportunity."
+      : "Sistema operativo de ventas omnicanal que conecta canales, agentes de IA y equipo humano para calificar y avanzar cada oportunidad.",
+  },
+  {
+    name: "Iruz Mi Negocio",
+    url: `https://minegocio.iruzlabs.com/${lang}`,
+    category: "Business management software",
+    description: lang === "en"
+      ? "Customers, quotes, orders and follow-up in one simple operation for growing businesses."
+      : "Clientes, cotizaciones, órdenes y seguimiento en una operación simple para negocios en crecimiento.",
+  },
+  {
+    name: "Iruz CIEE",
+    url: "https://ciee.iruzlabs.com",
+    category: "Surveys and market research",
+    description: lang === "en"
+      ? "AI-driven surveys, opinion studies and political or market polling."
+      : "Encuestas con IA, estudios de opinión y sondeos políticos o de mercado.",
+  },
+  {
+    name: "Iruz Connect",
+    url: new URL(connectHref(lang), Astro.url).toString(),
+    category: "WhatsApp Business API platform",
+    description: lang === "en"
+      ? "The official WhatsApp API for businesses and applications, without the technical complexity of Meta."
+      : "La API oficial de WhatsApp para empresas y aplicaciones, sin la complejidad técnica de Meta.",
+  },
+  {
+    name: "Iruz Tracking System",
+    url: new URL(trackingHref(lang), Astro.url).toString(),
+    category: "Product and campaign analytics",
+    description: lang === "en"
+      ? "Product analytics that measures every step of the customer journey, from first contact to sale."
+      : "Analítica de producto que mide cada paso del cliente, del primer contacto a la venta.",
+  },
+];
+
+const productsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: lang === "en" ? "Azury Labs products" : "Productos de Azury Labs",
+  itemListElement: [
+    ...products.map((product, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "SoftwareApplication",
+        name: product.name,
+        url: product.url,
+        applicationCategory: "BusinessApplication",
+        applicationSubCategory: product.category,
+        description: product.description,
+        publisher: { "@type": "Organization", name: "Azury Labs" },
+      },
+    })),
+    {
+      "@type": "ListItem",
+      position: products.length + 1,
+      item: {
+        "@type": "Service",
+        name: "Iruz Systems",
+        url: "https://systems.iruzlabs.com",
+        serviceType: lang === "en" ? "Custom software development and technology consulting" : "Desarrollo de software a medida y consultoría tecnológica",
+        provider: { "@type": "Organization", name: "Azury Labs" },
+      },
+    },
+  ],
 };
 ---
 
@@ -35,6 +129,7 @@ const descMap = {
   description={descMap[lang as keyof typeof descMap]}
   lang={htmlLang}
 >
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(productsJsonLd)} />
   <Navbar lang={lang} />
   <main>
     <Hero lang={lang} />
@@ -42,7 +137,9 @@ const descMap = {
     <Features lang={lang} />
     <HowItWorks lang={lang} />
     <Stats lang={lang} />
+    <FAQ lang={lang} />
     <CTA lang={lang} />
   </main>
   <Footer lang={lang} />
+  <ChatWidget lang={lang} />
 </BaseLayout>

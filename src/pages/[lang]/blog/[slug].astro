@@ -31,7 +31,7 @@ if (isPreview) {
   // Sin esto el iframe del admin queda en blanco por la CSP del navegador.
   Astro.response.headers.set(
     "Content-Security-Policy",
-    "frame-ancestors 'self' https://cms.azurylabs.com",
+    "frame-ancestors 'self' https://cms.iruzlabs.com",
   );
   // Un borrador nunca debe quedar en cache de Cloudflare ni indexarse.
   Astro.response.headers.set("Cache-Control", "no-store");
@@ -102,7 +102,7 @@ const blogPostingJsonLd = article && {
     name: "Azury Labs",
     logo: {
       "@type": "ImageObject",
-      url: new URL("/images/logos/iruzlabs-isotipo-light.png", site).toString(),
+      url: new URL("/images/logos/azurylabs-isotipo-light.png", site).toString(),
     },
   },
   mainEntityOfPage: { "@type": "WebPage", "@id": canonical },

@@ -5,7 +5,7 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://iruzlabs.com",
+  site: "https://azurylabs.online",
   output: "server",
   devToolbar: {
     enabled: false,

@@ -37,27 +37,39 @@ async function initEcosystem(root) {
     },
     {
       name: "ATENEA",
-      image: "/images/logos/azurylabs-atenea-logo.png",
+      image: "/images/logos/iruzlabs-atenea-logo.png",
     },
     {
-      name: "AZURY SALES OS",
+      name: "IRUZ LINDEX",
+      image: "/images/logos/lindex-logo.png",
+    },
+    {
+      name: "IRUZ SALES OS",
       wordmark: "SALES OS",
     },
     {
-      name: "AZURY MI NEGOCIO",
+      name: "IRUZ MI NEGOCIO",
       wordmark: "MI NEGOCIO",
     },
     {
-      name: "AZURY CIEE",
-      image: "/images/logos/azurylabs-ciee-logo.png",
+      name: "IRUZ CIEE",
+      image: "/images/logos/iruzlabs-ciee-logo.png",
     },
     {
-      name: "AZURY SYSTEMS",
+      name: "IRUZ SYSTEMS",
       wordmark: "SYSTEMS",
+    },
+    {
+      name: "IRUZ CONNECT",
+      wordmark: "CONNECT",
+    },
+    {
+      name: "IRUZ TRACKING SYSTEM",
+      wordmark: "TRACKING SYSTEM",
     },
   ];
 
-  const mark = await loadImage("/images/logos/azurylabs-isotipo-light.png");
+  const mark = await loadImage("/images/logos/iruzlabs-isotipo-light.png");
   const targets = await Promise.all(
     brandDefinitions.map(async (brand) => {
       const canvas = brand.image
@@ -312,6 +324,11 @@ function createWordmarkCanvas(mark, wordmark) {
   context.fillStyle = "#f4faff";
   context.font = "800 116px Arial, sans-serif";
   context.letterSpacing = "-4px";
+  const maxWordmarkWidth = canvas.width - 374 - 40;
+  const wordmarkWidth = context.measureText(wordmark).width;
+  if (wordmarkWidth > maxWordmarkWidth) {
+    context.font = `800 ${Math.floor(116 * (maxWordmarkWidth / wordmarkWidth))}px Arial, sans-serif`;
+  }
   context.fillText(wordmark, 374, 310);
   return canvas;
 }

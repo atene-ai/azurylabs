@@ -2,6 +2,7 @@
 import Badge from "../ui/Badge.astro";
 import BackgroundGlow from "../ui/BackgroundGlow.astro";
 import { useTranslations } from "../../i18n/utils";
+import { connectHref, trackingHref, isExternal } from "../../lib/product-links";
 
 export interface Props {
   lang: string;
@@ -20,7 +21,7 @@ const products = [
     description: t("products.atenea.desc"),
     features: t("products.atenea.features"),
     cta: t("products.atenea.cta"),
-    href: "https://atenea.iruzlabs.com",
+    href: "https://v3.atenea.iruzlabs.com",
     logo: "/images/logos/iruzlabs-atenea-logo.png",
     logoAlt: "Iruz Atenea",
     logoWidth: 745,
@@ -29,8 +30,25 @@ const products = [
     tone: "violet",
   },
   {
-    id: "sales-os",
+    id: "lindex",
     number: "02",
+    badge: t("products.lindex.badge"),
+    badgeVariant: "glow",
+    title: t("products.lindex.title"),
+    description: t("products.lindex.desc"),
+    features: t("products.lindex.features"),
+    cta: t("products.lindex.cta"),
+    href: "https://lindex.iruzlabs.com",
+    logo: "/images/logos/lindex-logo.png",
+    logoAlt: "Lindex by Iruz Labs",
+    logoWidth: 1853,
+    logoHeight: 594,
+    wordmark: null,
+    tone: "ice",
+  },
+  {
+    id: "sales-os",
+    number: "03",
     badge: t("products.salesOs.badge"),
     badgeVariant: "blue",
     title: t("products.salesOs.title"),
@@ -47,7 +65,7 @@ const products = [
   },
   {
     id: "mi-negocio",
-    number: "03",
+    number: "04",
     badge: t("products.miNegocio.badge"),
     badgeVariant: "glow",
     title: t("products.miNegocio.title"),
@@ -64,7 +82,7 @@ const products = [
   },
   {
     id: "ciee",
-    number: "04",
+    number: "05",
     badge: t("products.ciee.badge"),
     badgeVariant: "brand",
     title: t("products.ciee.title"),
@@ -81,7 +99,7 @@ const products = [
   },
   {
     id: "systems",
-    number: "05",
+    number: "06",
     badge: t("products.systems.badge"),
     badgeVariant: "blue",
     title: t("products.systems.title"),
@@ -95,6 +113,40 @@ const products = [
     logoHeight: 0,
     wordmark: "SYSTEMS",
     tone: "graphite",
+  },
+  {
+    id: "connect",
+    number: "07",
+    badge: t("products.connect.badge"),
+    badgeVariant: "glow",
+    title: t("products.connect.title"),
+    description: t("products.connect.desc"),
+    features: t("products.connect.features"),
+    cta: t("products.connect.cta"),
+    href: connectHref(lang),
+    logo: null,
+    logoAlt: "",
+    logoWidth: 0,
+    logoHeight: 0,
+    wordmark: "CONNECT",
+    tone: "navy",
+  },
+  {
+    id: "tracking",
+    number: "08",
+    badge: t("products.tracking.badge"),
+    badgeVariant: "brand",
+    title: t("products.tracking.title"),
+    description: t("products.tracking.desc"),
+    features: t("products.tracking.features"),
+    cta: t("products.tracking.cta"),
+    href: trackingHref(lang),
+    logo: null,
+    logoAlt: "",
+    logoWidth: 0,
+    logoHeight: 0,
+    wordmark: "TRACKING SYSTEM",
+    tone: "cyan",
   },
 ];
 ---
@@ -157,8 +209,12 @@ const products = [
               ))}
             </ul>
 
-            <a href={product.href} target="_blank" rel="noopener noreferrer">
-              {product.cta}<span aria-hidden="true">↗</span>
+            <a
+              href={product.href}
+              target={isExternal(product.href) ? "_blank" : undefined}
+              rel={isExternal(product.href) ? "noopener noreferrer" : undefined}
+            >
+              {product.cta}<span aria-hidden="true">{isExternal(product.href) ? "↗" : "→"}</span>
             </a>
           </div>
         </article>
@@ -283,6 +339,7 @@ const products = [
 
   .product-card__logo--atenea { max-width: min(72%, 290px); }
   .product-card__logo--ciee { max-width: 92%; max-height: 120px; }
+  .product-card__logo--lindex { max-width: min(82%, 340px); }
 
   .product-card__wordmark {
     display: flex;
@@ -315,30 +372,45 @@ const products = [
   }
 
   .product-card__wordmark--mi-negocio,
-  .product-card__wordmark--systems {
+  .product-card__wordmark--systems,
+  .product-card__wordmark--connect,
+  .product-card__wordmark--tracking {
     gap: clamp(0.7rem, 1.2vw, 0.95rem);
   }
 
   .product-card__wordmark--mi-negocio > img,
-  .product-card__wordmark--systems > img {
+  .product-card__wordmark--systems > img,
+  .product-card__wordmark--connect > img,
+  .product-card__wordmark--tracking > img {
     width: clamp(48px, 19cqi, 72px);
     height: clamp(48px, 19cqi, 72px);
   }
 
   .product-card__wordmark--mi-negocio span,
-  .product-card__wordmark--systems span {
+  .product-card__wordmark--systems span,
+  .product-card__wordmark--connect span,
+  .product-card__wordmark--tracking span {
     gap: 0.12rem;
   }
 
   .product-card__wordmark--mi-negocio small,
-  .product-card__wordmark--systems small {
+  .product-card__wordmark--systems small,
+  .product-card__wordmark--connect small,
+  .product-card__wordmark--tracking small {
     font-size: 0.56rem;
   }
 
   .product-card__wordmark--mi-negocio strong,
-  .product-card__wordmark--systems strong {
+  .product-card__wordmark--systems strong,
+  .product-card__wordmark--connect strong,
+  .product-card__wordmark--tracking strong {
     font-size: clamp(1.25rem, 8cqi, 2rem);
     letter-spacing: -0.035em;
+  }
+
+  .product-card__wordmark--tracking strong {
+    white-space: normal;
+    line-height: 1;
   }
 
   .product-card__content {

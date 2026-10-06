@@ -12,17 +12,23 @@ const t = useTranslations(lang);
 const modules = lang === "es"
   ? [
       ["01", "ATENEA", "AGENTES DE IA"],
-      ["02", "SALES OS", "VENTAS"],
-      ["03", "MI NEGOCIO", "OPERACIÓN"],
-      ["04", "CIEE", "DATOS"],
-      ["05", "SYSTEMS", "SOFTWARE"],
+      ["02", "LINDEX", "INGENIERÍA"],
+      ["03", "SALES OS", "VENTAS"],
+      ["04", "MI NEGOCIO", "OPERACIÓN"],
+      ["05", "CIEE", "DATOS"],
+      ["06", "SYSTEMS", "SOFTWARE"],
+      ["07", "CONNECT", "MENSAJERÍA"],
+      ["08", "TRACKING", "MEDICIÓN"],
     ]
   : [
       ["01", "ATENEA", "AI AGENTS"],
-      ["02", "SALES OS", "SALES"],
-      ["03", "MI NEGOCIO", "OPERATIONS"],
-      ["04", "CIEE", "DATA"],
-      ["05", "SYSTEMS", "SOFTWARE"],
+      ["02", "LINDEX", "ENGINEERING"],
+      ["03", "SALES OS", "SALES"],
+      ["04", "MI NEGOCIO", "OPERATIONS"],
+      ["05", "CIEE", "DATA"],
+      ["06", "SYSTEMS", "SOFTWARE"],
+      ["07", "CONNECT", "MESSAGING"],
+      ["08", "TRACKING", "MEASUREMENT"],
     ];
 ---
 
@@ -52,7 +58,7 @@ const modules = lang === "es"
       </p>
     </div>
 
-    <div class="hero__visual" aria-label={lang === "es" ? "Ecosistema de productos Iruz" : "Iruz product ecosystem"}>
+    <div class="hero__visual" aria-label={lang === "es" ? "Ecosistema de productos Azury" : "Azury product ecosystem"}>
       <div class="system" aria-hidden="true">
         <div class="system__field"></div>
         <div class="system__orbit system__orbit--outer"></div>
@@ -62,7 +68,7 @@ const modules = lang === "es"
         <div class="system__atom" data-hero-atom>
           <img
             class="system__fallback"
-            src="/images/logos/iruzlabs-isotipo-white.png"
+            src="/images/logos/azurylabs-isotipo-white.png"
             alt=""
             width="512"
             height="512"
@@ -72,7 +78,7 @@ const modules = lang === "es"
         </div>
 
         <div class="system__core">
-          <span class="system__core-kicker">IRUZ LABS</span>
+          <span class="system__core-kicker">AZURY LABS</span>
           <span class="system__core-label">INTELLIGENCE / IN ACTION</span>
         </div>
 
@@ -289,7 +295,7 @@ const modules = lang === "es"
   .system__atom.is-ready .system__fallback { opacity: 0; }
 
   :global(:root[data-theme="light"]) .system__fallback {
-    content: url("/images/logos/iruzlabs-isotipo-black.png");
+    content: url("/images/logos/azurylabs-isotipo-black.png");
   }
 
   .system__core {
@@ -403,15 +409,33 @@ const modules = lang === "es"
   }
 
   .system__module--4 {
+    right: 8%;
+    bottom: 7%;
+    animation: atom-module-2 9.5s ease-in-out infinite;
+  }
+
+  .system__module--5 {
     bottom: 9%;
     left: 16%;
     animation: atom-module-4 8.5s ease-in-out infinite;
   }
 
-  .system__module--5 {
+  .system__module--6 {
     top: 28%;
     left: 0;
     animation: atom-module-5 9.5s ease-in-out infinite;
+  }
+
+  .system__module--7 {
+    top: 3%;
+    right: 27%;
+    animation: atom-module-3 11s ease-in-out infinite;
+  }
+
+  .system__module--8 {
+    bottom: 27%;
+    left: 3%;
+    animation: atom-module-1 10.5s ease-in-out infinite;
   }
 
   .hero__visual-note {
@@ -532,8 +556,11 @@ const modules = lang === "es"
     .system__module--1 { top: 6%; left: 7%; }
     .system__module--2 { top: 17%; right: -1%; }
     .system__module--3 { right: -1%; bottom: 25%; }
-    .system__module--4 { bottom: 8%; left: 11%; }
-    .system__module--5 { top: 31%; left: -1%; }
+    .system__module--4 { right: 4%; bottom: 8%; }
+    .system__module--5 { bottom: 8%; left: 11%; }
+    .system__module--6 { top: 31%; left: -1%; }
+    .system__module--7 { top: 3%; right: 20%; }
+    .system__module--8 { bottom: 26%; left: 2%; }
     .system__module strong { font-size: 0.7rem; }
     .system__module small,
     .system__module span { font-size: 0.5rem; }

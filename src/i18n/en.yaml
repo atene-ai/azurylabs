@@ -2,21 +2,21 @@ nav:
   products: "Products"
   solutions: "Capabilities"
   howItWorks: "How we work"
-  company: "Iruz Labs"
+  company: "Azury Labs"
   team: "Team"
   blog: "Blog"
 
   scheduleDemo: "Let's talk"
 
 hero:
-  eyebrow: "Iruz Labs · Products, AI and software"
+  eyebrow: "Azury Labs · Products, AI and software"
   headline: "Intelligence becomes<br /><span class='hero__headline--accent'>your operation.</span>"
   subtext: "We create proprietary products, AI agents and custom software to help you sell, operate and decide with data."
   ctaPrimary: "Explore products"
   ctaSecondary: "Let's talk"
   trust: "Operating in Mexico, Colombia and the United States"
   visual:
-    title: "Iruz Labs — Dashboard"
+    title: "Azury Labs — Dashboard"
     start: "Active Agents"
     conversions: "Conversions"
     respTime: "Resp. Time"
@@ -35,8 +35,8 @@ hero:
 products:
   header:
     badge: "Products and solutions"
-    title: "Five product lines.<br /><span class='products__title--accent'>One mission: produce results.</span>"
-    sub: "Each Iruz business unit solves a distinct challenge: building intelligence, selling, operating, researching or creating custom technology."
+    title: "Eight product lines.<br /><span class='products__title--accent'>One mission: produce results.</span>"
+    sub: "Each Azury business unit solves a distinct challenge: building intelligence, selling, operating, messaging, measuring, researching or creating custom technology."
   stack:
     title: "Connect your productive tools"
     sub: "We integrate channels, messaging, voice, and scheduling so your agents can operate without friction."
@@ -49,14 +49,23 @@ products:
   atenea:
     badge: "01 · AI platform"
     title: "Iruz Atenea"
-    desc: "The platform we use to create AI agents that understand your business, connect to your systems and execute real processes."
+    desc: "The platform we use to create AI agents that handle messages and voice in real time, understand your business, connect to your systems and execute real processes."
     features:
-      - "Specialized agents"
+      - "AI agents for real-time messaging and voice"
       - "Custom workflows and knowledge"
       - "Tailored integrations"
     cta: "Explore Atenea"
+  lindex:
+    badge: "02 · Autonomous engineering"
+    title: "Iruz Lindex"
+    desc: "The harness that coordinates AI agents from ticket to code, tests and a deployed preview, with structure, limits and full traceability."
+    features:
+      - "Ticket to PR with preview"
+      - "Isolated, traceable execution"
+      - "Per-task budget control"
+    cta: "Explore Lindex"
   salesOs:
-    badge: "02 · Sales OS"
+    badge: "03 · Sales OS"
     title: "Iruz Sales OS"
     desc: "More than a CRM: it connects channels, AI agents and human teams to engage, qualify and advance every opportunity."
     features:
@@ -65,7 +74,7 @@ products:
       - "Sales follow-up and control"
     cta: "Explore Sales OS"
   miNegocio:
-    badge: "03 · Business management"
+    badge: "04 · Business management"
     title: "Iruz Mi Negocio"
     desc: "Customers, quotes, orders and follow-up in one simple operation for businesses that need to grow without adding complexity."
     features:
@@ -74,7 +83,7 @@ products:
       - "Visibility to decide"
     cta: "Explore Mi Negocio"
   ciee:
-    badge: "04 · Data and research"
+    badge: "05 · Data and research"
     title: "Iruz CIEE"
     desc: "AI surveys, opinion studies and political or market polling to decide with evidence and understand what is changing."
     features:
@@ -83,7 +92,7 @@ products:
       - "Actionable analysis"
     cta: "Explore CIEE"
   systems:
-    badge: "05 · Professional services"
+    badge: "06 · Professional services"
     title: "Iruz Systems"
     desc: "We design and develop the software your operation needs when an off-the-shelf tool is no longer enough."
     features:
@@ -91,6 +100,24 @@ products:
       - "Technology consulting"
       - "Guided implementation"
     cta: "Talk to Systems"
+  connect:
+    badge: "07 · Messaging"
+    title: "Iruz Connect"
+    desc: "The official WhatsApp API for businesses and apps, without Meta's technical complexity."
+    features:
+      - "No months of Meta integration work"
+      - "Credentials, webhooks and message statuses handled for you"
+      - "Next channels: Instagram, Messenger, SMS, RCS and voice"
+    cta: "Explore Connect"
+  tracking:
+    badge: "08 · Measurement and analytics"
+    title: "Iruz Tracking System"
+    desc: "Product analytics that measures every step of the customer journey, from first contact to sale."
+    features:
+      - "Know which campaign, channel or QR generates sales"
+      - "See where customers drop off the funnel"
+      - "From scan to appointment and sale, measured step by step"
+    cta: "Explore Tracking System"
 
 features:
   header:
@@ -149,6 +176,29 @@ stats:
     label: "Custom solutions"
     desc: "Product and service shaped around each company"
 
+faq:
+  badge: "Frequently asked questions"
+  title: "What people usually ask<br /><span class='faq__title--accent'>about Azury Labs.</span>"
+  items:
+    - q: "What is Azury Labs?"
+      a: "Azury Labs is a software company specialized in applied artificial intelligence. We build our own products and custom solutions so companies can sell, operate and decide with data. We have a presence in Mexico, Colombia and the United States."
+    - q: "What products does Azury Labs offer?"
+      a: "Eight lines: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio (customers, quotes and orders management), CIEE (surveys and research), Systems (custom software and consulting), Connect (official WhatsApp API) and Tracking System (analytics from first contact to sale)."
+    - q: "What is Iruz Atenea and which channels does it work on?"
+      a: "Atenea is the platform we use to create AI agents that handle messages and voice in real time, understand your business and connect to your systems to execute real processes. It integrates with WhatsApp Business, Telegram, Instagram Messenger, phone calls and Google Calendar."
+    - q: "What is Lindex?"
+      a: "Lindex is an autonomous software engineering harness: it coordinates AI agents from a ticket to code, tests and a deployed preview. It runs in an isolated environment, logs every action and lets you set a maximum budget per task. It connects with Linear, Jira, GitHub, GitLab and Cloudflare Pages."
+    - q: "What is Iruz Connect?"
+      a: "Iruz Connect is the official WhatsApp API for businesses and applications. It handles the Meta integration, credentials, webhooks and message statuses so your team can send and receive WhatsApp messages from its own platform or from Atenea. Instagram, Messenger, SMS, RCS and voice are the next channels."
+    - q: "What is Iruz Tracking System?"
+      a: "It is product analytics that measures every step of the customer journey, from the first contact to the sale. With trackable links and QR codes you can see which campaign, channel or QR generates leads, appointments and sales, and where customers drop off."
+    - q: "How is Sales OS different from a traditional CRM?"
+      a: "Sales OS connects your channels, AI agents and human team in a single omnichannel conversation to serve, qualify and follow up on every opportunity, instead of just storing contacts."
+    - q: "Does Azury Labs build custom software?"
+      a: "Yes. Iruz Systems designs and develops the software your operation needs when an off-the-shelf tool is no longer enough, with technology consulting and guided implementation."
+    - q: "How can I get started?"
+      a: "Reach out through the contact page or the chat on this site and tell us the challenge. We will guide you to the product or custom solution that fits best."
+
 cta:
   overline: "Azury Labs"
   title: "Let's build the next<br /><span class='cta__title--accent'>advance for your business.</span>"
@@ -156,7 +206,68 @@ cta:
   primary: "Talk to Azury"
   secondary: "View products"
   disclaimer: "Diagnosis · Design · Implementation"
-  link: "https://calendly.com/admin-azurylabs/we-re-going-to-transform-your-business-azury-labs"
+  link: "https://calendly.com/admin-iruzlabs/we-re-going-to-transform-your-business-zuri-labs"
+
+chat:
+  status: "Online"
+  welcomePrefix: "Hi! 👋 I'm the assistant from"
+  welcomeSuffix: "I'll ask a couple of quick questions to connect you with the right team."
+  powered: "Powered by Azury Labs"
+  restart: "Start over"
+  error: "We couldn't send your info. Please try again in a few minutes."
+  flow:
+    interest:
+      question: "What would you like to know about?"
+      options:
+        - value: atenea
+          label: "Atenea · AI agents"
+        - value: lindex
+          label: "Lindex · Autonomous engineering"
+        - value: salesOs
+          label: "Sales OS · CRM"
+        - value: miNegocio
+          label: "Mi Negocio · Management"
+        - value: ciee
+          label: "CIEE · Surveys"
+        - value: systems
+          label: "Systems · Custom software"
+        - value: connect
+          label: "Connect · WhatsApp API"
+        - value: tracking
+          label: "Tracking System · Analytics"
+        - value: unsure
+          label: "Not sure, point me"
+    role:
+      question: "What's your role in this decision?"
+      options:
+        - value: owner
+          label: "Owner or director"
+        - value: manager
+          label: "Manager or team lead"
+        - value: technical
+          label: "Technical team"
+        - value: exploring
+          label: "Just exploring"
+    timeline:
+      question: "When would you like to get started?"
+      options:
+        - value: asap
+          label: "As soon as possible"
+        - value: quarter
+          label: "In the next 3 months"
+        - value: later
+          label: "Later on"
+        - value: unsure
+          label: "Not sure yet"
+  contact:
+    question: "Great. To connect you with the right team, share your name and email:"
+    nameLabel: "Name"
+    namePlaceholder: "Your name"
+    emailLabel: "Email"
+    emailPlaceholder: "you@email.com"
+    submit: "Send"
+    sending: "Sending…"
+  success: "Thanks, {name}! 🙌 An Azury Labs advisor will reach out to you soon at {email}."
 
 footer:
   tagline: "Applied artificial intelligence, own products and custom solutions."
@@ -201,15 +312,47 @@ legal:
   back: "← Back to home"
   updated: "Last updated: {date}"
 
+support:
+  title: "Support"
+  centerTitle: "Help center"
+  centerLabel: "Azury Support"
+  subtitle: "Have a problem or a question? Write to us here."
+  notice: "Your requests are saved, and the Azury team can follow up on them with full context."
+  navNew: "New ticket"
+  navHistory: "History"
+  loading: "Opening your ticket..."
+  loadError: "We couldn't open your ticket. Try again in a few minutes."
+  greetingFallback: "How can we help you?"
+  formHint: "Tell us what you need to get started."
+  formPlaceholder: "Tell us what you need..."
+  formSubmit: "Send"
+  formSending: "Sending..."
+  formSuccess: "Done! We received your message and will reply by email shortly."
+  resolved: "This ticket was marked as resolved by support."
+  newTicket: "Open a new ticket"
+  suggestions: "Frequently asked"
+  suggestionWhatsapp: "I can't connect WhatsApp"
+  suggestionAgent: "I need to set up an agent"
+  suggestionPlan: "I have a question about my plan"
+  suggestionIssue: "I want to report an issue"
+  deliveryNote: "Your message will be sent to the support team. Avoid sharing passwords, codes or sensitive data."
+  historyTitle: "Your support requests"
+  historySubtitle: "Check the status and context of previous conversations."
+  statusOpen: "Open"
+  statusClosed: "Resolved"
+  inputPlaceholder: "Type your message..."
+  productQuestion: "What product do you need?"
+  productUnsure: "Not sure"
+
 about:
   hero:
     title: "Intelligence that becomes progress"
-    subtitle: "Iruz Labs is a software company specialized in applied artificial intelligence. We build our own products and custom solutions so companies can sell more, operate better and make data-driven decisions. We operate in Mexico, Colombia and the United States."
+    subtitle: "Azury Labs is a software company specialized in applied artificial intelligence. We build our own products and custom solutions so companies can sell more, operate better and make data-driven decisions. We operate in Mexico, Colombia and the United States."
     quote: "“Applied AI for what matters most.”"
   team:
     badge: "Team"
-    title: "Who's behind Iruz Labs"
-    subtitle: "The people who design useful products, intelligence and experiences behind Iruz."
+    title: "Who's behind Azury Labs"
+    subtitle: "The people who design useful products, intelligence and experiences behind Azury."
   ecosystem:
     badge: "Ecosystem"
     title: "Our Products"
@@ -218,7 +361,10 @@ about:
     items:
       atenea:
         name: "Iruz Atenea"
-        desc: "Our AI agent creation engine: the technology base we build every custom assistant on."
+        desc: "Our engine for creating AI agents for real-time messaging and voice: the technology base we build every custom assistant on."
+      lindex:
+        name: "Iruz Lindex"
+        desc: "Autonomous software engineering harness: coordinates AI agents from ticket to code, tests and a deployed preview."
       crm:
         name: "Iruz Sales OS"
         desc: "The omnichannel sales operating system that connects channels, AI agents and human teams to advance every opportunity."
@@ -231,6 +377,12 @@ about:
       systems:
         name: "Iruz Systems"
         desc: "Custom software development, consulting, and professional services for individuals and businesses."
+      connect:
+        name: "Iruz Connect"
+        desc: "The official WhatsApp API for businesses and applications, built for CTOs, product teams and SaaS companies that need official WhatsApp on their platform."
+      tracking:
+        name: "Iruz Tracking System"
+        desc: "Product analytics that measures every step from first contact to sale, for CEOs, COOs, CMOs and marketing and sales teams that need to measure the return on each campaign."
   vision:
     title: "Vision"
     text: "To be the technology partner that turns artificial intelligence, data and software into clearer operations, sounder decisions and businesses that move forward."
@@ -263,4 +415,4 @@ about:
     slogan: "Intelligence that becomes progress."
   tone:
     title: "Tone and Voice"
-    desc: "We speak like a technology partner: clear, precise and outcome-oriented. Iruz builds products, intelligence and software so technology becomes real progress."
+    desc: "We speak like a technology partner: clear, precise and outcome-oriented. Azury builds products, intelligence and software so technology becomes real progress."

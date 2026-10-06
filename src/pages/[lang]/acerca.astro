@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Navbar from "../../components/sections/Navbar.astro";
 import Footer from "../../components/sections/Footer.astro";
 import { useTranslations } from "../../i18n/utils";
+import { connectHref, trackingHref, isExternal } from "../../lib/product-links";
 import { getEnv, getTeamMembers, mediaUrl } from "../../lib/strapi";
 import SocialIcon from "../../components/ui/SocialIcon.astro";
 import ContactForm from "../../components/sections/ContactForm.astro";
@@ -58,8 +59,8 @@ Astro.response.headers.set(
             {lang === "es" ? "Hablemos de tu operación" : "Let's talk about your operation"} <span aria-hidden="true">↓</span>
           </a>
         </div>
-        <aside class="about-hero__statement" aria-label={lang === "es" ? "Tesis Iruz" : "Iruz thesis"}>
-          <span class="about-hero__statement-index">IRUZ / 2026</span>
+        <aside class="about-hero__statement" aria-label={lang === "es" ? "Tesis Azury" : "Azury thesis"}>
+          <span class="about-hero__statement-index">AZURY / 2026</span>
           <blockquote>{t("about.hero.quote")}</blockquote>
           <div class="about-hero__statement-lines" aria-hidden="true">
             <span>PRODUCTO</span><span>IA</span><span>DATOS</span><span>SOFTWARE</span>
@@ -136,7 +137,20 @@ Astro.response.headers.set(
             />
             <h3>{t("about.ecosystem.items.atenea.name")}</h3>
             <p>{t("about.ecosystem.items.atenea.desc")}</p>
-            <a href="https://atenea.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+            <a href="https://v3.atenea.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+          <div class="ecosystem-card">
+            <img
+              src="/images/logos/lindex-logo.png"
+              alt="Lindex by Iruz Labs"
+              class="ecosystem-card__logo ecosystem-card__logo--lindex"
+              loading="lazy"
+            />
+            <h3>{t("about.ecosystem.items.lindex.name")}</h3>
+            <p>{t("about.ecosystem.items.lindex.desc")}</p>
+            <a href="https://lindex.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
               {t("about.ecosystem.cta")} →
             </a>
           </div>
@@ -177,6 +191,32 @@ Astro.response.headers.set(
             <h3>{t("about.ecosystem.items.systems.name")}</h3>
             <p>{t("about.ecosystem.items.systems.desc")}</p>
             <a href="https://systems.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+          <div class="ecosystem-card">
+            <span class="ecosystem-card__wordmark gradient-text">CONNECT</span>
+            <h3>{t("about.ecosystem.items.connect.name")}</h3>
+            <p>{t("about.ecosystem.items.connect.desc")}</p>
+            <a
+              href={connectHref(lang)}
+              target={isExternal(connectHref(lang)) ? "_blank" : undefined}
+              rel={isExternal(connectHref(lang)) ? "noopener noreferrer" : undefined}
+              class="ecosystem-card__link"
+            >
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+          <div class="ecosystem-card">
+            <span class="ecosystem-card__wordmark gradient-text">TRACKING</span>
+            <h3>{t("about.ecosystem.items.tracking.name")}</h3>
+            <p>{t("about.ecosystem.items.tracking.desc")}</p>
+            <a
+              href={trackingHref(lang)}
+              target={isExternal(trackingHref(lang)) ? "_blank" : undefined}
+              rel={isExternal(trackingHref(lang)) ? "noopener noreferrer" : undefined}
+              class="ecosystem-card__link"
+            >
               {t("about.ecosystem.cta")} →
             </a>
           </div>
@@ -500,11 +540,6 @@ Astro.response.headers.set(
     grid-column: span 2;
   }
 
-  .ecosystem-card:nth-child(4),
-  .ecosystem-card:nth-child(5) {
-    grid-column: span 3;
-  }
-
   .ecosystem-card:hover {
     transform: translateY(-5px);
     border-color: var(--color-brand);
@@ -517,6 +552,13 @@ Astro.response.headers.set(
     object-fit: contain;
     object-position: left center;
     margin-bottom: var(--space-4);
+  }
+
+  .ecosystem-card__logo--lindex {
+    height: 48px;
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    background: #fff;
   }
 
   .ecosystem-card__wordmark {
@@ -551,6 +593,10 @@ Astro.response.headers.set(
     white-space: nowrap;
   }
 
+  @media (min-width: 901px) {
+    .ecosystem-card:nth-last-child(-n + 2) { grid-column: span 3; }
+  }
+
   .ecosystem-card--minegocio {
     background:
       radial-gradient(circle at 92% 8%, rgba(89, 189, 215, 0.14), transparent 38%),
@@ -562,13 +608,8 @@ Astro.response.headers.set(
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .ecosystem-card,
-    .ecosystem-card:nth-child(4) {
+    .ecosystem-card {
       grid-column: span 1;
-    }
-
-    .ecosystem-card:nth-child(5) {
-      grid-column: span 2;
     }
   }
 
@@ -577,9 +618,7 @@ Astro.response.headers.set(
       grid-template-columns: 1fr;
     }
 
-    .ecosystem-card,
-    .ecosystem-card:nth-child(4),
-    .ecosystem-card:nth-child(5) {
+    .ecosystem-card {
       grid-column: span 1;
     }
   }
