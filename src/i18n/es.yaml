@@ -108,7 +108,7 @@ products:
       - "Sin meses de integración con Meta"
       - "Credenciales, webhooks y estados de mensajes resueltos"
       - "Próximos canales: Instagram, Messenger, SMS, RCS y voz"
-    cta: "Hablar de Connect"
+    cta: "Conocer Connect"
   tracking:
     badge: "08 · Medición y analítica"
     title: "Iruz Tracking System"
@@ -117,7 +117,7 @@ products:
       - "Qué campaña, canal o QR genera ventas"
       - "Dónde se pierden los clientes en el embudo"
       - "Del escaneo a la cita y la venta, medido paso a paso"
-    cta: "Hablar de Tracking"
+    cta: "Conocer Tracking System"
 
 features:
   header:

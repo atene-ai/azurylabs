@@ -26,9 +26,10 @@
 - **Iruz Connect** — The official WhatsApp API for businesses and applications,
   without the technical complexity of Meta. Handles credentials, webhooks and
   message statuses. Next channels: Instagram, Messenger, SMS, RCS and voice.
+  https://connect.iruzlabs.com
 - **Iruz Tracking System** — Product analytics that measures every step of the
   customer journey, from first contact to sale, using trackable links and QR
-  codes.
+  codes. https://go.iruzlabs.com/+
 
 Channels supported by Atenea agents include WhatsApp Business, Telegram,
 Instagram Messenger, phone calls and Google Calendar.
