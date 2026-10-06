@@ -1,5 +1,5 @@
 ---
-const SITE_NAME = "Azury Labs";
+const SITE_NAME = "Iruz Labs";
 const DEFAULT_OG_IMAGE = "/images/og-default.png";
 const SAME_AS = [
   "https://www.facebook.com/profile.php?id=61588787630828",
@@ -21,9 +21,9 @@ export interface Props {
 }
 
 const {
-  title = "Azury Labs",
+  title = "Iruz Labs",
   description = "",
-  lang = "en",
+  lang = "es-MX",
   canonical,
   image = DEFAULT_OG_IMAGE,
   ogType = "website",
@@ -46,7 +46,7 @@ const hreflangAlternates = langMatch
       return [
         { hreflang: "es", href: esHref },
         { hreflang: "en", href: enHref },
-        { hreflang: "x-default", href: enHref },
+        { hreflang: "x-default", href: esHref },
       ];
     })()
   : [];
@@ -60,6 +60,17 @@ const structuredData = {
       name: SITE_NAME,
       url: site.toString(),
       logo: new URL("/images/logos/iruzlabs-isotipo-light.png", site).toString(),
+      description:
+        "Iruz Labs builds applied AI and software products: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio (business management), CIEE (surveys and research) and Systems (custom software).",
+      areaServed: ["MX", "CO", "US"],
+      knowsAbout: [
+        "Applied artificial intelligence",
+        "AI agents",
+        "Autonomous software engineering",
+        "Omnichannel CRM",
+        "Market research",
+        "Custom software development",
+      ],
       sameAs: SAME_AS,
     },
     {
@@ -124,7 +135,7 @@ const structuredData = {
 
     <script is:inline>
       (() => {
-        const savedTheme = localStorage.getItem("azury-theme");
+        const savedTheme = localStorage.getItem("iruz-theme");
         const normalized = savedTheme === "light" ? "light" : "dark";
         document.documentElement.dataset.theme = normalized;
       })();
@@ -159,6 +170,8 @@ const structuredData = {
       observeElements();
       document.addEventListener("astro:page-load", observeElements);
     </script>
+    <!-- Iruz Links: mide las visitas que llegan desde nuestros links/QR (llave publicable, segura de publicar) -->
+    <script is:inline src="https://go.iruzlabs.com/t.js" data-key="iruz_pk_890da6448cd4ae3bf4d5e11b482f6d5e90d5275e180d5df3" defer></script>
   </body>
 </html>
 

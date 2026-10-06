@@ -32,32 +32,36 @@ async function initEcosystem(root) {
 
   const brandDefinitions = [
     {
-      name: "AZURY LABS",
-      image: "/images/logos/azurylabs-logotipo-h-white.png",
+      name: "IRUZ LABS",
+      image: "/images/logos/iruzlabs-logotipo-h-white.png",
     },
     {
       name: "ATENEA",
-      image: "/images/logos/azurylabs-atenea-logo.png",
+      image: "/images/logos/iruzlabs-atenea-logo.png",
     },
     {
-      name: "AZURY SALES OS",
+      name: "IRUZ LINDEX",
+      image: "/images/logos/lindex-logo.png",
+    },
+    {
+      name: "IRUZ SALES OS",
       wordmark: "SALES OS",
     },
     {
-      name: "AZURY MI NEGOCIO",
+      name: "IRUZ MI NEGOCIO",
       wordmark: "MI NEGOCIO",
     },
     {
-      name: "AZURY CIEE",
-      image: "/images/logos/azurylabs-ciee-logo.png",
+      name: "IRUZ CIEE",
+      image: "/images/logos/iruzlabs-ciee-logo.png",
     },
     {
-      name: "AZURY SYSTEMS",
+      name: "IRUZ SYSTEMS",
       wordmark: "SYSTEMS",
     },
   ];
 
-  const mark = await loadImage("/images/logos/azurylabs-isotipo-light.png");
+  const mark = await loadImage("/images/logos/iruzlabs-isotipo-light.png");
   const targets = await Promise.all(
     brandDefinitions.map(async (brand) => {
       const canvas = brand.image

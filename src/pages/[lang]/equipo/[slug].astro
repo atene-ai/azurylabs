@@ -67,7 +67,7 @@ const copy = {
   },
 }[lang];
 
-const pageTitle = member ? `${member.name} — Azury Labs` : copy.notFound;
+const pageTitle = member ? `${member.name} — Iruz Labs` : copy.notFound;
 const pageDescription = member ? member.tagline || member.bio : copy.notFoundBody;
 const avatarUrl = member?.avatar?.url ? mediaUrl(strapiBase, member.avatar.url) : undefined;
 const resumeUrl = member?.resume?.url ? mediaUrl(strapiBase, member.resume.url) : undefined;
@@ -106,7 +106,7 @@ const personJsonLd = member && {
     member.socials.length > 0 && {
       sameAs: member.socials.map((s) => s.url),
     }),
-  worksFor: { "@type": "Organization", name: "Azury Labs", url: site.toString() },
+  worksFor: { "@type": "Organization", name: "Iruz Labs", url: site.toString() },
   mainEntityOfPage: { "@type": "ProfilePage", "@id": canonical },
 };
 ---

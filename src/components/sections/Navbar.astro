@@ -80,10 +80,10 @@ const enPath = lang === "en" ? currentPath : nextPath;
 >
   <div class="navbar__inner container">
     <!-- Logo -->
-    <a href={`/${lang}/`} class="navbar__logo" aria-label="Azury Labs">
+    <a href={`/${lang}/`} class="navbar__logo" aria-label="Iruz Labs">
       <img
-        src="/images/logos/azurylabs-logotipo-h-white.png"
-        alt="Azury Labs"
+        src="/images/logos/iruzlabs-logotipo-h-white.png"
+        alt="Iruz Labs"
         class="logo__mark"
         width="180"
         height="52"
@@ -229,7 +229,7 @@ const enPath = lang === "en" ? currentPath : nextPath;
   const applyTheme = (theme) => {
     const normalized = theme === "light" ? "light" : "dark";
     document.documentElement.dataset.theme = normalized;
-    localStorage.setItem("azury-theme", normalized);
+    localStorage.setItem("iruz-theme", normalized);
   };
 
   document.querySelectorAll(".theme-toggle").forEach((button) => {
@@ -271,7 +271,7 @@ const enPath = lang === "en" ? currentPath : nextPath;
   }
 
   /* ── Logo ── */
-      .navbar__logo {
+  .navbar__logo {
     display: flex;
     align-items: center;
     gap: var(--space-3);
@@ -298,7 +298,7 @@ const enPath = lang === "en" ? currentPath : nextPath;
 
   /* Horizontal logotype swaps to dark version on light theme */
   :global(:root[data-theme="light"]) .logo__mark {
-    content: url("/images/logos/azurylabs-logotipo-h-black.png");
+    content: url("/images/logos/iruzlabs-logotipo-h-black.png");
     filter: drop-shadow(0 0 12px rgba(8, 145, 178, 0.22));
   }
 
@@ -311,23 +311,6 @@ const enPath = lang === "en" ? currentPath : nextPath;
     .logo__mark {
       height: 40px;
     }
-  }
-
-  
-  
-
-  
-
-  .navbar__logo:hover 
-
-  /* Horizontal logotype swaps to dark version on light theme */
-  :global(:root[data-theme="light"]) 
-
-  /* Compact when navbar shrinks on scroll */
-  .navbar--scrolled 
-
-  @media (max-width: 480px) {
-    
   }
 
   /* ── Nav ── */
@@ -602,9 +585,13 @@ const enPath = lang === "en" ? currentPath : nextPath;
       gap: 10px;
     }
 
-    
+    .logo__mark {
+      height: 36px;
+    }
 
-    .navbar--scrolled 
+    .navbar--scrolled .logo__mark {
+      height: 34px;
+    }
 
     .navbar__nav {
       gap: 8px;

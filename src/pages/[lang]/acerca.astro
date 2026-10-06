@@ -27,8 +27,8 @@ const contactCopy = lang === "es"
     };
 
 const titleMap = {
-  es: "Acerca de Azury Labs — Inteligencia artificial aplicada",
-  en: "About Azury Labs — Applied artificial intelligence",
+  es: "Acerca de Iruz Labs — Inteligencia artificial aplicada",
+  en: "About Iruz Labs — Applied artificial intelligence",
 };
 
 const strapiBase = getEnv(Astro.locals, "STRAPI_URL").replace(/\/$/, "");
@@ -136,7 +136,20 @@ Astro.response.headers.set(
             />
             <h3>{t("about.ecosystem.items.atenea.name")}</h3>
             <p>{t("about.ecosystem.items.atenea.desc")}</p>
-            <a href="https://atenea.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+            <a href="https://v3.atenea.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+          <div class="ecosystem-card">
+            <img
+              src="/images/logos/lindex-logo.png"
+              alt="Lindex by Iruz Labs"
+              class="ecosystem-card__logo ecosystem-card__logo--lindex"
+              loading="lazy"
+            />
+            <h3>{t("about.ecosystem.items.lindex.name")}</h3>
+            <p>{t("about.ecosystem.items.lindex.desc")}</p>
+            <a href="https://lindex.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
               {t("about.ecosystem.cta")} →
             </a>
           </div>
@@ -500,11 +513,6 @@ Astro.response.headers.set(
     grid-column: span 2;
   }
 
-  .ecosystem-card:nth-child(4),
-  .ecosystem-card:nth-child(5) {
-    grid-column: span 3;
-  }
-
   .ecosystem-card:hover {
     transform: translateY(-5px);
     border-color: var(--color-brand);
@@ -517,6 +525,13 @@ Astro.response.headers.set(
     object-fit: contain;
     object-position: left center;
     margin-bottom: var(--space-4);
+  }
+
+  .ecosystem-card__logo--lindex {
+    height: 48px;
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    background: #fff;
   }
 
   .ecosystem-card__wordmark {
@@ -562,13 +577,8 @@ Astro.response.headers.set(
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .ecosystem-card,
-    .ecosystem-card:nth-child(4) {
+    .ecosystem-card {
       grid-column: span 1;
-    }
-
-    .ecosystem-card:nth-child(5) {
-      grid-column: span 2;
     }
   }
 
@@ -577,9 +587,7 @@ Astro.response.headers.set(
       grid-template-columns: 1fr;
     }
 
-    .ecosystem-card,
-    .ecosystem-card:nth-child(4),
-    .ecosystem-card:nth-child(5) {
+    .ecosystem-card {
       grid-column: span 1;
     }
   }

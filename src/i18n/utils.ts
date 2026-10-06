@@ -35,7 +35,7 @@ export const ui = {
   en: {},
 };
 
-export const defaultLang = "en";
+export const defaultLang = "es";
 export const showDefaultLang = true;
 
 // Helper to get lang from url

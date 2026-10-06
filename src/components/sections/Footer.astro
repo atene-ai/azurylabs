@@ -12,7 +12,8 @@ const links = [
   {
     heading: t("footer.cols.products"),
     items: [
-      { label: "Iruz Atenea", href: "https://atenea.iruzlabs.com" },
+      { label: "Iruz Atenea", href: "https://v3.atenea.iruzlabs.com" },
+      { label: "Iruz Lindex", href: "https://lindex.iruzlabs.com" },
       { label: "Iruz Sales OS", href: "https://crm.iruzlabs.com" },
       { label: "Iruz Mi Negocio", href: `https://minegocio.iruzlabs.com/${lang}` },
       { label: "Iruz CIEE", href: "https://ciee.iruzlabs.com" },
@@ -52,11 +53,11 @@ const copyright = t("footer.copy").replace("{year}", String(year));
           <a
             href={`/${lang}/`}
             class="footer__logo"
-            aria-label="Azury Labs LLC"
+            aria-label="Iruz Labs SAS de CV"
           >
             <img
-              src="/images/logos/azurylabs-logotipo-h-white.png"
-              alt="Azury Labs"
+              src="/images/logos/iruzlabs-logotipo-h-white.png"
+              alt="Iruz Labs"
               class="footer__logo-img"
               width="200"
               height="58"
@@ -175,8 +176,8 @@ const copyright = t("footer.copy").replace("{year}", String(year));
 <style>
   .footer {
     border-top: 1px solid var(--color-border-subtle);
-    padding-top: var(--space-14);
-    padding-bottom: var(--space-8);
+    padding-top: clamp(var(--space-12), 7vw, var(--space-20));
+    padding-bottom: var(--space-10);
     position: relative;
   }
 
@@ -213,7 +214,7 @@ const copyright = t("footer.copy").replace("{year}", String(year));
     gap: var(--space-4);
   }
 
-      .footer__logo {
+  .footer__logo {
     display: inline-block;
     text-decoration: none;
     margin-bottom: var(--space-2);
@@ -232,18 +233,9 @@ const copyright = t("footer.copy").replace("{year}", String(year));
   }
 
   :global(:root[data-theme="light"]) .footer__logo-img {
-    content: url("/images/logos/azurylabs-logotipo-h-black.png");
+    content: url("/images/logos/iruzlabs-logotipo-h-black.png");
     filter: drop-shadow(0 0 12px rgba(8, 145, 178, 0.18));
   }
-
-  
-  
-
-  
-
-  .footer__logo:hover 
-
-  :global(:root[data-theme="light"]) 
 
   .footer__tagline {
     font-family: var(--font-body);

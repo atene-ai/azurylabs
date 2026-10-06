@@ -20,7 +20,7 @@ const products = [
     description: t("products.atenea.desc"),
     features: t("products.atenea.features"),
     cta: t("products.atenea.cta"),
-    href: "https://atenea.iruzlabs.com",
+    href: "https://v3.atenea.iruzlabs.com",
     logo: "/images/logos/iruzlabs-atenea-logo.png",
     logoAlt: "Iruz Atenea",
     logoWidth: 745,
@@ -29,8 +29,25 @@ const products = [
     tone: "violet",
   },
   {
-    id: "sales-os",
+    id: "lindex",
     number: "02",
+    badge: t("products.lindex.badge"),
+    badgeVariant: "glow",
+    title: t("products.lindex.title"),
+    description: t("products.lindex.desc"),
+    features: t("products.lindex.features"),
+    cta: t("products.lindex.cta"),
+    href: "https://lindex.iruzlabs.com",
+    logo: "/images/logos/lindex-logo.png",
+    logoAlt: "Lindex by Iruz Labs",
+    logoWidth: 1853,
+    logoHeight: 594,
+    wordmark: null,
+    tone: "ice",
+  },
+  {
+    id: "sales-os",
+    number: "03",
     badge: t("products.salesOs.badge"),
     badgeVariant: "blue",
     title: t("products.salesOs.title"),
@@ -47,7 +64,7 @@ const products = [
   },
   {
     id: "mi-negocio",
-    number: "03",
+    number: "04",
     badge: t("products.miNegocio.badge"),
     badgeVariant: "glow",
     title: t("products.miNegocio.title"),
@@ -64,7 +81,7 @@ const products = [
   },
   {
     id: "ciee",
-    number: "04",
+    number: "05",
     badge: t("products.ciee.badge"),
     badgeVariant: "brand",
     title: t("products.ciee.title"),
@@ -81,7 +98,7 @@ const products = [
   },
   {
     id: "systems",
-    number: "05",
+    number: "06",
     badge: t("products.systems.badge"),
     badgeVariant: "blue",
     title: t("products.systems.title"),
@@ -234,6 +251,17 @@ const products = [
 
   .product-card:nth-child(1) { grid-column: span 7; }
   .product-card:nth-child(2) { grid-column: span 5; }
+  .product-card:nth-child(6) { grid-column: 1 / -1; }
+
+  @media (min-width: 961px) {
+    .product-card:nth-child(6) { flex-direction: row; }
+    .product-card:nth-child(6) .product-card__media {
+      flex: 0 0 38%;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 0;
+    }
+    .product-card:nth-child(6) .product-card__content > a { padding-top: var(--space-5); }
+  }
 
   .product-card:hover {
     transform: translateY(-6px);
@@ -283,6 +311,7 @@ const products = [
 
   .product-card__logo--atenea { max-width: min(72%, 290px); }
   .product-card__logo--ciee { max-width: 92%; max-height: 120px; }
+  .product-card__logo--lindex { max-width: min(82%, 340px); }
 
   .product-card__wordmark {
     display: flex;

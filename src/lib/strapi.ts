@@ -1,5 +1,5 @@
 /**
- * Cliente de la API de Strapi (cms.azurylabs.com).
+ * Cliente de la API de Strapi (cms.iruzlabs.com).
  *
  * Un solo token, a proposito. Verificado contra la instancia: un token
  * Read-only devuelve borradores en cuanto se le pasa `status=draft`, asi

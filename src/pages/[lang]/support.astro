@@ -1,0 +1,1275 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { useTranslations } from "../../i18n/utils";
+
+// Public support center — the main entry point, no ticket id in the URL.
+// The conversation id is created client-side and kept in localStorage.
+// Runs on local mock data for now — no backend call yet. Wiring it to a
+// real (public) ticket API is a separate follow-up.
+export const prerender = false;
+
+const { lang: rawLang } = Astro.params;
+const lang = rawLang === "en" ? "en" : "es";
+const htmlLang = lang === "en" ? "en" : "es-MX";
+const t = useTranslations(lang);
+
+// The client script needs a handful of these strings (status labels, canned
+// reply, suggestion text used as mock history preview) — serialized once
+// here instead of duplicating copy in the script.
+const clientStrings = {
+  "support.statusOpen": t("support.statusOpen"),
+  "support.statusClosed": t("support.statusClosed"),
+  "support.formSuccess": t("support.formSuccess"),
+  "support.formSending": t("support.formSending"),
+  "support.formSubmit": t("support.formSubmit"),
+  "support.greetingFallback": t("support.greetingFallback"),
+  "support.suggestionWhatsapp": t("support.suggestionWhatsapp"),
+  "support.suggestionPlan": t("support.suggestionPlan"),
+};
+---
+
+<BaseLayout title={t("support.title")} lang={htmlLang} noindex={true}>
+  <div class="support" id="support-root" data-lang={lang}>
+    <header class="support__topbar">
+      <div class="support__topbar-title">
+        <span class="support__topbar-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a7 7 0 1 0 7 7"></path>
+            <path d="m17.5 2 .65 2.35L20.5 5l-2.35.65L17.5 8l-.65-2.35L14.5 5l2.35-.65L17.5 2Z"></path>
+            <path d="M8.5 13.5 11 16l4.5-5"></path>
+          </svg>
+        </span>
+        <div>
+          <span class="support__eyebrow">IRUZ</span>
+          <h1>{t("support.centerTitle")}</h1>
+        </div>
+      </div>
+
+      <div class="support__topbar-actions">
+        <nav class="support__tabs" aria-label={t("support.title")}>
+          <button type="button" id="rail-new" class="support__tab active" data-view="new">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"></path></svg>
+            <span>{t("support.navNew")}</span>
+          </button>
+          <button type="button" id="rail-history" class="support__tab" data-view="history">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg>
+            <span>{t("support.navHistory")}</span>
+          </button>
+        </nav>
+
+        <button class="theme-toggle" type="button" id="support-theme-toggle" aria-label={lang === "es" ? "Tema" : "Theme"}>
+          <span class="theme-toggle__icon" aria-hidden="true">
+            <svg class="sun-icon" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24">
+              <path d="M20.7 15.1A8.5 8.5 0 0 1 8.9 3.3 8.5 8.5 0 1 0 20.7 15.1Z"></path>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <div class="support__notice" role="note">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5"></path><path d="M12 8h.01"></path></svg>
+      <span>{t("support.notice")}</span>
+    </div>
+
+    <div class="support__shell">
+      <!-- ── View: this ticket ── -->
+      <div class="support__panel" id="support-view-new">
+        <div class="support__ticket-meta" id="ticket-meta" style="display:none;">
+          <span class="support__ticket-number" id="ticket-number"></span>
+          <span class="support__ticket-topic" id="ticket-topic"></span>
+          <span class="support__history-badge" id="ticket-status-badge"></span>
+        </div>
+
+        <div class="support__body" id="support-loading">
+          <div class="support__spinner"></div>
+          <p>{t("support.loading")}</p>
+        </div>
+
+        <!-- Asked before the composer shows up, same pattern as the landing
+             chat's lead-qualification flow: a question, answered with
+             buttons instead of free text. -->
+        <div class="support__body support__form-wrap" id="support-product-step" style="display:none;">
+          <div class="support__intro">
+            <span class="support__intro-label">{t("support.centerLabel")}</span>
+            <p class="support__greeting">{t("support.productQuestion")}</p>
+          </div>
+          <div class="support__suggestions">
+            <div class="support__suggestion-list" id="support-product-options">
+              <button type="button" class="support__suggestion" data-product="atenea">Atenea</button>
+              <button type="button" class="support__suggestion" data-product="lindex">Lindex</button>
+              <button type="button" class="support__suggestion" data-product="salesOs">Sales OS</button>
+              <button type="button" class="support__suggestion" data-product="miNegocio">Mi Negocio</button>
+              <button type="button" class="support__suggestion" data-product="ciee">CIEE</button>
+              <button type="button" class="support__suggestion" data-product="systems">Systems</button>
+              <button type="button" class="support__suggestion" data-product="">{t("support.productUnsure")}</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="support__body support__form-wrap" id="support-form" style="display:none;">
+          <div class="support__assistant-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="22" cy="25" r="14" stroke="currentColor" stroke-width="2"></circle>
+              <path d="M34 8.5 35.7 14l5.3 1.8-5.3 1.7L34 23l-1.8-5.5-5.2-1.7 5.2-1.8L34 8.5Z" fill="currentColor"></path>
+              <path d="M15.5 25.5 20 30l9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <div class="support__intro">
+            <span class="support__intro-label">{t("support.centerLabel")}</span>
+            <p class="support__greeting" id="support-greeting">{t("support.greetingFallback")}</p>
+            <p class="support__intro-copy">{t("support.subtitle")}</p>
+          </div>
+          <form id="support-ticket-form" class="support__form">
+            <div class="support__composer">
+              <textarea
+                id="support-form-message"
+                class="support__form-textarea"
+                placeholder={t("support.formPlaceholder")}
+                rows="4"
+                required
+              ></textarea>
+              <div class="support__composer-footer">
+                <span>{t("support.formHint")}</span>
+                <button type="submit" class="support__form-submit" id="support-form-submit">
+                  <span id="support-submit-label">{t("support.formSubmit")}</span>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14-7-4 14-3-6-7-1Z"></path><path d="m12 13 7-8"></path></svg>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="support__suggestions">
+            <span class="support__suggestions-label">{t("support.suggestions")}</span>
+            <div class="support__suggestion-list">
+              <button type="button" class="support__suggestion" data-suggestion={t("support.suggestionWhatsapp")}>{t("support.suggestionWhatsapp")}</button>
+              <button type="button" class="support__suggestion" data-suggestion={t("support.suggestionAgent")}>{t("support.suggestionAgent")}</button>
+              <button type="button" class="support__suggestion" data-suggestion={t("support.suggestionPlan")}>{t("support.suggestionPlan")}</button>
+              <button type="button" class="support__suggestion" data-suggestion={t("support.suggestionIssue")}>{t("support.suggestionIssue")}</button>
+            </div>
+          </div>
+
+          <p class="support__delivery-note">{t("support.deliveryNote")}</p>
+        </div>
+
+        <div id="support-chat" style="display:none; flex:1; min-height:0;">
+          <div class="msg-chat">
+            <div class="msg-chat__messages" id="chat-messages"></div>
+            <div class="msg-chat__input">
+              <textarea id="chat-input" placeholder={t("support.inputPlaceholder")} rows="1"></textarea>
+              <button class="msg-chat__send" id="send-btn" type="button" aria-label={t("support.formSubmit")}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── View: ticket history ── -->
+      <div class="support__panel" id="support-view-history" style="display:none;">
+        <div class="support__history-header">
+          <span>{t("support.centerLabel")}</span>
+          <h2>{t("support.historyTitle")}</h2>
+          <p>{t("support.historySubtitle")}</p>
+        </div>
+        <div class="support__history-list" id="history-list" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script type="application/json" id="support-i18n" set:html={JSON.stringify(clientStrings)} />
+
+<style is:global>
+  .support {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-height: 42rem;
+    color: var(--color-text);
+    background:
+      radial-gradient(circle at 50% 26%, rgba(8, 145, 178, 0.09), transparent 34rem),
+      var(--color-bg);
+    overflow: hidden;
+    font-family: var(--font-body);
+  }
+
+  .support__topbar {
+    min-height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 0.75rem clamp(1rem, 2.5vw, 2rem);
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+    backdrop-filter: blur(18px);
+    flex-shrink: 0;
+  }
+
+  .support__topbar-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+
+  .support__topbar-mark {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.8rem;
+    color: var(--color-brand);
+    background: rgba(8, 145, 178, 0.1);
+    border: 1px solid rgba(8, 145, 178, 0.18);
+    flex-shrink: 0;
+  }
+
+  .support__topbar-mark svg {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .support__eyebrow {
+    display: block;
+    margin-bottom: 0.05rem;
+    font-size: 0.625rem;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    color: var(--color-brand);
+    font-weight: 700;
+  }
+
+  .support__topbar h1 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.2;
+    font-weight: 650;
+    font-family: var(--font-brand);
+  }
+
+  .support__topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .support__tabs {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--color-bg);
+  }
+
+  .theme-toggle {
+    position: relative;
+    display: grid;
+    width: 2.375rem;
+    height: 2.375rem;
+    flex: none;
+    place-items: center;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-surface) 78%, transparent);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+      color 150ms ease,
+      border-color 150ms ease,
+      background 150ms ease,
+      transform 150ms ease;
+  }
+
+  .theme-toggle:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-border);
+    background: var(--color-brand-dim);
+    color: var(--color-brand);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+
+  .theme-toggle__icon {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .theme-toggle__icon svg {
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.65;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  :root[data-theme="light"] .support .sun-icon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  :root[data-theme="light"] .support .moon-icon {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.55);
+  }
+
+  :root[data-theme="dark"] .support .sun-icon {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.55);
+  }
+
+  :root[data-theme="dark"] .support .moon-icon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  .support__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.1rem;
+    padding: 0.4rem 0.85rem;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+  }
+
+  .support__tab:hover {
+    background: var(--color-surface-2);
+    color: var(--color-text);
+  }
+
+  .support__tab.active {
+    background: var(--color-brand);
+    color: #fff;
+    box-shadow: 0 0.3rem 0.9rem rgba(8, 145, 178, 0.22);
+  }
+
+  .support__notice {
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.6rem 1.25rem;
+    border-bottom: 1px solid rgba(8, 145, 178, 0.16);
+    background: rgba(8, 145, 178, 0.065);
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .support__notice svg {
+    color: var(--color-brand);
+    flex-shrink: 0;
+  }
+
+  .support__shell {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+  }
+
+  .support__panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .support__ticket-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    padding: 0.55rem clamp(1rem, 3vw, 2rem);
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 86%, transparent);
+    font-size: 0.75rem;
+  }
+
+  .support__ticket-number {
+    flex-shrink: 0;
+    font-weight: 700;
+    color: var(--color-text-faint);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .support__ticket-topic {
+    flex: 1;
+    min-width: 0;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .support__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    text-align: center;
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+  }
+
+  .support__spinner {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-brand);
+    animation: support-spin 0.7s linear infinite;
+  }
+
+  @keyframes support-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .support__form-wrap {
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  .support__assistant-mark {
+    width: 3.4rem;
+    height: 3.4rem;
+    color: var(--color-brand);
+    filter: drop-shadow(0 0.5rem 1rem rgba(8, 145, 178, 0.18));
+  }
+
+  .support__assistant-mark svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .support__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  .support__intro-label,
+  .support__suggestions-label,
+  .support__history-header > span {
+    color: var(--color-brand);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .support__greeting {
+    max-width: 44rem;
+    margin: 0;
+    font-family: var(--font-brand);
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+    line-height: 1.14;
+    letter-spacing: -0.035em;
+    font-weight: 650;
+    color: var(--color-text);
+    text-align: center;
+  }
+
+  .support__intro-copy {
+    max-width: 34rem;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .support__form {
+    width: 100%;
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  .support__composer {
+    border: 1px solid var(--color-border);
+    border-radius: 1.15rem;
+    background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+    box-shadow:
+      0 1.1rem 3rem rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    transition: border-color 0.16s ease, box-shadow 0.16s ease;
+  }
+
+  .support__composer:focus-within {
+    border-color: rgba(8, 145, 178, 0.55);
+    box-shadow:
+      0 1.1rem 3rem rgba(0, 0, 0, 0.1),
+      0 0 0 3px rgba(8, 145, 178, 0.09);
+  }
+
+  .support__form-textarea {
+    width: 100%;
+    min-height: 7.25rem;
+    padding: 1.25rem 1.3rem 0.75rem;
+    box-sizing: border-box;
+    background: transparent;
+    border: 0;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+  }
+
+  .support__form-textarea::placeholder {
+    color: var(--color-text-faint);
+  }
+
+  .support__composer-footer {
+    min-height: 3.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0.7rem 0.7rem 1.3rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+  }
+
+  .support__composer-footer > span {
+    color: var(--color-text-faint);
+    font-size: 0.7rem;
+  }
+
+  .support__form-submit {
+    min-height: 2.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: var(--radius-full);
+    border: none;
+    background: var(--color-brand);
+    color: white;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0.35rem 1rem rgba(8, 145, 178, 0.25);
+    transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+  }
+
+  .support__form-submit:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 0.5rem 1.2rem rgba(8, 145, 178, 0.34);
+  }
+
+  .support__form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .support__suggestions {
+    width: 100%;
+    max-width: 48rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 0.4rem;
+  }
+
+  .support__suggestion-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .support__suggestion {
+    min-height: 2.1rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--color-surface) 82%, transparent);
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  }
+
+  .support__suggestion:hover {
+    color: var(--color-text);
+    border-color: rgba(8, 145, 178, 0.45);
+    background: rgba(8, 145, 178, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .support__delivery-note {
+    max-width: 38rem;
+    margin: 0.75rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.68rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  /* ── Chat (self-contained: no ChatPanel here, this repo doesn't have the
+     CRM's messaging module) ── */
+  #support-chat {
+    width: 100%;
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .msg-chat {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 1.15rem;
+    background: var(--color-surface);
+  }
+
+  .msg-chat__messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .msg-group {
+    display: flex;
+  }
+
+  .msg-group--out {
+    justify-content: flex-end;
+  }
+
+  .msg-group__col {
+    max-width: 75%;
+  }
+
+  .msg-bubble {
+    padding: 0.7rem 1rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .msg-bubble--in {
+    background: var(--color-surface-2);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-bottom-left-radius: 0.3rem;
+  }
+
+  .msg-bubble--out {
+    background: var(--gradient-brand);
+    color: #fff;
+    border-bottom-right-radius: 0.3rem;
+  }
+
+  .msg-bubble__meta {
+    margin-top: 0.3rem;
+  }
+
+  .msg-bubble__time {
+    font-size: 0.65rem;
+    opacity: 0.7;
+  }
+
+  .msg-chat__input {
+    flex-shrink: 0;
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .msg-chat__input textarea {
+    flex: 1;
+    resize: none;
+    max-height: 8rem;
+    padding: 0.75rem 1rem;
+    background: var(--color-surface-2);
+    color: var(--color-text);
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    font-family: inherit;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .msg-chat__input textarea:focus {
+    outline: none;
+    border-color: var(--color-brand);
+  }
+
+  .msg-chat__send {
+    flex-shrink: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: none;
+    border-radius: 0.75rem;
+    background: var(--gradient-brand);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+
+  .msg-chat__send:hover {
+    transform: scale(1.05);
+  }
+
+  .typing-dots {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    height: 1rem;
+  }
+
+  .typing-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--color-text-faint);
+    animation: typing-bounce 1.4s infinite ease-in-out;
+  }
+
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typing-bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+    30% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  /* ── History list ── */
+  .support__history-header {
+    width: min(100% - 3rem, 58rem);
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) 0 1.25rem;
+    text-align: center;
+  }
+
+  .support__history-header h2 {
+    margin: 0.45rem 0 0.35rem;
+    color: var(--color-text);
+    font-family: var(--font-brand);
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    letter-spacing: -0.03em;
+  }
+
+  .support__history-header p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+
+  .support__history-list {
+    flex: 1;
+    overflow-y: auto;
+    width: min(100% - 3rem, 58rem);
+    margin: 0 auto;
+    padding: 0 0 2rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .support__history-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    text-align: left;
+    width: 100%;
+    box-shadow: 0 0.4rem 1.25rem rgba(0, 0, 0, 0.04);
+  }
+
+  .support__history-row-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .support__history-number {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--color-text-faint);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .support__history-preview {
+    font-size: 0.85rem;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 26rem;
+  }
+
+  .support__history-date {
+    font-size: 0.72rem;
+    color: var(--color-text-faint);
+  }
+
+  .support__history-badge {
+    flex-shrink: 0;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+  }
+
+  .support__history-badge--open {
+    color: #16a34a;
+    background: rgba(22, 163, 74, 0.1);
+  }
+
+  .support__history-badge--closed {
+    color: var(--color-text-muted);
+    background: var(--color-surface-2);
+  }
+
+  @media (max-width: 720px) {
+    .support {
+      min-height: 36rem;
+    }
+
+    .support__topbar {
+      min-height: 4rem;
+      padding: 0.65rem 0.85rem;
+    }
+
+    .support__topbar-mark {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    .support__topbar h1 {
+      font-size: 0.88rem;
+    }
+
+    .support__tab {
+      padding-inline: 0.65rem;
+    }
+
+    .support__tab svg {
+      display: none;
+    }
+
+    .support__notice {
+      justify-content: flex-start;
+      text-align: left;
+      font-size: 0.7rem;
+    }
+
+    .support__form-wrap {
+      justify-content: flex-start;
+      padding: 1.5rem 1rem 2rem;
+    }
+
+    .support__assistant-mark {
+      width: 2.9rem;
+      height: 2.9rem;
+    }
+
+    .support__greeting {
+      font-size: 1.55rem;
+    }
+
+    .support__composer-footer > span {
+      display: none;
+    }
+
+    .support__composer-footer {
+      justify-content: flex-end;
+      padding-left: 0.7rem;
+    }
+
+    .support__suggestion-list {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .support__suggestion {
+      text-align: left;
+    }
+
+    #support-chat {
+      padding: 0.75rem;
+    }
+
+    .support__history-header,
+    .support__history-list {
+      width: min(100% - 2rem, 58rem);
+    }
+  }
+
+  @media (max-width: 430px) {
+    .support__topbar-title > div {
+      display: none;
+    }
+
+    .support__topbar {
+      gap: 0.5rem;
+    }
+
+    .support__topbar-actions {
+      gap: 0.4rem;
+    }
+
+    .support__tab {
+      font-size: 0.7rem;
+      padding-inline: 0.55rem;
+    }
+
+  }
+</style>
+
+<script>
+  // ── Mock data only — no backend call yet (see the file header comment). ──
+  interface MockMessage {
+    id: string;
+    role: "LEAD" | "AI";
+    content: string;
+    createdAt: number;
+  }
+
+  const STORAGE_KEY = "iruz_support_ticket_id";
+
+  function getOrCreateConversationId(): string {
+    try {
+      const existing = localStorage.getItem(STORAGE_KEY);
+      if (existing) return existing;
+      const created = crypto.randomUUID();
+      localStorage.setItem(STORAGE_KEY, created);
+      return created;
+    } catch {
+      return crypto.randomUUID();
+    }
+  }
+
+  function escapeHtml(str: string): string {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function formatHour(date: Date): string {
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  }
+
+  const root = document.getElementById("support-root")!;
+  const conversationId = getOrCreateConversationId();
+  const shortId = conversationId.slice(0, 8);
+
+  const dict = JSON.parse(
+    document.getElementById("support-i18n")?.textContent || "{}"
+  ) as Record<string, string>;
+  const t = (key: string) => dict[key] || key;
+
+  const $ = (id: string) => document.getElementById(id)!;
+
+  // ── Rail / view switching ──
+  const railNewBtn = $("rail-new") as HTMLButtonElement;
+  const railHistoryBtn = $("rail-history") as HTMLButtonElement;
+  const viewNewEl = $("support-view-new");
+  const viewHistoryEl = $("support-view-history");
+
+  function showView(view: "new" | "history") {
+    viewNewEl.style.display = view === "new" ? "flex" : "none";
+    viewHistoryEl.style.display = view === "history" ? "flex" : "none";
+    railNewBtn.classList.toggle("active", view === "new");
+    railHistoryBtn.classList.toggle("active", view === "history");
+    if (view === "history") loadHistory();
+  }
+
+  railNewBtn.addEventListener("click", () => showView("new"));
+  railHistoryBtn.addEventListener("click", () => showView("history"));
+
+  // ── Ticket number / tema / status line ──
+  const ticketMetaEl = $("ticket-meta");
+  const ticketNumberEl = $("ticket-number");
+  const ticketTopicEl = $("ticket-topic");
+  const ticketStatusBadgeEl = $("ticket-status-badge");
+  let topicSet = false;
+
+  function renderTicketMeta(status: "OPEN" | "CLOSED") {
+    ticketNumberEl.textContent = `#${shortId}`;
+    const isOpen = status !== "CLOSED";
+    ticketStatusBadgeEl.textContent = isOpen ? t("support.statusOpen") : t("support.statusClosed");
+    ticketStatusBadgeEl.className = `support__history-badge ${isOpen ? "support__history-badge--open" : "support__history-badge--closed"}`;
+    ticketMetaEl.style.display = "flex";
+  }
+
+  function setTopicFromFirstMessage(oldestContent: string) {
+    if (topicSet || !oldestContent.trim()) return;
+    topicSet = true;
+    const trimmed = oldestContent.trim();
+    ticketTopicEl.textContent = trimmed.length > 60 ? trimmed.slice(0, 60) + "…" : trimmed;
+  }
+
+  // A product picked up front wins over the first-message-derived topic:
+  // it's a deliberate choice by the visitor, not a guess from free text.
+  let selectedProductLabel: string | null = null;
+
+  function applyProductTopic() {
+    if (!selectedProductLabel) return;
+    topicSet = true;
+    ticketTopicEl.textContent = selectedProductLabel;
+  }
+
+  // ── "This ticket" view ──
+  const loadingEl = $("support-loading");
+  const productStepEl = $("support-product-step");
+  const formWrapEl = $("support-form");
+  const greetingEl = $("support-greeting");
+  const formEl = $("support-ticket-form") as HTMLFormElement;
+  const formMessageEl = $("support-form-message") as HTMLTextAreaElement;
+  const formSubmitEl = $("support-form-submit") as HTMLButtonElement;
+  const formSubmitLabelEl = $("support-submit-label");
+  const chatEl = $("support-chat");
+
+  const chatMessagesEl = $("chat-messages");
+  const chatInputEl = $("chat-input") as HTMLTextAreaElement;
+  const sendBtnEl = $("send-btn") as HTMLButtonElement;
+
+  document.querySelectorAll<HTMLButtonElement>("#support-form .support__suggestion").forEach((button) => {
+    button.addEventListener("click", () => {
+      formMessageEl.value = button.dataset.suggestion || button.textContent?.trim() || "";
+      formMessageEl.focus();
+      formMessageEl.setSelectionRange(formMessageEl.value.length, formMessageEl.value.length);
+    });
+  });
+
+  const seenMessageIds = new Set<string>();
+
+  function hideAllStates() {
+    loadingEl.style.display = "none";
+    productStepEl.style.display = "none";
+    formWrapEl.style.display = "none";
+    chatEl.style.display = "none";
+  }
+
+  function bubbleFor(msg: MockMessage) {
+    const isMine = msg.role === "LEAD";
+    const group = document.createElement("div");
+    group.className = `msg-group ${isMine ? "msg-group--out" : ""}`.trim();
+
+    const col = document.createElement("div");
+    col.className = "msg-group__col";
+
+    const bubble = document.createElement("div");
+    bubble.className = `msg-bubble ${isMine ? "msg-bubble--out" : "msg-bubble--in"}`;
+    bubble.innerHTML = escapeHtml(msg.content);
+
+    const meta = document.createElement("div");
+    meta.className = "msg-bubble__meta";
+    const time = document.createElement("span");
+    time.className = "msg-bubble__time";
+    time.textContent = formatHour(new Date(msg.createdAt));
+    meta.appendChild(time);
+    bubble.appendChild(meta);
+
+    col.appendChild(bubble);
+    group.appendChild(col);
+    return group;
+  }
+
+  function appendMessage(msg: MockMessage) {
+    if (seenMessageIds.has(msg.id)) return;
+    seenMessageIds.add(msg.id);
+    setTopicFromFirstMessage(msg.content);
+    chatMessagesEl.appendChild(bubbleFor(msg));
+    chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+  }
+
+  function showTypingThenReply(replyText: string) {
+    const typing = document.createElement("div");
+    typing.className = "msg-group";
+    typing.innerHTML = `<div class="msg-group__col"><div class="msg-bubble msg-bubble--in"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
+    chatMessagesEl.appendChild(typing);
+    chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+
+    setTimeout(() => {
+      typing.remove();
+      appendMessage({ id: `mock-${Date.now()}`, role: "AI", content: replyText, createdAt: Date.now() });
+    }, 900);
+  }
+
+  function startChat() {
+    hideAllStates();
+    chatEl.style.display = "flex";
+    renderTicketMeta("OPEN");
+    applyProductTopic();
+  }
+
+  function sendChatMessage() {
+    const body = chatInputEl.value.trim();
+    if (!body) return;
+    chatInputEl.value = "";
+    appendMessage({ id: `mock-${Date.now()}`, role: "LEAD", content: body, createdAt: Date.now() });
+    showTypingThenReply(t("support.formSuccess"));
+  }
+
+  sendBtnEl.addEventListener("click", sendChatMessage);
+  chatInputEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendChatMessage();
+    }
+  });
+
+  formEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const body = formMessageEl.value.trim();
+    if (!body) return;
+
+    formSubmitEl.disabled = true;
+    formSubmitLabelEl.textContent = t("support.formSending");
+
+    setTimeout(() => {
+      startChat();
+      appendMessage({ id: `mock-${Date.now()}`, role: "LEAD", content: body, createdAt: Date.now() });
+      showTypingThenReply(t("support.formSuccess"));
+      formMessageEl.value = "";
+      formSubmitEl.disabled = false;
+      formSubmitLabelEl.textContent = t("support.formSubmit");
+    }, 500);
+  });
+
+  // ── "Ticket history" view — static preview rows, nothing to fetch yet. ──
+  const historyListEl = $("history-list");
+  let historyLoaded = false;
+
+  function loadHistory() {
+    if (historyLoaded) return;
+    historyLoaded = true;
+
+    const mockTickets: { id: string; preview: string; status: "OPEN" | "CLOSED"; date: string }[] = [
+      { id: conversationId, preview: t("support.suggestionWhatsapp"), status: "OPEN", date: "—" },
+      { id: "00000000-0000-0000-0000-000000000000", preview: t("support.suggestionPlan"), status: "CLOSED", date: "—" },
+    ];
+
+    historyListEl.innerHTML = "";
+    for (const ticket of mockTickets) {
+      const row = document.createElement("div");
+      row.className = "support__history-row";
+
+      const main = document.createElement("div");
+      main.className = "support__history-row-main";
+      const number = document.createElement("span");
+      number.className = "support__history-number";
+      number.textContent = `#${ticket.id.slice(0, 8)}`;
+      const preview = document.createElement("span");
+      preview.className = "support__history-preview";
+      preview.textContent = ticket.preview;
+      const date = document.createElement("span");
+      date.className = "support__history-date";
+      date.textContent = ticket.date;
+      main.appendChild(number);
+      main.appendChild(preview);
+      main.appendChild(date);
+
+      const badge = document.createElement("span");
+      const isOpen = ticket.status !== "CLOSED";
+      badge.className = `support__history-badge ${isOpen ? "support__history-badge--open" : "support__history-badge--closed"}`;
+      badge.textContent = isOpen ? t("support.statusOpen") : t("support.statusClosed");
+
+      row.appendChild(main);
+      row.appendChild(badge);
+      historyListEl.appendChild(row);
+    }
+    historyListEl.style.display = "flex";
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("#support-product-options .support__suggestion").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectedProductLabel = button.dataset.product ? button.textContent?.trim() || null : null;
+      hideAllStates();
+      greetingEl.textContent = t("support.greetingFallback");
+      formWrapEl.style.display = "flex";
+      formMessageEl.focus();
+    });
+  });
+
+  function init() {
+    hideAllStates();
+    loadingEl.style.display = "flex";
+    setTimeout(() => {
+      hideAllStates();
+      productStepEl.style.display = "flex";
+    }, 500);
+  }
+
+  init();
+
+  // ── Theme toggle — same "iruz-theme" key BaseLayout's inline script reads
+  // on load and Navbar's toggle writes, so it stays in sync across pages. ──
+  const themeToggleBtn = $("support-theme-toggle") as HTMLButtonElement;
+  themeToggleBtn.addEventListener("click", () => {
+    const current = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem("iruz-theme", next);
+    } catch {
+      // Private mode / storage disabled — theme just won't persist.
+    }
+  });
+</script>

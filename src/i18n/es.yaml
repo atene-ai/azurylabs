@@ -35,7 +35,7 @@ hero:
 products:
   header:
     badge: "Productos y soluciones"
-    title: "Cinco líneas de producto.<br /><span class='products__title--accent'>Una misión: producir resultados.</span>"
+    title: "Seis líneas de producto.<br /><span class='products__title--accent'>Una misión: producir resultados.</span>"
     sub: "Cada unidad de Iruz resuelve una parte distinta del negocio: crear inteligencia, vender, operar, investigar o construir tecnología a medida."
   stack:
     title: "Conecta tus herramientas productivas"
@@ -49,14 +49,23 @@ products:
   atenea:
     badge: "01 · Plataforma IA"
     title: "Iruz Atenea"
-    desc: "La plataforma con la que creamos agentes de IA que conocen tu negocio, se conectan a tus sistemas y ejecutan procesos reales."
+    desc: "La plataforma con la que creamos agentes de IA que atienden por mensajes y voz en tiempo real, conocen tu negocio, se conectan a tus sistemas y ejecutan procesos reales."
     features:
-      - "Agentes especializados"
+      - "Agentes de IA para mensajes y voz en tiempo real"
       - "Flujos y conocimiento propios"
       - "Integraciones a medida"
     cta: "Conocer Atenea"
+  lindex:
+    badge: "02 · Ingeniería autónoma"
+    title: "Iruz Lindex"
+    desc: "El harness que coordina agentes de IA del ticket al código, las pruebas y un preview desplegado, con estructura, límites y trazabilidad."
+    features:
+      - "Del ticket al PR con preview"
+      - "Ejecución aislada y trazable"
+      - "Control de presupuesto por tarea"
+    cta: "Conocer Lindex"
   salesOs:
-    badge: "02 · Sales OS"
+    badge: "03 · Sales OS"
     title: "Iruz Sales OS"
     desc: "Más que un CRM: conecta canales, agentes de IA y equipo humano para atender, calificar y hacer avanzar cada oportunidad."
     features:
@@ -65,7 +74,7 @@ products:
       - "Seguimiento y control comercial"
     cta: "Conocer Sales OS"
   miNegocio:
-    badge: "03 · Gestión de negocio"
+    badge: "04 · Gestión de negocio"
     title: "Iruz Mi Negocio"
     desc: "Clientes, cotizaciones, órdenes y seguimiento en una operación simple para negocios que necesitan crecer sin sumar complejidad."
     features:
@@ -74,7 +83,7 @@ products:
       - "Visibilidad para decidir"
     cta: "Conocer Mi Negocio"
   ciee:
-    badge: "04 · Datos e investigación"
+    badge: "05 · Datos e investigación"
     title: "Iruz CIEE"
     desc: "Encuestas con IA, estudios de opinión y sondeos políticos o de mercado para decidir con evidencia y entender qué está cambiando."
     features:
@@ -83,7 +92,7 @@ products:
       - "Análisis accionable"
     cta: "Conocer CIEE"
   systems:
-    badge: "05 · Servicios profesionales"
+    badge: "06 · Servicios profesionales"
     title: "Iruz Systems"
     desc: "Diseñamos y desarrollamos el software que tu operación necesita cuando una herramienta estándar ya no alcanza."
     features:
@@ -149,19 +158,95 @@ stats:
     label: "Soluciones a medida"
     desc: "Producto y servicio según la realidad de cada empresa"
 
+faq:
+  badge: "Preguntas frecuentes"
+  title: "Lo que suelen preguntarnos<br /><span class='faq__title--accent'>sobre Iruz Labs.</span>"
+  items:
+    - q: "¿Qué es Iruz Labs?"
+      a: "Iruz Labs es una empresa de software especializada en inteligencia artificial aplicada. Construimos productos propios y soluciones a medida para que las empresas vendan, operen y decidan con datos. Tenemos presencia en México, Colombia y Estados Unidos."
+    - q: "¿Qué productos ofrece Iruz Labs?"
+      a: "Seis líneas: Atenea (agentes de IA para mensajes y voz en tiempo real), Lindex (ingeniería de software autónoma), Sales OS (CRM omnicanal), Mi Negocio (gestión de clientes, cotizaciones y órdenes), CIEE (encuestas e investigación) y Systems (software a medida y consultoría)."
+    - q: "¿Qué es Iruz Atenea y en qué canales funciona?"
+      a: "Atenea es la plataforma con la que creamos agentes de IA que atienden mensajes y voz en tiempo real, conocen tu negocio y se conectan a tus sistemas para ejecutar procesos reales. Se integra con WhatsApp Business, Telegram, Instagram Messenger, llamadas y Google Calendar."
+    - q: "¿Qué es Lindex?"
+      a: "Lindex es un harness de ingeniería de software autónoma: coordina agentes de IA desde un ticket hasta el código, las pruebas y un preview desplegado. Ejecuta en un entorno aislado, registra cada acción y permite definir un presupuesto máximo por tarea. Se conecta con Linear, Jira, GitHub, GitLab y Cloudflare Pages."
+    - q: "¿En qué se diferencia Sales OS de un CRM tradicional?"
+      a: "Sales OS conecta tus canales, agentes de IA y equipo humano en una sola conversación omnicanal para atender, calificar y dar seguimiento a cada oportunidad, en lugar de limitarse a registrar contactos."
+    - q: "¿Iruz Labs desarrolla software a medida?"
+      a: "Sí. Iruz Systems diseña y desarrolla el software que tu operación necesita cuando una herramienta estándar ya no alcanza, con consultoría tecnológica e implementación acompañada."
+    - q: "¿Cómo puedo empezar?"
+      a: "Escríbenos desde la página de contacto o con el chat del sitio y cuéntanos el reto. Te orientamos hacia el producto o la solución a medida que mejor encaje."
+
 cta:
-  overline: "Azury Labs"
+  overline: "Iruz Labs"
   title: "Construyamos el siguiente<br /><span class='cta__title--accent'>avance de tu negocio.</span>"
   sub: "Cuéntanos qué quieres hacer avanzar. Diseñamos el producto, la IA y la tecnología que lo hace posible."
-  primary: "Hablar con Azury"
+  primary: "Hablar con Iruz"
   secondary: "Ver productos"
   disclaimer: "Diagnóstico · Diseño · Implementación"
-  link: "https://calendly.com/admin-azurylabs/we-re-going-to-transform-your-business-azury-labs"
+  link: "https://calendly.com/admin-iruzlabs/we-re-going-to-transform-your-business-zuri-labs"
+
+chat:
+  status: "En línea"
+  welcomePrefix: "¡Hola! 👋 Soy el asistente de"
+  welcomeSuffix: "Te haré un par de preguntas rápidas para conectarte con el equipo correcto."
+  powered: "Powered by Iruz Labs"
+  restart: "Empezar de nuevo"
+  error: "No pudimos enviar tus datos. Intenta de nuevo en unos minutos."
+  flow:
+    interest:
+      question: "¿Qué te interesa conocer?"
+      options:
+        - value: atenea
+          label: "Atenea · Agentes de IA"
+        - value: lindex
+          label: "Lindex · Ingeniería autónoma"
+        - value: salesOs
+          label: "Sales OS · CRM"
+        - value: miNegocio
+          label: "Mi Negocio · Gestión"
+        - value: ciee
+          label: "CIEE · Encuestas"
+        - value: systems
+          label: "Systems · Software a medida"
+        - value: unsure
+          label: "Aún no sé, oriéntenme"
+    role:
+      question: "¿Cuál es tu rol frente a esta decisión?"
+      options:
+        - value: owner
+          label: "Dueño/a o director/a"
+        - value: manager
+          label: "Gerente o líder de área"
+        - value: technical
+          label: "Equipo técnico"
+        - value: exploring
+          label: "Solo estoy investigando"
+    timeline:
+      question: "¿Para cuándo te gustaría empezar?"
+      options:
+        - value: asap
+          label: "Lo antes posible"
+        - value: quarter
+          label: "En los próximos 3 meses"
+        - value: later
+          label: "Más adelante"
+        - value: unsure
+          label: "Aún no lo sé"
+  contact:
+    question: "Perfecto. Para conectarte con el equipo indicado, compárteme tu nombre y correo:"
+    nameLabel: "Nombre"
+    namePlaceholder: "Tu nombre"
+    emailLabel: "Correo"
+    emailPlaceholder: "tu@correo.com"
+    submit: "Enviar"
+    sending: "Enviando…"
+  success: "¡Gracias, {name}! 🙌 Un asesor de Iruz Labs te contactará pronto a {email}."
 
 footer:
   tagline: "Inteligencia artificial aplicada, productos propios y soluciones a medida."
   status: "Creando operaciones más inteligentes"
-  copy: "© {year} Azury Labs LLC. Todos los derechos reservados."
+  copy: "© {year} Iruz Labs SAS de CV. Todos los derechos reservados."
   cols:
     products: "Productos"
     solutions: "Soluciones"
@@ -201,6 +286,38 @@ legal:
   back: "← Volver al inicio"
   updated: "Última actualización: {date}"
 
+support:
+  title: "Soporte"
+  centerTitle: "Centro de ayuda"
+  centerLabel: "Soporte Iruz"
+  subtitle: "¿Tienes un problema o una pregunta? Escríbenos aquí."
+  notice: "Tus solicitudes quedan guardadas y el equipo de Iruz puede darles seguimiento con todo el contexto."
+  navNew: "Nuevo ticket"
+  navHistory: "Historial"
+  loading: "Abriendo tu ticket..."
+  loadError: "No se pudo abrir tu ticket. Intenta de nuevo en unos minutos."
+  greetingFallback: "¿Cómo podemos ayudarte?"
+  formHint: "Cuéntanos qué necesitas para empezar."
+  formPlaceholder: "Cuéntanos qué necesitas..."
+  formSubmit: "Enviar"
+  formSending: "Enviando..."
+  formSuccess: "¡Listo! Recibimos tu mensaje y te responderemos por correo a la brevedad."
+  resolved: "Este ticket fue marcado como resuelto por soporte."
+  newTicket: "Abrir un nuevo ticket"
+  suggestions: "Consultas frecuentes"
+  suggestionWhatsapp: "No puedo conectar WhatsApp"
+  suggestionAgent: "Necesito configurar un agente"
+  suggestionPlan: "Tengo una duda sobre mi plan"
+  suggestionIssue: "Quiero reportar un problema"
+  deliveryNote: "Tu mensaje se enviará al equipo de soporte. Evita compartir contraseñas, códigos o datos sensibles."
+  historyTitle: "Tus solicitudes de soporte"
+  historySubtitle: "Revisa el estado y el contexto de conversaciones anteriores."
+  statusOpen: "Abierto"
+  statusClosed: "Resuelto"
+  inputPlaceholder: "Escribe tu mensaje..."
+  productQuestion: "¿Qué producto necesitas?"
+  productUnsure: "No estoy seguro"
+
 about:
   hero:
     title: "Inteligencia que se vuelve avance"
@@ -218,7 +335,10 @@ about:
     items:
       atenea:
         name: "Iruz Atenea"
-        desc: "Nuestro motor de creación de agentes de IA: la base tecnológica sobre la que construimos cada asistente a la medida."
+        desc: "Nuestro motor de creación de agentes de IA para mensajes y voz en tiempo real: la base tecnológica sobre la que construimos cada asistente a la medida."
+      lindex:
+        name: "Iruz Lindex"
+        desc: "Harness de ingeniería de software autónoma: coordina agentes de IA del ticket al código, las pruebas y un preview desplegado."
       crm:
         name: "Iruz Sales OS"
         desc: "El sistema operativo de ventas omnicanal que conecta canales, agentes de IA y equipo humano para acelerar cada oportunidad."

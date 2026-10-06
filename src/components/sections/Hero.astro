@@ -12,17 +12,19 @@ const t = useTranslations(lang);
 const modules = lang === "es"
   ? [
       ["01", "ATENEA", "AGENTES DE IA"],
-      ["02", "SALES OS", "VENTAS"],
-      ["03", "MI NEGOCIO", "OPERACIÓN"],
-      ["04", "CIEE", "DATOS"],
-      ["05", "SYSTEMS", "SOFTWARE"],
+      ["02", "LINDEX", "INGENIERÍA"],
+      ["03", "SALES OS", "VENTAS"],
+      ["04", "MI NEGOCIO", "OPERACIÓN"],
+      ["05", "CIEE", "DATOS"],
+      ["06", "SYSTEMS", "SOFTWARE"],
     ]
   : [
       ["01", "ATENEA", "AI AGENTS"],
-      ["02", "SALES OS", "SALES"],
-      ["03", "MI NEGOCIO", "OPERATIONS"],
-      ["04", "CIEE", "DATA"],
-      ["05", "SYSTEMS", "SOFTWARE"],
+      ["02", "LINDEX", "ENGINEERING"],
+      ["03", "SALES OS", "SALES"],
+      ["04", "MI NEGOCIO", "OPERATIONS"],
+      ["05", "CIEE", "DATA"],
+      ["06", "SYSTEMS", "SOFTWARE"],
     ];
 ---
 
@@ -403,12 +405,18 @@ const modules = lang === "es"
   }
 
   .system__module--4 {
+    right: 8%;
+    bottom: 7%;
+    animation: atom-module-2 9.5s ease-in-out infinite;
+  }
+
+  .system__module--5 {
     bottom: 9%;
     left: 16%;
     animation: atom-module-4 8.5s ease-in-out infinite;
   }
 
-  .system__module--5 {
+  .system__module--6 {
     top: 28%;
     left: 0;
     animation: atom-module-5 9.5s ease-in-out infinite;
@@ -532,8 +540,9 @@ const modules = lang === "es"
     .system__module--1 { top: 6%; left: 7%; }
     .system__module--2 { top: 17%; right: -1%; }
     .system__module--3 { right: -1%; bottom: 25%; }
-    .system__module--4 { bottom: 8%; left: 11%; }
-    .system__module--5 { top: 31%; left: -1%; }
+    .system__module--4 { right: 4%; bottom: 8%; }
+    .system__module--5 { bottom: 8%; left: 11%; }
+    .system__module--6 { top: 31%; left: -1%; }
     .system__module strong { font-size: 0.7rem; }
     .system__module small,
     .system__module span { font-size: 0.5rem; }
