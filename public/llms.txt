@@ -3,7 +3,7 @@
 > Azury Labs is a software and applied-AI company with presence in Mexico,
 > Colombia and the United States. It builds its own products and custom
 > solutions so companies can sell, operate and decide with data. It offers
-> six product lines, each solving a different part of the business.
+> eight product lines, each solving a different part of the business.
 
 ## Products
 
@@ -23,13 +23,19 @@
   political or market polling. https://ciee.iruzlabs.com
 - **Iruz Systems** — Custom software development, technology consulting and
   guided implementation. https://systems.iruzlabs.com
+- **Iruz Connect** — The official WhatsApp API for businesses and applications,
+  without the technical complexity of Meta. Handles credentials, webhooks and
+  message statuses. Next channels: Instagram, Messenger, SMS, RCS and voice.
+- **Iruz Tracking System** — Product analytics that measures every step of the
+  customer journey, from first contact to sale, using trackable links and QR
+  codes.
 
 Channels supported by Atenea agents include WhatsApp Business, Telegram,
 Instagram Messenger, phone calls and Google Calendar.
 
 ## Key pages
 
-- [Home (Spanish)](https://azurylabs.online/es/): overview of the six product
+- [Home (Spanish)](https://azurylabs.online/es/): overview of the eight product
   lines and how Azury Labs works.
 - [Home (English)](https://azurylabs.online/en/): English version of the above.
 - [About](https://azurylabs.online/en/acerca): mission, vision, values, ecosystem

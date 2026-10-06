@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Navbar from "../../components/sections/Navbar.astro";
 import Footer from "../../components/sections/Footer.astro";
 import { useTranslations } from "../../i18n/utils";
+import { connectHref, trackingHref, isExternal } from "../../lib/product-links";
 import { getEnv, getTeamMembers, mediaUrl } from "../../lib/strapi";
 import SocialIcon from "../../components/ui/SocialIcon.astro";
 import ContactForm from "../../components/sections/ContactForm.astro";
@@ -190,6 +191,32 @@ Astro.response.headers.set(
             <h3>{t("about.ecosystem.items.systems.name")}</h3>
             <p>{t("about.ecosystem.items.systems.desc")}</p>
             <a href="https://systems.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+          <div class="ecosystem-card">
+            <span class="ecosystem-card__wordmark gradient-text">CONNECT</span>
+            <h3>{t("about.ecosystem.items.connect.name")}</h3>
+            <p>{t("about.ecosystem.items.connect.desc")}</p>
+            <a
+              href={connectHref(lang)}
+              target={isExternal(connectHref(lang)) ? "_blank" : undefined}
+              rel={isExternal(connectHref(lang)) ? "noopener noreferrer" : undefined}
+              class="ecosystem-card__link"
+            >
+              {t("about.ecosystem.cta")} →
+            </a>
+          </div>
+          <div class="ecosystem-card">
+            <span class="ecosystem-card__wordmark gradient-text">TRACKING</span>
+            <h3>{t("about.ecosystem.items.tracking.name")}</h3>
+            <p>{t("about.ecosystem.items.tracking.desc")}</p>
+            <a
+              href={trackingHref(lang)}
+              target={isExternal(trackingHref(lang)) ? "_blank" : undefined}
+              rel={isExternal(trackingHref(lang)) ? "noopener noreferrer" : undefined}
+              class="ecosystem-card__link"
+            >
               {t("about.ecosystem.cta")} →
             </a>
           </div>
@@ -564,6 +591,10 @@ Astro.response.headers.set(
     font-weight: var(--weight-semibold);
     letter-spacing: -0.035em;
     white-space: nowrap;
+  }
+
+  @media (min-width: 901px) {
+    .ecosystem-card:nth-last-child(-n + 2) { grid-column: span 3; }
   }
 
   .ecosystem-card--minegocio {

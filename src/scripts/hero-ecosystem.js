@@ -59,6 +59,14 @@ async function initEcosystem(root) {
       name: "IRUZ SYSTEMS",
       wordmark: "SYSTEMS",
     },
+    {
+      name: "IRUZ CONNECT",
+      wordmark: "CONNECT",
+    },
+    {
+      name: "IRUZ TRACKING SYSTEM",
+      wordmark: "TRACKING SYSTEM",
+    },
   ];
 
   const mark = await loadImage("/images/logos/iruzlabs-isotipo-light.png");
@@ -316,6 +324,11 @@ function createWordmarkCanvas(mark, wordmark) {
   context.fillStyle = "#f4faff";
   context.font = "800 116px Arial, sans-serif";
   context.letterSpacing = "-4px";
+  const maxWordmarkWidth = canvas.width - 374 - 40;
+  const wordmarkWidth = context.measureText(wordmark).width;
+  if (wordmarkWidth > maxWordmarkWidth) {
+    context.font = `800 ${Math.floor(116 * (maxWordmarkWidth / wordmarkWidth))}px Arial, sans-serif`;
+  }
   context.fillText(wordmark, 374, 310);
   return canvas;
 }

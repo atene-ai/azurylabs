@@ -35,8 +35,8 @@ hero:
 products:
   header:
     badge: "Productos y soluciones"
-    title: "Seis líneas de producto.<br /><span class='products__title--accent'>Una misión: producir resultados.</span>"
-    sub: "Cada unidad de Azury resuelve una parte distinta del negocio: crear inteligencia, vender, operar, investigar o construir tecnología a medida."
+    title: "Ocho líneas de producto.<br /><span class='products__title--accent'>Una misión: producir resultados.</span>"
+    sub: "Cada unidad de Azury resuelve una parte distinta del negocio: crear inteligencia, vender, operar, conectar mensajería, medir, investigar o construir tecnología a medida."
   stack:
     title: "Conecta tus herramientas productivas"
     sub: "Integramos canales, mensajeria, voz y agenda para que tus agentes operen sin friccion."
@@ -100,6 +100,24 @@ products:
       - "Consultoría tecnológica"
       - "Implementación acompañada"
     cta: "Hablar con Systems"
+  connect:
+    badge: "07 · Mensajería"
+    title: "Iruz Connect"
+    desc: "La API oficial de WhatsApp para empresas y aplicaciones, sin la complejidad técnica de Meta."
+    features:
+      - "Sin meses de integración con Meta"
+      - "Credenciales, webhooks y estados de mensajes resueltos"
+      - "Próximos canales: Instagram, Messenger, SMS, RCS y voz"
+    cta: "Hablar de Connect"
+  tracking:
+    badge: "08 · Medición y analítica"
+    title: "Iruz Tracking System"
+    desc: "Analítica de producto que mide cada paso del cliente, del primer contacto a la venta."
+    features:
+      - "Qué campaña, canal o QR genera ventas"
+      - "Dónde se pierden los clientes en el embudo"
+      - "Del escaneo a la cita y la venta, medido paso a paso"
+    cta: "Hablar de Tracking"
 
 features:
   header:
@@ -165,11 +183,15 @@ faq:
     - q: "¿Qué es Azury Labs?"
       a: "Azury Labs es una empresa de software especializada en inteligencia artificial aplicada. Construimos productos propios y soluciones a medida para que las empresas vendan, operen y decidan con datos. Tenemos presencia en México, Colombia y Estados Unidos."
     - q: "¿Qué productos ofrece Azury Labs?"
-      a: "Seis líneas: Atenea (agentes de IA para mensajes y voz en tiempo real), Lindex (ingeniería de software autónoma), Sales OS (CRM omnicanal), Mi Negocio (gestión de clientes, cotizaciones y órdenes), CIEE (encuestas e investigación) y Systems (software a medida y consultoría)."
+      a: "Ocho líneas: Atenea (agentes de IA para mensajes y voz en tiempo real), Lindex (ingeniería de software autónoma), Sales OS (CRM omnicanal), Mi Negocio (gestión de clientes, cotizaciones y órdenes), CIEE (encuestas e investigación), Systems (software a medida y consultoría), Connect (API oficial de WhatsApp) y Tracking System (analítica del primer contacto a la venta)."
     - q: "¿Qué es Iruz Atenea y en qué canales funciona?"
       a: "Atenea es la plataforma con la que creamos agentes de IA que atienden mensajes y voz en tiempo real, conocen tu negocio y se conectan a tus sistemas para ejecutar procesos reales. Se integra con WhatsApp Business, Telegram, Instagram Messenger, llamadas y Google Calendar."
     - q: "¿Qué es Lindex?"
       a: "Lindex es un harness de ingeniería de software autónoma: coordina agentes de IA desde un ticket hasta el código, las pruebas y un preview desplegado. Ejecuta en un entorno aislado, registra cada acción y permite definir un presupuesto máximo por tarea. Se conecta con Linear, Jira, GitHub, GitLab y Cloudflare Pages."
+    - q: "¿Qué es Iruz Connect?"
+      a: "Iruz Connect es la API oficial de WhatsApp para empresas y aplicaciones. Resuelve la integración con Meta, las credenciales, los webhooks y los estados de los mensajes para que tu equipo envíe y reciba mensajes de WhatsApp desde su propia plataforma o desde Atenea. Instagram, Messenger, SMS, RCS y voz son los próximos canales."
+    - q: "¿Qué es Iruz Tracking System?"
+      a: "Es analítica de producto que mide cada paso del cliente, del primer contacto a la venta. Con links rastreables y códigos QR ves qué campaña, canal o QR genera leads, citas y ventas, y en qué paso se pierden los clientes."
     - q: "¿En qué se diferencia Sales OS de un CRM tradicional?"
       a: "Sales OS conecta tus canales, agentes de IA y equipo humano en una sola conversación omnicanal para atender, calificar y dar seguimiento a cada oportunidad, en lugar de limitarse a registrar contactos."
     - q: "¿Azury Labs desarrolla software a medida?"
@@ -209,6 +231,10 @@ chat:
           label: "CIEE · Encuestas"
         - value: systems
           label: "Systems · Software a medida"
+        - value: connect
+          label: "Connect · API de WhatsApp"
+        - value: tracking
+          label: "Tracking System · Analítica"
         - value: unsure
           label: "Aún no sé, oriéntenme"
     role:
@@ -351,6 +377,12 @@ about:
       systems:
         name: "Iruz Systems"
         desc: "Desarrollo de software a la medida, consultoría y servicios profesionales para personas y empresas."
+      connect:
+        name: "Iruz Connect"
+        desc: "La API oficial de WhatsApp para empresas y aplicaciones, pensada para CTOs, equipos de producto y empresas SaaS que necesitan WhatsApp oficial en su plataforma."
+      tracking:
+        name: "Iruz Tracking System"
+        desc: "Analítica de producto que mide cada paso del primer contacto a la venta, para CEOs, COOs, CMOs y equipos de marketing y ventas que necesitan medir el retorno de cada campaña."
   vision:
     title: "Visión"
     text: "Ser el socio tecnológico que convierte inteligencia artificial, datos y software en operaciones más claras, decisiones más sólidas y negocios que avanzan."

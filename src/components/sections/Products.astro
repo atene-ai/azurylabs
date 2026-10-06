@@ -2,6 +2,7 @@
 import Badge from "../ui/Badge.astro";
 import BackgroundGlow from "../ui/BackgroundGlow.astro";
 import { useTranslations } from "../../i18n/utils";
+import { connectHref, trackingHref, isExternal } from "../../lib/product-links";
 
 export interface Props {
   lang: string;
@@ -113,6 +114,40 @@ const products = [
     wordmark: "SYSTEMS",
     tone: "graphite",
   },
+  {
+    id: "connect",
+    number: "07",
+    badge: t("products.connect.badge"),
+    badgeVariant: "glow",
+    title: t("products.connect.title"),
+    description: t("products.connect.desc"),
+    features: t("products.connect.features"),
+    cta: t("products.connect.cta"),
+    href: connectHref(lang),
+    logo: null,
+    logoAlt: "",
+    logoWidth: 0,
+    logoHeight: 0,
+    wordmark: "CONNECT",
+    tone: "navy",
+  },
+  {
+    id: "tracking",
+    number: "08",
+    badge: t("products.tracking.badge"),
+    badgeVariant: "brand",
+    title: t("products.tracking.title"),
+    description: t("products.tracking.desc"),
+    features: t("products.tracking.features"),
+    cta: t("products.tracking.cta"),
+    href: trackingHref(lang),
+    logo: null,
+    logoAlt: "",
+    logoWidth: 0,
+    logoHeight: 0,
+    wordmark: "TRACKING SYSTEM",
+    tone: "cyan",
+  },
 ];
 ---
 
@@ -174,8 +209,12 @@ const products = [
               ))}
             </ul>
 
-            <a href={product.href} target="_blank" rel="noopener noreferrer">
-              {product.cta}<span aria-hidden="true">↗</span>
+            <a
+              href={product.href}
+              target={isExternal(product.href) ? "_blank" : undefined}
+              rel={isExternal(product.href) ? "noopener noreferrer" : undefined}
+            >
+              {product.cta}<span aria-hidden="true">{isExternal(product.href) ? "↗" : "→"}</span>
             </a>
           </div>
         </article>
@@ -251,17 +290,6 @@ const products = [
 
   .product-card:nth-child(1) { grid-column: span 7; }
   .product-card:nth-child(2) { grid-column: span 5; }
-  .product-card:nth-child(6) { grid-column: 1 / -1; }
-
-  @media (min-width: 961px) {
-    .product-card:nth-child(6) { flex-direction: row; }
-    .product-card:nth-child(6) .product-card__media {
-      flex: 0 0 38%;
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
-      border-bottom: 0;
-    }
-    .product-card:nth-child(6) .product-card__content > a { padding-top: var(--space-5); }
-  }
 
   .product-card:hover {
     transform: translateY(-6px);
@@ -344,30 +372,45 @@ const products = [
   }
 
   .product-card__wordmark--mi-negocio,
-  .product-card__wordmark--systems {
+  .product-card__wordmark--systems,
+  .product-card__wordmark--connect,
+  .product-card__wordmark--tracking {
     gap: clamp(0.7rem, 1.2vw, 0.95rem);
   }
 
   .product-card__wordmark--mi-negocio > img,
-  .product-card__wordmark--systems > img {
+  .product-card__wordmark--systems > img,
+  .product-card__wordmark--connect > img,
+  .product-card__wordmark--tracking > img {
     width: clamp(48px, 19cqi, 72px);
     height: clamp(48px, 19cqi, 72px);
   }
 
   .product-card__wordmark--mi-negocio span,
-  .product-card__wordmark--systems span {
+  .product-card__wordmark--systems span,
+  .product-card__wordmark--connect span,
+  .product-card__wordmark--tracking span {
     gap: 0.12rem;
   }
 
   .product-card__wordmark--mi-negocio small,
-  .product-card__wordmark--systems small {
+  .product-card__wordmark--systems small,
+  .product-card__wordmark--connect small,
+  .product-card__wordmark--tracking small {
     font-size: 0.56rem;
   }
 
   .product-card__wordmark--mi-negocio strong,
-  .product-card__wordmark--systems strong {
+  .product-card__wordmark--systems strong,
+  .product-card__wordmark--connect strong,
+  .product-card__wordmark--tracking strong {
     font-size: clamp(1.25rem, 8cqi, 2rem);
     letter-spacing: -0.035em;
+  }
+
+  .product-card__wordmark--tracking strong {
+    white-space: normal;
+    line-height: 1;
   }
 
   .product-card__content {

@@ -12,6 +12,7 @@ import Stats from "../../components/sections/Stats.astro";
 import FAQ from "../../components/sections/FAQ.astro";
 import CTA from "../../components/sections/CTA.astro";
 import Footer from "../../components/sections/Footer.astro";
+import { connectHref, trackingHref } from "../../lib/product-links";
 import ChatWidget from "../../components/widgets/ChatWidget.astro";
 
 export function getStaticPaths() {
@@ -27,8 +28,8 @@ const titleMap = {
 };
 
 const descMap = {
-  es: "Azury Labs es una empresa de software e IA aplicada con seis líneas: Atenea (agentes de IA para mensajes y voz en tiempo real), Lindex (ingeniería de software autónoma), Sales OS (CRM omnicanal), Mi Negocio, CIEE (encuestas e investigación) y Systems (software a medida).",
-  en: "Azury Labs is an applied AI and software company with six lines: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio, CIEE (surveys and research) and Systems (custom software).",
+  es: "Azury Labs es una empresa de software e IA aplicada con ocho líneas: Atenea (agentes de IA para mensajes y voz en tiempo real), Lindex (ingeniería de software autónoma), Sales OS (CRM omnicanal), Mi Negocio, CIEE (encuestas e investigación), Systems (software a medida), Connect (API oficial de WhatsApp) y Tracking System (analítica de producto).",
+  en: "Azury Labs is an applied AI and software company with eight lines: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio, CIEE (surveys and research), Systems (custom software), Connect (official WhatsApp API) and Tracking System (product analytics).",
 };
 
 const products = [
@@ -71,6 +72,22 @@ const products = [
     description: lang === "en"
       ? "AI-driven surveys, opinion studies and political or market polling."
       : "Encuestas con IA, estudios de opinión y sondeos políticos o de mercado.",
+  },
+  {
+    name: "Iruz Connect",
+    url: new URL(connectHref(lang), Astro.url).toString(),
+    category: "WhatsApp Business API platform",
+    description: lang === "en"
+      ? "The official WhatsApp API for businesses and applications, without the technical complexity of Meta."
+      : "La API oficial de WhatsApp para empresas y aplicaciones, sin la complejidad técnica de Meta.",
+  },
+  {
+    name: "Iruz Tracking System",
+    url: new URL(trackingHref(lang), Astro.url).toString(),
+    category: "Product and campaign analytics",
+    description: lang === "en"
+      ? "Product analytics that measures every step of the customer journey, from first contact to sale."
+      : "Analítica de producto que mide cada paso del cliente, del primer contacto a la venta.",
   },
 ];
 

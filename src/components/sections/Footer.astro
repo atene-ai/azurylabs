@@ -1,5 +1,6 @@
 ---
 import { useTranslations } from "../../i18n/utils";
+import { connectHref, trackingHref } from "../../lib/product-links";
 
 export interface Props {
   lang: string;
@@ -18,6 +19,8 @@ const links = [
       { label: "Iruz Mi Negocio", href: `https://minegocio.iruzlabs.com/${lang}` },
       { label: "Iruz CIEE", href: "https://ciee.iruzlabs.com" },
       { label: "Iruz Systems", href: "https://systems.iruzlabs.com" },
+      { label: "Iruz Connect", href: connectHref(lang) },
+      { label: "Iruz Tracking System", href: trackingHref(lang) },
     ],
   },
   {
