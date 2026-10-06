@@ -27,8 +27,8 @@ const contactCopy = lang === "es"
     };
 
 const titleMap = {
-  es: "Acerca de Iruz Labs — Inteligencia artificial aplicada",
-  en: "About Iruz Labs — Applied artificial intelligence",
+  es: "Acerca de Azury Labs — Inteligencia artificial aplicada",
+  en: "About Azury Labs — Applied artificial intelligence",
 };
 
 const strapiBase = getEnv(Astro.locals, "STRAPI_URL").replace(/\/$/, "");
@@ -58,8 +58,8 @@ Astro.response.headers.set(
             {lang === "es" ? "Hablemos de tu operación" : "Let's talk about your operation"} <span aria-hidden="true">↓</span>
           </a>
         </div>
-        <aside class="about-hero__statement" aria-label={lang === "es" ? "Tesis Iruz" : "Iruz thesis"}>
-          <span class="about-hero__statement-index">IRUZ / 2026</span>
+        <aside class="about-hero__statement" aria-label={lang === "es" ? "Tesis Azury" : "Azury thesis"}>
+          <span class="about-hero__statement-index">AZURY / 2026</span>
           <blockquote>{t("about.hero.quote")}</blockquote>
           <div class="about-hero__statement-lines" aria-hidden="true">
             <span>PRODUCTO</span><span>IA</span><span>DATOS</span><span>SOFTWARE</span>

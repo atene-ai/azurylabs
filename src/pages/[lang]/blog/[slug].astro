@@ -69,7 +69,7 @@ const copy = {
 }[lang];
 
 const pageTitle = article
-  ? (article.seo?.metaTitle ?? `${article.title} — Iruz Labs`)
+  ? (article.seo?.metaTitle ?? `${article.title} — Azury Labs`)
   : copy.notFound;
 const pageDescription = article
   ? (article.seo?.metaDescription ?? article.excerpt)
@@ -99,10 +99,10 @@ const blogPostingJsonLd = article && {
   }),
   publisher: {
     "@type": "Organization",
-    name: "Iruz Labs",
+    name: "Azury Labs",
     logo: {
       "@type": "ImageObject",
-      url: new URL("/images/logos/iruzlabs-isotipo-light.png", site).toString(),
+      url: new URL("/images/logos/azurylabs-isotipo-light.png", site).toString(),
     },
   },
   mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
@@ -112,7 +112,7 @@ const breadcrumbJsonLd = article && {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Iruz Labs", item: site.toString() },
+    { "@type": "ListItem", position: 1, name: "Azury Labs", item: site.toString() },
     { "@type": "ListItem", position: 2, name: "Blog", item: blogIndexHref },
     { "@type": "ListItem", position: 3, name: article.title, item: canonical },
   ],

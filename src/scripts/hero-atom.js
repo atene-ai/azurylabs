@@ -25,7 +25,7 @@ async function initAtom(root) {
   const compact = window.matchMedia("(max-width: 640px)").matches;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const particleCount = compact ? 2100 : 4400;
-  const logo = await loadImage("/images/logos/iruzlabs-isotipo-black.png");
+  const logo = await loadImage("/images/logos/azurylabs-isotipo-black.png");
   const target = sampleMark(logo, particleCount);
   const isLight = document.documentElement.dataset.theme === "light";
 

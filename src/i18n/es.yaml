@@ -2,21 +2,21 @@ nav:
   products: "Productos"
   solutions: "Capacidades"
   howItWorks: "Cómo trabajamos"
-  company: "Iruz Labs"
+  company: "Azury Labs"
   team: "Equipo"
   blog: "Blog"
 
   scheduleDemo: "Hablemos"
 
 hero:
-  eyebrow: "Iruz Labs · Productos, IA y software"
+  eyebrow: "Azury Labs · Productos, IA y software"
   headline: "La inteligencia<br /><span class='hero__headline--accent'>se vuelve operación.</span>"
   subtext: "Creamos productos propios, agentes de IA y software a medida para vender, operar y decidir con datos."
   ctaPrimary: "Explorar productos"
   ctaSecondary: "Hablemos"
   trust: "Presencia en México, Colombia y Estados Unidos"
   visual:
-    title: "Iruz Labs — Panel de Control"
+    title: "Azury Labs — Panel de Control"
     start: "Agentes Activos"
     conversions: "Conversiones"
     respTime: "Tiempo Resp."
@@ -36,7 +36,7 @@ products:
   header:
     badge: "Productos y soluciones"
     title: "Seis líneas de producto.<br /><span class='products__title--accent'>Una misión: producir resultados.</span>"
-    sub: "Cada unidad de Iruz resuelve una parte distinta del negocio: crear inteligencia, vender, operar, investigar o construir tecnología a medida."
+    sub: "Cada unidad de Azury resuelve una parte distinta del negocio: crear inteligencia, vender, operar, investigar o construir tecnología a medida."
   stack:
     title: "Conecta tus herramientas productivas"
     sub: "Integramos canales, mensajeria, voz y agenda para que tus agentes operen sin friccion."
@@ -160,11 +160,11 @@ stats:
 
 faq:
   badge: "Preguntas frecuentes"
-  title: "Lo que suelen preguntarnos<br /><span class='faq__title--accent'>sobre Iruz Labs.</span>"
+  title: "Lo que suelen preguntarnos<br /><span class='faq__title--accent'>sobre Azury Labs.</span>"
   items:
-    - q: "¿Qué es Iruz Labs?"
-      a: "Iruz Labs es una empresa de software especializada en inteligencia artificial aplicada. Construimos productos propios y soluciones a medida para que las empresas vendan, operen y decidan con datos. Tenemos presencia en México, Colombia y Estados Unidos."
-    - q: "¿Qué productos ofrece Iruz Labs?"
+    - q: "¿Qué es Azury Labs?"
+      a: "Azury Labs es una empresa de software especializada en inteligencia artificial aplicada. Construimos productos propios y soluciones a medida para que las empresas vendan, operen y decidan con datos. Tenemos presencia en México, Colombia y Estados Unidos."
+    - q: "¿Qué productos ofrece Azury Labs?"
       a: "Seis líneas: Atenea (agentes de IA para mensajes y voz en tiempo real), Lindex (ingeniería de software autónoma), Sales OS (CRM omnicanal), Mi Negocio (gestión de clientes, cotizaciones y órdenes), CIEE (encuestas e investigación) y Systems (software a medida y consultoría)."
     - q: "¿Qué es Iruz Atenea y en qué canales funciona?"
       a: "Atenea es la plataforma con la que creamos agentes de IA que atienden mensajes y voz en tiempo real, conocen tu negocio y se conectan a tus sistemas para ejecutar procesos reales. Se integra con WhatsApp Business, Telegram, Instagram Messenger, llamadas y Google Calendar."
@@ -172,16 +172,16 @@ faq:
       a: "Lindex es un harness de ingeniería de software autónoma: coordina agentes de IA desde un ticket hasta el código, las pruebas y un preview desplegado. Ejecuta en un entorno aislado, registra cada acción y permite definir un presupuesto máximo por tarea. Se conecta con Linear, Jira, GitHub, GitLab y Cloudflare Pages."
     - q: "¿En qué se diferencia Sales OS de un CRM tradicional?"
       a: "Sales OS conecta tus canales, agentes de IA y equipo humano en una sola conversación omnicanal para atender, calificar y dar seguimiento a cada oportunidad, en lugar de limitarse a registrar contactos."
-    - q: "¿Iruz Labs desarrolla software a medida?"
+    - q: "¿Azury Labs desarrolla software a medida?"
       a: "Sí. Iruz Systems diseña y desarrolla el software que tu operación necesita cuando una herramienta estándar ya no alcanza, con consultoría tecnológica e implementación acompañada."
     - q: "¿Cómo puedo empezar?"
       a: "Escríbenos desde la página de contacto o con el chat del sitio y cuéntanos el reto. Te orientamos hacia el producto o la solución a medida que mejor encaje."
 
 cta:
-  overline: "Iruz Labs"
+  overline: "Azury Labs"
   title: "Construyamos el siguiente<br /><span class='cta__title--accent'>avance de tu negocio.</span>"
   sub: "Cuéntanos qué quieres hacer avanzar. Diseñamos el producto, la IA y la tecnología que lo hace posible."
-  primary: "Hablar con Iruz"
+  primary: "Hablar con Azury"
   secondary: "Ver productos"
   disclaimer: "Diagnóstico · Diseño · Implementación"
   link: "https://calendly.com/admin-iruzlabs/we-re-going-to-transform-your-business-zuri-labs"
@@ -190,7 +190,7 @@ chat:
   status: "En línea"
   welcomePrefix: "¡Hola! 👋 Soy el asistente de"
   welcomeSuffix: "Te haré un par de preguntas rápidas para conectarte con el equipo correcto."
-  powered: "Powered by Iruz Labs"
+  powered: "Powered by Azury Labs"
   restart: "Empezar de nuevo"
   error: "No pudimos enviar tus datos. Intenta de nuevo en unos minutos."
   flow:
@@ -241,12 +241,12 @@ chat:
     emailPlaceholder: "tu@correo.com"
     submit: "Enviar"
     sending: "Enviando…"
-  success: "¡Gracias, {name}! 🙌 Un asesor de Iruz Labs te contactará pronto a {email}."
+  success: "¡Gracias, {name}! 🙌 Un asesor de Azury Labs te contactará pronto a {email}."
 
 footer:
   tagline: "Inteligencia artificial aplicada, productos propios y soluciones a medida."
   status: "Creando operaciones más inteligentes"
-  copy: "© {year} Iruz Labs SAS de CV. Todos los derechos reservados."
+  copy: "© {year} Azury Labs LLC. Todos los derechos reservados."
   cols:
     products: "Productos"
     solutions: "Soluciones"
@@ -289,9 +289,9 @@ legal:
 support:
   title: "Soporte"
   centerTitle: "Centro de ayuda"
-  centerLabel: "Soporte Iruz"
+  centerLabel: "Soporte Azury"
   subtitle: "¿Tienes un problema o una pregunta? Escríbenos aquí."
-  notice: "Tus solicitudes quedan guardadas y el equipo de Iruz puede darles seguimiento con todo el contexto."
+  notice: "Tus solicitudes quedan guardadas y el equipo de Azury puede darles seguimiento con todo el contexto."
   navNew: "Nuevo ticket"
   navHistory: "Historial"
   loading: "Abriendo tu ticket..."
@@ -321,12 +321,12 @@ support:
 about:
   hero:
     title: "Inteligencia que se vuelve avance"
-    subtitle: "Iruz Labs es una empresa de software especializada en inteligencia artificial aplicada. Construimos productos propios y soluciones a medida para que las empresas vendan más, operen mejor y tomen decisiones con datos. Operamos en México, Colombia y Estados Unidos."
+    subtitle: "Azury Labs es una empresa de software especializada en inteligencia artificial aplicada. Construimos productos propios y soluciones a medida para que las empresas vendan más, operen mejor y tomen decisiones con datos. Operamos en México, Colombia y Estados Unidos."
     quote: "“IA aplicada para resolver lo que importa.”"
   team:
     badge: "Equipo"
-    title: "Quién está detrás de Iruz Labs"
-    subtitle: "Las personas que diseñan productos, inteligencia y experiencias útiles detrás de Iruz."
+    title: "Quién está detrás de Azury Labs"
+    subtitle: "Las personas que diseñan productos, inteligencia y experiencias útiles detrás de Azury."
   ecosystem:
     badge: "Ecosistema"
     title: "Nuestros Productos"
@@ -383,4 +383,4 @@ about:
     slogan: "Inteligencia que se vuelve avance."
   tone:
     title: "Tono y Voz"
-    desc: "Hablamos como un socio tecnológico: claros, precisos y orientados al resultado. Iruz construye productos, inteligencia y software para que la tecnología se vuelva avance real."
+    desc: "Hablamos como un socio tecnológico: claros, precisos y orientados al resultado. Azury construye productos, inteligencia y software para que la tecnología se vuelva avance real."

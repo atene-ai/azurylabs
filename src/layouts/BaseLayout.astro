@@ -1,5 +1,5 @@
 ---
-const SITE_NAME = "Iruz Labs";
+const SITE_NAME = "Azury Labs";
 const DEFAULT_OG_IMAGE = "/images/og-default.png";
 const SAME_AS = [
   "https://www.facebook.com/profile.php?id=61588787630828",
@@ -21,9 +21,9 @@ export interface Props {
 }
 
 const {
-  title = "Iruz Labs",
+  title = "Azury Labs",
   description = "",
-  lang = "es-MX",
+  lang = "en",
   canonical,
   image = DEFAULT_OG_IMAGE,
   ogType = "website",
@@ -46,7 +46,7 @@ const hreflangAlternates = langMatch
       return [
         { hreflang: "es", href: esHref },
         { hreflang: "en", href: enHref },
-        { hreflang: "x-default", href: esHref },
+        { hreflang: "x-default", href: enHref },
       ];
     })()
   : [];
@@ -59,9 +59,9 @@ const structuredData = {
       "@id": `${site}#organization`,
       name: SITE_NAME,
       url: site.toString(),
-      logo: new URL("/images/logos/iruzlabs-isotipo-light.png", site).toString(),
+      logo: new URL("/images/logos/azurylabs-isotipo-light.png", site).toString(),
       description:
-        "Iruz Labs builds applied AI and software products: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio (business management), CIEE (surveys and research) and Systems (custom software).",
+        "Azury Labs builds applied AI and software products: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio (business management), CIEE (surveys and research) and Systems (custom software).",
       areaServed: ["MX", "CO", "US"],
       knowsAbout: [
         "Applied artificial intelligence",
@@ -135,7 +135,7 @@ const structuredData = {
 
     <script is:inline>
       (() => {
-        const savedTheme = localStorage.getItem("iruz-theme");
+        const savedTheme = localStorage.getItem("azury-theme");
         const normalized = savedTheme === "light" ? "light" : "dark";
         document.documentElement.dataset.theme = normalized;
       })();

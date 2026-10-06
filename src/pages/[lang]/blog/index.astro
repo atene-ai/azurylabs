@@ -17,8 +17,8 @@ const [featured, ...rest] = articles;
 
 const copy = {
   es: {
-    title: "Blog — Iruz Labs",
-    eyebrow: "IRUZ / PERSPECTIVAS",
+    title: "Blog — Azury Labs",
+    eyebrow: "AZURY / PERSPECTIVAS",
     heading: "Ideas para operar mejor.",
     intro: "Notas sobre inteligencia aplicada, productos, automatización y las decisiones que convierten tecnología en avance.",
     latest: "LO MÁS RECIENTE",
@@ -27,8 +27,8 @@ const copy = {
     readMore: "Leer artículo",
   },
   en: {
-    title: "Blog — Iruz Labs",
-    eyebrow: "IRUZ / PERSPECTIVES",
+    title: "Blog — Azury Labs",
+    eyebrow: "AZURY / PERSPECTIVES",
     heading: "Ideas for better operations.",
     intro: "Notes on applied intelligence, products, automation and the decisions that turn technology into progress.",
     latest: "LATEST",
@@ -86,7 +86,7 @@ Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=300, st
             {featured.cover?.url ? (
               <img src={mediaUrl(strapiBase, featured.cover.url)} alt={featured.cover.alternativeText ?? ""} loading="eager" decoding="async" />
             ) : (
-              <span aria-hidden="true">IRUZ / 01</span>
+              <span aria-hidden="true">AZURY / 01</span>
             )}
           </div>
         </a>
@@ -100,7 +100,7 @@ Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=300, st
                 <div class:list={["card__media", !article.cover?.url && "card__media--placeholder"]}>
                   {article.cover?.url ? (
                     <img src={mediaUrl(strapiBase, article.cover.url)} alt={article.cover.alternativeText ?? ""} loading="lazy" decoding="async" />
-                  ) : <span aria-hidden="true">IRUZ / {String(index + 2).padStart(2, "0")}</span>}
+                  ) : <span aria-hidden="true">AZURY / {String(index + 2).padStart(2, "0")}</span>}
                   {article.categories?.[0] && <span class="card__tag"><Tag color="brand">{article.categories[0].name}</Tag></span>}
                 </div>
                 <div class="card__body">

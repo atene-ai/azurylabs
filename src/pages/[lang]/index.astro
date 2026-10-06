@@ -22,13 +22,13 @@ const { lang } = Astro.params;
 const htmlLang = lang === "en" ? "en" : "es-MX";
 
 const titleMap = {
-  es: "Iruz Labs — Agentes de IA, CRM, ingeniería autónoma y software a medida",
-  en: "Iruz Labs — AI agents, CRM, autonomous engineering and custom software",
+  es: "Azury Labs — Agentes de IA, CRM, ingeniería autónoma y software a medida",
+  en: "Azury Labs — AI agents, CRM, autonomous engineering and custom software",
 };
 
 const descMap = {
-  es: "Iruz Labs es una empresa de software e IA aplicada con seis líneas: Atenea (agentes de IA para mensajes y voz en tiempo real), Lindex (ingeniería de software autónoma), Sales OS (CRM omnicanal), Mi Negocio, CIEE (encuestas e investigación) y Systems (software a medida).",
-  en: "Iruz Labs is an applied AI and software company with six lines: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio, CIEE (surveys and research) and Systems (custom software).",
+  es: "Azury Labs es una empresa de software e IA aplicada con seis líneas: Atenea (agentes de IA para mensajes y voz en tiempo real), Lindex (ingeniería de software autónoma), Sales OS (CRM omnicanal), Mi Negocio, CIEE (encuestas e investigación) y Systems (software a medida).",
+  en: "Azury Labs is an applied AI and software company with six lines: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio, CIEE (surveys and research) and Systems (custom software).",
 };
 
 const products = [
@@ -77,7 +77,7 @@ const products = [
 const productsJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: lang === "en" ? "Iruz Labs products" : "Productos de Iruz Labs",
+  name: lang === "en" ? "Azury Labs products" : "Productos de Azury Labs",
   itemListElement: [
     ...products.map((product, index) => ({
       "@type": "ListItem",
@@ -89,7 +89,7 @@ const productsJsonLd = {
         applicationCategory: "BusinessApplication",
         applicationSubCategory: product.category,
         description: product.description,
-        publisher: { "@type": "Organization", name: "Iruz Labs" },
+        publisher: { "@type": "Organization", name: "Azury Labs" },
       },
     })),
     {
@@ -100,7 +100,7 @@ const productsJsonLd = {
         name: "Iruz Systems",
         url: "https://systems.iruzlabs.com",
         serviceType: lang === "en" ? "Custom software development and technology consulting" : "Desarrollo de software a medida y consultoría tecnológica",
-        provider: { "@type": "Organization", name: "Iruz Labs" },
+        provider: { "@type": "Organization", name: "Azury Labs" },
       },
     },
   ],

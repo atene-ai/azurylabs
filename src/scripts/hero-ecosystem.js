@@ -32,8 +32,8 @@ async function initEcosystem(root) {
 
   const brandDefinitions = [
     {
-      name: "IRUZ LABS",
-      image: "/images/logos/iruzlabs-logotipo-h-white.png",
+      name: "AZURY LABS",
+      image: "/images/logos/azurylabs-logotipo-h-white.png",
     },
     {
       name: "ATENEA",

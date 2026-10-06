@@ -40,7 +40,7 @@ const clientStrings = {
           </svg>
         </span>
         <div>
-          <span class="support__eyebrow">IRUZ</span>
+          <span class="support__eyebrow">AZURY</span>
           <h1>{t("support.centerTitle")}</h1>
         </div>
       </div>
@@ -990,7 +990,7 @@ const clientStrings = {
     createdAt: number;
   }
 
-  const STORAGE_KEY = "iruz_support_ticket_id";
+  const STORAGE_KEY = "azury_support_ticket_id";
 
   function getOrCreateConversationId(): string {
     try {
@@ -1259,7 +1259,7 @@ const clientStrings = {
 
   init();
 
-  // ── Theme toggle — same "iruz-theme" key BaseLayout's inline script reads
+  // ── Theme toggle — same "azury-theme" key BaseLayout's inline script reads
   // on load and Navbar's toggle writes, so it stays in sync across pages. ──
   const themeToggleBtn = $("support-theme-toggle") as HTMLButtonElement;
   themeToggleBtn.addEventListener("click", () => {
@@ -1267,7 +1267,7 @@ const clientStrings = {
     const next = current === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
     try {
-      localStorage.setItem("iruz-theme", next);
+      localStorage.setItem("azury-theme", next);
     } catch {
       // Private mode / storage disabled — theme just won't persist.
     }

@@ -27,7 +27,7 @@ function urlEntry(
 }
 
 export const GET: APIRoute = async ({ site, locals }) => {
-  const base = site ?? new URL("https://iruzlabs.com");
+  const base = site ?? new URL("https://azurylabs.online");
   const entries: string[] = [];
 
   for (const path of STATIC_PATHS) {

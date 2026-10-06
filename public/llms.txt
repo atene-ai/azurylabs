@@ -1,6 +1,6 @@
-# Iruz Labs
+# Azury Labs
 
-> Iruz Labs is a software and applied-AI company with presence in Mexico,
+> Azury Labs is a software and applied-AI company with presence in Mexico,
 > Colombia and the United States. It builds its own products and custom
 > solutions so companies can sell, operate and decide with data. It offers
 > six product lines, each solving a different part of the business.
@@ -29,16 +29,16 @@ Instagram Messenger, phone calls and Google Calendar.
 
 ## Key pages
 
-- [Home (Spanish)](https://iruzlabs.com/es/): overview of the six product
-  lines and how Iruz Labs works.
-- [Home (English)](https://iruzlabs.com/en/): English version of the above.
-- [About](https://iruzlabs.com/en/acerca): mission, vision, values, ecosystem
+- [Home (Spanish)](https://azurylabs.online/es/): overview of the six product
+  lines and how Azury Labs works.
+- [Home (English)](https://azurylabs.online/en/): English version of the above.
+- [About](https://azurylabs.online/en/acerca): mission, vision, values, ecosystem
   and team.
-- [Blog](https://iruzlabs.com/es/blog): articles on agents, automation, and
+- [Blog](https://azurylabs.online/es/blog): articles on agents, automation, and
   applied engineering.
-- [Contact](https://iruzlabs.com/en/contacto)
+- [Contact](https://azurylabs.online/en/contacto)
 
 ## Company
 
-Iruz Labs SAS de CV, based in Mexico City. Social: LinkedIn
+Azury Labs LLC, the United States entity of the group. Social: LinkedIn
 (linkedin.com/company/iruzlabs), Instagram (@iruzlabsmx), Facebook.
