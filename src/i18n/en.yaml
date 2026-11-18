@@ -269,34 +269,6 @@ chat:
     sending: "Sending…"
   success: "Thanks, {name}! 🙌 An Azury Labs advisor will reach out to you soon at {email}."
 
-footer:
-  tagline: "Applied artificial intelligence, own products and custom solutions."
-  status: "Building smarter operations"
-  copy: "© {year} Azury Labs LLC. All rights reserved."
-  cols:
-    products: "Products"
-    solutions: "Solutions"
-    company: "Company"
-    legal: "Legal"
-  links:
-    aiRE: "Real Estate Agents"
-    aiHC: "Healthcare Agents"
-    crm: "Iruz CRM"
-    reactive: "Reactive Agents"
-    proactive: "Proactive Agents"
-    omni: "Omnichannel"
-    about: "About"
-    team: "Team"
-    contact: "Contact"
-    help: "Get in touch"
-    blog: "Blog"
-    privacy: "Privacy"
-    terms: "Terms"
-    security: "Security"
-    encryption: "Encryption"
-    api: "Neural API"
-    internal: "Internal Access"
-
 contactPage:
   title: "Get in touch"
   subtitle: "Have a question or an issue? Write to us and we'll get back to you as soon as possible. You don't need to be a customer to reach out."

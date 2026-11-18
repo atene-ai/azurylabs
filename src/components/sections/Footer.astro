@@ -1,50 +1,24 @@
 ---
-import { useTranslations } from "../../i18n/utils";
-import { connectHref, trackingHref } from "../../lib/product-links";
+// Footer unificado del grupo Iruz Labs. El contenido sale de
+// `iruz-labs-footer.ts` (copia idéntica en todos los sitios); aquí solo se
+// declara lo propio de este sitio en `SITE`. Usa los tokens de diseño del
+// sitio, así que respeta su tema claro/oscuro.
+import { buildFooter, footerLang, type FooterSite } from "../../lib/iruz-labs-footer";
 
 export interface Props {
   lang: string;
 }
 
-const { lang } = Astro.props;
-const t = useTranslations(lang);
+const SITE: FooterSite = {
+  // Marca hermana: mismo footer con su propia marca y páginas. No muestra
+  // alianzas, NVIDIA Inception ni «Hecho en México» (membresías de Iruz Labs).
+  brand: "azurylabs",
+  companyOrigin: "",
+  legal: { privacy: "/{lang}/privacidad", terms: "/{lang}/terminos" },
+};
 
-const links = [
-  {
-    heading: t("footer.cols.products"),
-    items: [
-      { label: "Iruz Atenea", href: "https://v3.atenea.iruzlabs.com" },
-      { label: "Iruz Lindex", href: "https://lindex.iruzlabs.com" },
-      { label: "Iruz Sales OS", href: "https://crm.iruzlabs.com" },
-      { label: "Iruz Mi Negocio", href: `https://minegocio.iruzlabs.com/${lang}` },
-      { label: "Iruz CIEE", href: "https://ciee.iruzlabs.com" },
-      { label: "Iruz Systems", href: "https://systems.iruzlabs.com" },
-      { label: "Iruz Connect", href: connectHref(lang) },
-      { label: "Iruz Tracking System", href: trackingHref(lang) },
-    ],
-  },
-  {
-    heading: t("footer.cols.company"),
-    items: [
-      { label: t("footer.links.about"), href: `/${lang}/acerca` },
-      { label: t("footer.links.team"), href: `/${lang}/acerca#equipo` },
-      { label: t("footer.links.contact"), href: `/${lang}/acerca#contacto` },
-      { label: t("footer.links.help"), href: `/${lang}/contacto` },
-      { label: t("footer.links.blog"), href: `/${lang}/blog` },
-    ],
-  },
-  {
-    heading: t("footer.cols.legal"),
-    items: [
-      { label: t("footer.links.privacy"), href: `/${lang}/privacidad` },
-      { label: t("footer.links.terms"), href: `/${lang}/terminos` },
-    ],
-  },
-];
-
-const year = new Date().getFullYear();
-const copyright = t("footer.copy").replace("{year}", String(year));
-// Force HMR update
+const footer = buildFooter(footerLang(Astro.props.lang), SITE);
+const { copy, brand, badges } = footer;
 ---
 
 <footer class="footer">
@@ -53,111 +27,58 @@ const copyright = t("footer.copy").replace("{year}", String(year));
       <div class="footer__top">
         <!-- Brand -->
         <div class="footer__brand">
-          <a
-            href={`/${lang}/`}
-            class="footer__logo"
-            aria-label="Azury Labs LLC"
-          >
+          <a href={footer.homeHref} class="footer__logo" aria-label={brand.entity}>
             <img
-              src="/images/logos/azurylabs-logotipo-h-white.png"
-              alt="Azury Labs"
-              class="footer__logo-img"
+              src={brand.logoDark}
+              alt={brand.name}
+              class="footer__logo-img footer__on-dark"
+              width="200"
+              height="58"
+              loading="lazy"
+            />
+            <img
+              src={brand.logoLight}
+              alt={brand.name}
+              class="footer__logo-img footer__on-light"
               width="200"
               height="58"
               loading="lazy"
             />
           </a>
-          <p class="footer__tagline">
-            {t("footer.tagline")}
-          </p>
+          <p class="footer__tagline">{copy.tagline}</p>
           <div class="footer__status">
             <span class="status__dot"></span>
-            <span class="status__text">{t("footer.status")}</span>
+            <span class="status__text">{copy.status}</span>
           </div>
           <div class="footer__socials">
-            <a
-              href="https://www.facebook.com/profile.php?id=61588787630828"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-link"
-              aria-label="Facebook"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><path
-                  d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
-                ></path></svg
-              >
-            </a>
-            <a
-              href="https://www.linkedin.com/company/iruzlabs"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-link"
-              aria-label="LinkedIn"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><path
-                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-                ></path><rect x="2" y="9" width="4" height="12"></rect><circle
-                  cx="4"
-                  cy="4"
-                  r="2"></circle></svg
-              >
-            </a>
-            <a
-              href="https://www.instagram.com/iruzlabsmx/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-link"
-              aria-label="Instagram"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><rect x="2" y="2" width="20" height="20" rx="5" ry="5"
-                ></rect><path
-                  d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
-                ></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg
-              >
-            </a>
+            {
+              footer.socials.map((social) => (
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="social-link"
+                  aria-label={social.label}
+                  set:html={social.icon}
+                />
+              ))
+            }
           </div>
         </div>
 
         <!-- Links -->
-        <nav class="footer__nav" aria-label="Footer navigation">
+        <nav class="footer__nav" aria-label={copy.navLabel}>
           {
-            links.map((col) => (
+            footer.columns.map((col) => (
               <div class="footer__col">
                 <h4 class="footer__col-heading">{col.heading}</h4>
                 <ul class="footer__col-list">
                   {col.items.map((item) => (
                     <li>
-                      <a href={item.href} class="footer__link">
+                      <a
+                        href={item.href}
+                        class:list={["footer__link", { "footer__link--current": item.current }]}
+                      >
                         {item.label}
                       </a>
                     </li>
@@ -169,8 +90,113 @@ const copyright = t("footer.copy").replace("{year}", String(year));
         </nav>
       </div>
 
+      {
+        footer.showMemberships && (
+          <div class="footer__alliances">
+            <div class="footer__alliances-group">
+              <p class="footer__alliances-label">{copy.alliances}</p>
+              <ul class="footer__partners">
+                {footer.partners.map(({ icon, name, status }) => (
+                  <li class="footer__partner" title={`${name} ${status}`}>
+                    <span class="footer__partner-logo" set:html={icon} />
+                    <span>{name}</span>
+                  </li>
+                ))}
+                <li class="footer__partner">
+                  <a
+                    href={badges.elevenLabs.href}
+                    class="footer__grants"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={badges.elevenLabs.srcDark}
+                      alt={badges.elevenLabs.alt}
+                      class="footer__grants-logo footer__on-dark"
+                      width={badges.elevenLabs.width}
+                      height={badges.elevenLabs.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <img
+                      src={badges.elevenLabs.srcLight}
+                      alt={badges.elevenLabs.alt}
+                      class="footer__grants-logo footer__on-light"
+                      width={badges.elevenLabs.width}
+                      height={badges.elevenLabs.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                </li>
+                <li class="footer__partner">
+                  <a
+                    href={badges.asem.href}
+                    class="footer__seal"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={copy.asemLabel}
+                  >
+                    <img
+                      src={badges.asem.src}
+                      alt={copy.asemAlt}
+                      width={badges.asem.width}
+                      height={badges.asem.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="footer__inception">
+              <p class="footer__inception-label">{copy.inception}</p>
+              <a
+                href={badges.nvidiaInception.href}
+                class="footer__inception-link"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src={badges.nvidiaInception.src}
+                  alt={badges.nvidiaInception.alt}
+                  width={badges.nvidiaInception.width}
+                  height={badges.nvidiaInception.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            </div>
+          </div>
+        )
+      }
+
       <div class="footer__bottom">
-        <p class="footer__copy" set:html={copyright} />
+        <p class="footer__copy">{footer.copyright}</p>
+        {
+          footer.showMemberships && (
+            <div class="footer__origin">
+              <img
+                src={badges.madeInMexico.srcDark}
+                alt={copy.madeInMexico}
+                class="footer__origin-logo footer__on-dark"
+                width={badges.madeInMexico.width}
+                height={badges.madeInMexico.height}
+                loading="lazy"
+                decoding="async"
+              />
+              <img
+                src={badges.madeInMexico.srcLight}
+                alt={copy.madeInMexico}
+                class="footer__origin-logo footer__on-light"
+                width={badges.madeInMexico.width}
+                height={badges.madeInMexico.height}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          )
+        }
       </div>
     </div>
   </div>
@@ -182,6 +208,19 @@ const copyright = t("footer.copy").replace("{year}", String(year));
     padding-top: clamp(var(--space-12), 7vw, var(--space-20));
     padding-bottom: var(--space-10);
     position: relative;
+  }
+
+  /* Variantes por tema: logos que tienen versión para fondo claro y oscuro. */
+  .footer__on-light {
+    display: none;
+  }
+
+  :global(:root[data-theme="light"]) .footer__on-dark {
+    display: none;
+  }
+
+  :global(:root[data-theme="light"]) .footer__on-light {
+    display: block;
   }
 
   .footer__panel {
@@ -236,7 +275,6 @@ const copyright = t("footer.copy").replace("{year}", String(year));
   }
 
   :global(:root[data-theme="light"]) .footer__logo-img {
-    content: url("/images/logos/azurylabs-logotipo-h-black.png");
     filter: drop-shadow(0 0 12px rgba(8, 145, 178, 0.18));
   }
 
@@ -334,11 +372,159 @@ const copyright = t("footer.copy").replace("{year}", String(year));
       color var(--duration-fast) var(--ease-out),
       transform var(--duration-fast) var(--ease-out);
     display: inline-flex;
+    align-items: center;
   }
 
   .footer__link:hover {
     color: var(--color-text);
     transform: translateX(2px);
+  }
+
+  /* Producto propio del sitio: primero y con el color de la marca. */
+  .footer__link--current {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .footer__link--current::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    margin-right: var(--space-2);
+    border-radius: 50%;
+    background: var(--color-brand);
+    flex-shrink: 0;
+  }
+
+  /* ── Alianzas ── */
+  /* Dos bloques con su propio título: alianzas (izquierda) y NVIDIA Inception
+     (derecha). En móvil se apilan. */
+  .footer__alliances {
+    --partner-width: 140px;
+    --partner-height: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-5) var(--space-8);
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .footer__alliances-group {
+    display: flex;
+    flex: 1 1 420px;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  .footer__alliances-label,
+  .footer__inception-label {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .footer__partners {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-8);
+  }
+
+  .footer__partner {
+    display: inline-flex;
+    min-height: var(--partner-height);
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-muted);
+    filter: grayscale(1);
+    opacity: 0.75;
+    transition:
+      filter var(--duration-normal) var(--ease-out),
+      opacity var(--duration-normal) var(--ease-out);
+  }
+
+  .footer__partner:hover {
+    filter: none;
+    opacity: 1;
+  }
+
+  .footer__partner-logo {
+    display: grid;
+    place-items: center;
+  }
+
+  .footer__partner-logo :global(svg) {
+    display: block;
+    width: auto;
+    height: 20px;
+  }
+
+  .footer__grants {
+    display: grid;
+    place-items: center;
+    width: var(--partner-width);
+    min-height: var(--partner-height);
+    max-width: 100%;
+    border-radius: var(--radius-sm);
+  }
+
+  .footer__grants:focus-visible,
+  .footer__inception-link:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 6px;
+  }
+
+  .footer__grants-logo {
+    width: 100%;
+    height: auto;
+  }
+
+  .footer__seal {
+    display: grid;
+    place-items: center;
+    width: var(--partner-height);
+    height: var(--partner-height);
+    border-radius: 50%;
+  }
+
+  .footer__seal:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 6px;
+  }
+
+  .footer__seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* NVIDIA Inception: insignia oficial sin filtros ni cambios de color. */
+  .footer__inception {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    flex-shrink: 0;
+  }
+
+  .footer__inception-link {
+    display: block;
+    border-radius: var(--radius-sm);
+  }
+
+  .footer__inception-link img {
+    display: block;
+    width: 140px;
+    height: auto;
   }
 
   /* ── Bottom ── */
@@ -356,6 +542,21 @@ const copyright = t("footer.copy").replace("{year}", String(year));
     font-family: var(--font-body);
     font-size: var(--text-xs);
     color: var(--color-text-faint);
+  }
+
+  .footer__origin {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .footer__origin-logo {
+    width: clamp(80px, 8vw, 104px);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+    -webkit-mask: url("/images/logos/hem-outline-mask.svg") center / contain no-repeat;
+    mask: url("/images/logos/hem-outline-mask.svg") center / contain no-repeat;
   }
 
   :global(:root[data-theme="light"]) .footer__panel {
