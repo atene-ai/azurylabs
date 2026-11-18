@@ -1,0 +1,66 @@
+---
+// Insignia oficial de miembro de NVIDIA Inception (versión RGB "for screen"
+// del paquete oficial). Guía de marca:
+// https://design.nvidia.com/partners/inception/nvidia-inception-program/member-badge
+//
+// Reglas que respeta este componente:
+// - Archivo sin modificar: no se recolorea, recorta ni deforma; tampoco se le
+//   aplican filtros (grayscale, opacity…).
+// - La versión a color funciona sobre fondo claro y oscuro: un solo archivo.
+// - Tamaño mínimo digital: 30 px de alto del recuadro. El SVG trae margen
+//   transparente (el recuadro ocupa ~76 % del alto), así que la imagen nunca
+//   baja de 40 px.
+// - No debe verse más grande que el logo de la empresa.
+export interface Props {
+  lang: string;
+  /** Alto de la imagen en px (incluye el margen transparente del SVG). */
+  height?: number;
+  lazy?: boolean;
+}
+
+const MIN_HEIGHT = 40;
+const { lang, height = MIN_HEIGHT, lazy = true } = Astro.props;
+
+const label =
+  lang === "es"
+    ? "Miembro del programa NVIDIA Inception"
+    : "Member of the NVIDIA Inception program";
+---
+
+<a
+  href="https://www.nvidia.com/en-us/startups/"
+  class="inception"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={`--inception-height: ${Math.max(height, MIN_HEIGHT)}px`}
+>
+  <img
+    src="/images/logos/nvidia-inception-program-badge.svg"
+    alt={label}
+    class="inception__img"
+    width="500"
+    height="216"
+    loading={lazy ? "lazy" : "eager"}
+    decoding="async"
+  />
+</a>
+
+<style>
+  .inception {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+  }
+
+  .inception:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+
+  .inception__img {
+    display: block;
+    width: auto;
+    height: var(--inception-height);
+  }
+</style>

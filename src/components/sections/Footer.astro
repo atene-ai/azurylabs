@@ -1,6 +1,7 @@
 ---
 import { useTranslations } from "../../i18n/utils";
 import { connectHref, trackingHref } from "../../lib/product-links";
+import NvidiaInceptionBadge from "../ui/NvidiaInceptionBadge.astro";
 
 export interface Props {
   lang: string;
@@ -171,6 +172,7 @@ const copyright = t("footer.copy").replace("{year}", String(year));
 
       <div class="footer__bottom">
         <p class="footer__copy" set:html={copyright} />
+        <NvidiaInceptionBadge lang={lang} height={44} />
       </div>
     </div>
   </div>
