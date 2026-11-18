@@ -114,8 +114,11 @@ export const footerBrands = {
     home: "https://azurylabs.online/{lang}/",
     logoDark: "/images/logos/azurylabs-logotipo-h-white.png",
     logoLight: "/images/logos/azurylabs-logotipo-h-black.png",
-    /** Pendiente de confirmar qué membresías aplican a Azury Labs LLC. */
-    memberships: false,
+    /**
+     * Azury Labs LLC es la entidad de Iruz Labs en EE. UU. (misma empresa):
+     * comparte sus alianzas, NVIDIA Inception y «Hecho en México».
+     */
+    memberships: true,
   },
 } as const;
 
