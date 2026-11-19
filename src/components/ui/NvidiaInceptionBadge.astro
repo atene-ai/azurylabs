@@ -1,0 +1,66 @@
+---
+// Insignia de miembro de NVIDIA Inception para la franja de alianzas del hero.
+// El enlace, la imagen y el texto salen de `iruz-labs-footer.ts` (la misma
+// fuente que usa el footer unificado), así que solo se editan ahí.
+//
+// Guía de marca:
+// https://design.nvidia.com/partners/inception/nvidia-inception-program/member-badge
+// - Archivo oficial sin modificar: no se recolorea, recorta ni deforma, y no
+//   lleva filtros (grayscale, opacity…).
+// - Tamaño mínimo digital: 30 px de alto del recuadro. El SVG trae margen
+//   transparente (el recuadro ocupa ~76 % del alto), así que la imagen nunca
+//   baja de 40 px.
+// - No debe verse más grande que el logo de la empresa.
+import { footerBadges, footerCopy, footerLang } from "../../lib/iruz-labs-footer";
+
+export interface Props {
+  lang: string;
+  /** Alto de la imagen en px (incluye el margen transparente del SVG). */
+  height?: number;
+  lazy?: boolean;
+}
+
+const MIN_HEIGHT = 40;
+const { lang, height = MIN_HEIGHT, lazy = true } = Astro.props;
+const badge = footerBadges.nvidiaInception;
+const label = footerCopy[footerLang(lang)].inception;
+---
+
+<a
+  href={badge.href}
+  class="inception"
+  target="_blank"
+  rel="noopener"
+  title={label}
+  style={`--inception-height: ${Math.max(height, MIN_HEIGHT)}px`}
+>
+  <img
+    src={badge.src}
+    alt={badge.alt}
+    class="inception__img"
+    width={badge.width}
+    height={badge.height}
+    loading={lazy ? "lazy" : "eager"}
+    decoding="async"
+  />
+</a>
+
+<style>
+  .inception {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+  }
+
+  .inception:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+
+  .inception__img {
+    display: block;
+    width: auto;
+    height: var(--inception-height);
+  }
+</style>
