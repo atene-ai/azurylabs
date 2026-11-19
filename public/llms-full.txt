@@ -59,6 +59,9 @@ Azury Labs is a software company specialized in applied artificial intelligence.
 ### How are Azury Labs LLC and Iruz Labs SAS related?
 They are sister entities of the same technology group sharing the same eight-product ecosystem. Azury Labs LLC serves the United States market, while Iruz Labs SAS serves Mexico and Colombia with regional operations and pricing.
 
+### What technology partnerships and programs back Azury Labs?
+The group participates in multiple leading global AI, cloud, and messaging ecosystems—including NVIDIA Inception, the Microsoft AI Cloud Partner Program (with Commercial Marketplace Publisher status), AWS for Startups, Meta Tech Provider, WhatsApp Business Partner, and ElevenLabs Startup Grants—giving enterprise clients proven infrastructure, compliance, and scalability.
+
 ### What is an ARM and how is Sales OS different from a traditional CRM?
 An ARM (Agentic Relationship Management) goes beyond passively logging contacts like a traditional CRM: in Sales OS, autonomous AI agents and human teams operate together across channels to engage, qualify, follow up, and advance every opportunity in real time.
 

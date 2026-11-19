@@ -47,9 +47,18 @@ For full product specs, ARM vs. CRM comparison, and FAQ answers, see
 - [Support](https://azurylabs.online/en/support): Customer help center.
 - [Full LLM reference](https://azurylabs.online/llms-full.txt): Detailed documentation and Q&A for AI assistants.
 
+## Trust, Alliances & Global Technology Programs
+
+Azury Labs LLC is backed by an active global ecosystem of leading AI, cloud, and messaging technology programs, providing enterprise-grade infrastructure, reliability, and security:
+
+- **NVIDIA Inception** — Official program member
+- **Microsoft AI Cloud Partner Program** — Member (and Commercial Marketplace Publisher)
+- **AWS for Startups** — Active cloud infrastructure program
+- **Meta Tech Provider & WhatsApp Business Partner** — Official messaging ecosystem
+- **ElevenLabs Startup Grants** — Real-time conversational voice AI partner
+
 ## Company & Sister Entity
 
 - **United States**: Azury Labs LLC (Idaho, USA) — https://azurylabs.online
 - **Mexico & Colombia**: Iruz Labs SAS de CV — https://iruzlabs.com
-- **Programs & Partnerships**: NVIDIA Inception member, Microsoft AI Cloud Partner Program, AWS for Startups, Meta Tech Provider, WhatsApp Business Partner, ElevenLabs Grants.
 - **Social**: LinkedIn (https://www.linkedin.com/company/iruzlabs), Instagram (@iruzlabsmx), Facebook.
