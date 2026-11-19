@@ -5,9 +5,10 @@ export interface Props {
   transparent?: boolean;
   lang?: string;
   page?: "home" | "about" | string;
+  showTeam?: boolean;
 }
 
-const { transparent = false, page = "home" } = Astro.props;
+const { transparent = false, page = "home", showTeam = true } = Astro.props;
 const lang = Astro.props.lang || getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const themeLabel = lang === "es" ? "Tema" : "Theme";
@@ -27,9 +28,7 @@ const homeLinks = [
 const aboutLinks = [
   { label: lang === "es" ? "← Inicio" : "← Home", href: `/${lang}/` },
   { label: lang === "es" ? "Nosotros" : "About", href: "#mision" },
-  { label: t("nav.team"), href: "#equipo" },
-  { label: lang === "es" ? "Productos" : "Products", href: "#ecosistema" },
-  { label: t("about.vision.title"), href: "#vision" },
+  ...(showTeam ? [{ label: t("nav.team"), href: "#equipo" }] : []),
   { label: lang === "es" ? "Contacto" : "Contact", href: "#contacto" },
   { label: t("nav.blog"), href: blogHref },
 ];

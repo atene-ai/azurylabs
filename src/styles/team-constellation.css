@@ -1,0 +1,37 @@
+.team-constellation { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 0.4fr); gap: 1.5rem; align-items: stretch; }
+.team-constellation__visual { min-width: 0; }
+.team-constellation__stage {
+  height: 540px;
+  aspect-ratio: auto;
+  border-radius: 1.4rem;
+  background: radial-gradient(ellipse at 50% 45%, color-mix(in srgb, var(--color-brand) 10%, var(--color-surface)), var(--color-surface));
+}
+.team-constellation__stage svg { color: color-mix(in srgb, var(--color-brand) 65%, transparent); }
+.team-constellation__stage [data-star] { border: 2px solid var(--color-border); background: #152d40; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); color: var(--color-glow); }
+.team-constellation__stage [data-star] img { object-position: center 28%; }
+.team-constellation__stage [data-star]:hover,
+.team-constellation__stage [data-star]:focus-visible { border-color: var(--color-glow); }
+.team-constellation__stage [data-star][data-hero] { border-radius: 0.8rem; border-color: var(--color-brand); }
+.team-constellation__stage [data-label] { max-width: calc(100% - 2rem); color: var(--color-text); line-height: 1.5; }
+.team-constellation__stage [data-caption] { padding-inline: 0.8rem; color: var(--color-text); }
+.team-constellation__hint { display: flex; align-items: baseline; gap: 0.6rem; margin-top: 0.8rem; color: var(--color-text-muted); font-size: 0.72rem; line-height: 1.6; }
+.team-constellation__hint span { color: var(--color-brand); }
+.team-constellation__profile { display: flex; flex-direction: column; padding: clamp(1.3rem, 2vw, 2rem); border: 1px solid var(--color-border-subtle); border-radius: 1.4rem; background: var(--color-surface); min-width: 0; }
+.team-constellation__eyebrow { color: var(--color-brand); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.13em; line-height: 1.7; }
+.team-constellation__person { margin-top: 2.5rem; }
+.team-constellation__person h3 { font-size: clamp(1.4rem, 2vw, 2rem); font-weight: 650; line-height: 1.18; letter-spacing: -0.04em; text-wrap: balance; }
+.team-constellation__role { margin-top: 0.8rem; color: var(--color-brand); font-size: 0.8rem; font-weight: 600; line-height: 1.5; }
+.team-constellation__bio { margin-top: 1.4rem; color: var(--color-text-muted); font-size: 0.86rem; line-height: 1.8; }
+.team-constellation__link { display: inline-flex; gap: 0.6rem; align-items: center; margin-top: 1.5rem; margin-bottom: 2rem; color: var(--color-brand); font-size: 0.79rem; font-weight: 650; text-decoration: none; }
+.team-constellation__link:hover { color: var(--color-glow); }
+.team-constellation__link:focus-visible { outline: 2px solid var(--color-glow); outline-offset: 4px; }
+.team-constellation__count { padding-top: 1.3rem; margin-top: auto; border-top: 1px solid var(--color-border-subtle); color: var(--color-text-muted); font-size: 0.72rem; }
+@media (max-width: 900px) {
+  .team-constellation { grid-template-columns: minmax(0, 1fr); }
+  .team-constellation__stage { height: 500px; }
+  .team-constellation__person { margin-top: 1.3rem; }
+}
+@media (max-width: 640px) {
+  .team-constellation__stage { height: 480px; border-radius: 1rem; }
+  .team-constellation__profile { border-radius: 1rem; }
+}

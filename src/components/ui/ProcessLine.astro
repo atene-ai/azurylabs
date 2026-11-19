@@ -1,0 +1,32 @@
+---
+import "../../lib/iso/iso.css";
+import "../../styles/iso-figures.css";
+import { art, readoutAt, stageAt, STILL } from "../../lib/figures/process-line.mjs";
+export interface Props { lang: string; steps: { number: string; title: string }[]; }
+const { lang, steps } = Astro.props;
+const title = lang === "es" ? "Línea de proceso" : "Process line";
+const active = stageAt(STILL) - 1;
+---
+<figure class="line iso" data-figure="process-line" data-lang={lang}>
+  <div class="iso-plate">
+    <div class="iso-plate-corners" aria-hidden="true">
+      <span class="iso-plate-corner" data-corner="fig">Fig 1</span>
+      <span class="iso-plate-corner" data-corner="title">{title}</span>
+      <span class="iso-plate-corner" data-corner="readout" data-readout>{readoutAt(lang)}</span>
+    </div>
+    <div class="iso-stage" set:html={art(lang)} />
+  </div>
+  <ol class="line__steps">
+    {steps.map((step, index) => (
+      <li>
+        <button type="button" class="line__step" data-step={index} data-active={index === active ? "" : undefined} aria-pressed={index === active ? "true" : "false"}>
+          <span class="line__number">{step.number}</span>
+          <span class="line__title">{step.title}</span>
+        </button>
+      </li>
+    ))}
+  </ol>
+</figure>
+<script>
+  import "../../scripts/process-line.js";
+</script>

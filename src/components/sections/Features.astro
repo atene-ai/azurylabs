@@ -1,179 +1,61 @@
 ---
 import Badge from "../ui/Badge.astro";
+import CapabilityFigure from "../ui/CapabilityFigure.astro";
 import { useTranslations } from "../../i18n/utils";
-
-export interface Props {
-  lang: string;
-}
-
+export interface Props { lang: string; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-
-const featuresData = [
-  { key: "reactive", icon: "01", color: "brand" },
-  { key: "proactive", icon: "02", color: "blue" },
-  { key: "omnichannel", icon: "03", color: "glow" },
-  { key: "integrations", icon: "04", color: "brand" },
-  { key: "analytics", icon: "05", color: "blue" },
-  { key: "custom", icon: "06", color: "glow" },
-];
-
-const features = featuresData.map((f) => ({
-  ...f,
-  title: t(`features.items.${f.key}.title`),
-  desc: t(`features.items.${f.key}.desc`),
+const features = ["reactive", "proactive", "omnichannel", "integrations", "analytics", "custom"].map((key, index) => ({
+  title: t(`features.items.${key}.title`), desc: t(`features.items.${key}.desc`), index,
 }));
-
-const colorMap: Record<string, string> = {
-  brand: "var(--color-brand)",
-  blue: "var(--color-blue)",
-  glow: "var(--color-glow)",
-};
-
-const dimMap: Record<string, string> = {
-  brand: "var(--color-brand-dim)",
-  blue: "var(--color-blue-dim)",
-  glow: "rgba(167,139,250,0.12)",
-};
 ---
-
-<section class="features" id="capacidades">
+<section class="features" id="capacidades" aria-labelledby="capabilities-title">
   <div class="container">
-    <div class="features__header reveal">
-      <Badge variant="subtle">{t("features.header.badge")}</Badge>
-      <h2 class="features__title" set:html={t("features.header.title")} />
-      <p class="features__sub">
-        {t("features.header.sub")}
-      </p>
-    </div>
-
+    <header class="features__header reveal">
+      <div><Badge variant="subtle">{t("features.header.badge")}</Badge><h2 id="capabilities-title" class="features__title" set:html={t("features.header.title")} /></div>
+      <p class="features__sub">{t("features.header.sub")}</p>
+    </header>
     <div class="features__grid">
-      {
-        features.map((f, i) => (
-          <div
-            class={`feature-card reveal reveal-delay-${((i % 3) + 1) * 100}`}
-            style={`--fc: ${colorMap[f.color]}; --fd: ${dimMap[f.color]};`}
-          >
-            <div class="feature-card__icon-wrap">
-              <span class="feature-card__icon">{f.icon}</span>
-            </div>
-            <h3 class="feature-card__title">{f.title}</h3>
-            <p class="feature-card__desc">{f.desc}</p>
-          </div>
-        ))
-      }
+      {features.map((feature) => (
+        <article class:list={["capability", `capability--${feature.index}`, "reveal"]}>
+          <div class="capability__art"><CapabilityFigure variant={feature.index} lang={lang} /></div>
+          <div class="capability__copy"><span class="capability__number" aria-hidden="true">0{feature.index + 1}</span><h3>{feature.title}</h3><p>{feature.desc}</p></div>
+        </article>
+      ))}
     </div>
   </div>
 </section>
-
 <style>
-  .features {
-    padding-block: var(--space-24);
-    position: relative;
-  }
-
-  /* ── Header ── */
-  .features__header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--space-4);
-    margin-bottom: var(--space-16);
-  }
-
-  .features__title {
-    font-family: var(--font-brand);
-    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
-    font-weight: var(--weight-bold);
-    line-height: var(--leading-tight);
-    letter-spacing: var(--tracking-tight);
-    color: var(--color-text);
-  }
-
-  :global(.features__title--accent) {
-    background: linear-gradient(
-      135deg,
-      var(--color-blue) 0%,
-      var(--color-brand) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .features__sub {
-    font-size: var(--text-lg);
-    color: var(--color-text-muted);
-    max-width: 680px;
-    line-height: var(--leading-relaxed);
-  }
-
-  /* ── Grid ── */
-  .features__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-4);
-  }
-
-  /* ── Feature card ── */
-  .feature-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    transition:
-      border-color var(--duration-normal) var(--ease-out),
-      transform var(--duration-normal) var(--ease-out);
-  }
-
-  .feature-card:hover {
-    border-color: var(--fc);
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 16px color-mix(in srgb, var(--fc) 15%, transparent);
-  }
-
-  .feature-card__icon-wrap {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-md);
-    background: var(--fd);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--fc);
-    font-size: 0.7rem;
-    font-weight: var(--weight-bold);
-    letter-spacing: 0.08em;
-    border: 1px solid color-mix(in srgb, var(--fc) 25%, transparent);
-  }
-
-  .feature-card__title {
-    font-family: var(--font-brand);
-    font-size: var(--text-lg);
-    font-weight: var(--weight-semibold);
-    color: var(--color-text);
-  }
-
-  .feature-card__desc {
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    line-height: var(--leading-relaxed);
-  }
-
+  .features { position: relative; padding-block: clamp(4rem, 8vw, 7rem); }
+  .features::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 15% 45%, #00c8ff08, transparent 50%); }
+  .features__header { position: relative; display: grid; grid-template-columns: 1.3fr 0.7fr; align-items: end; gap: 2rem 5rem; margin-bottom: 3rem; }
+  .features__title { margin-top: 1.3rem; font-size: clamp(2rem, 3.7vw, 3.5rem); line-height: 1.08; letter-spacing: -0.045em; text-wrap: balance; }
+  :global(.features__title--accent) { color: var(--color-glow); }
+  .features__sub { font-size: 1rem; line-height: 1.8; max-width: 40ch; padding-bottom: 0.2rem; }
+  .features__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1.2rem; }
+  .capability { --ink: #00c8ff; position: relative; isolation: isolate; grid-column: span 4; overflow: hidden; min-width: 0; border: 1px solid var(--color-border-subtle); border-radius: 1.6rem; background: var(--color-surface); }
+  .capability::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 70% 5%, color-mix(in srgb, var(--ink) 12%, transparent), transparent 65%); opacity: 0.8; transition: opacity 250ms; }
+  .capability:hover { border-color: color-mix(in srgb, var(--ink) 45%, var(--color-border-subtle)); }
+  .capability:hover::before { opacity: 1; }
+  .capability--0 { grid-column: span 7; --ink: #56d9ef; }
+  .capability--1 { grid-column: span 5; --ink: #a5a1ff; }
+  .capability--3 { --ink: #8bb7ff; }.capability--4 { --ink: #b4a4ff; }
+  .capability--5 { grid-column: 1 / -1; display: grid; grid-template-columns: 0.65fr 1.35fr; align-items: center; --ink: #56d9ef; }
+  .capability__art { height: 260px; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; padding: 1.2rem 1.5rem 0.4rem; color: var(--ink); }
+  .capability--0 .capability__art, .capability--1 .capability__art { height: 300px; }
+  .capability--5 .capability__art { height: 250px; padding: 1.2rem 1.5rem; }
+  .capability__copy { position: relative; padding: 0.4rem 1.8rem 1.8rem; }
+  .capability--5 .capability__copy { padding: 2rem 3rem 2rem 1rem; }
+  .capability__number { display: block; margin-bottom: 0.85rem; color: var(--ink); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em; }
+  .capability h3 { font-size: clamp(1.2rem, 1.6vw, 1.55rem); letter-spacing: -0.035em; line-height: 1.2; }
+  .capability p { margin-top: 0.75rem; max-width: 55ch; font-size: 0.88rem; line-height: 1.75; }
+  :global(:root[data-theme="light"]) .capability { --ink: #087a99; background: #fff; box-shadow: 0 12px 36px #10263b06; }
+  :global(:root[data-theme="light"]) .capability--1, :global(:root[data-theme="light"]) .capability--4 { --ink: #6556b8; }
   @media (max-width: 900px) {
-    .features__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .features__header { grid-template-columns: 1fr; gap: 1.5rem; }.features__sub { max-width: 65ch; }
+    .capability, .capability--0, .capability--1 { grid-column: span 6; }.capability--5 { display: block; }
+    .capability--5 .capability__copy { padding: 0.4rem 1.8rem 1.8rem; }
+    .capability__art, .capability--0 .capability__art, .capability--1 .capability__art, .capability--5 .capability__art { height: 240px; }
   }
-
-  @media (max-width: 560px) {
-    .features__grid {
-      grid-template-columns: 1fr;
-    }
-  }
+  @media (max-width: 560px) { .capability, .capability--0, .capability--1 { grid-column: 1 / -1; }.features__header { margin-bottom: 2rem; }.capability__copy { padding-inline: 1.4rem; } }
 </style>

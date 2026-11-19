@@ -1,8 +1,11 @@
 ---
+import "../../styles/product-palettes.css";
 import Badge from "../ui/Badge.astro";
+import ProductMedia from "../ui/ProductMedia.astro";
+import { getProducts } from "../../lib/products";
 import BackgroundGlow from "../ui/BackgroundGlow.astro";
 import { useTranslations } from "../../i18n/utils";
-import { connectHref, trackingHref, isExternal } from "../../lib/product-links";
+import { isExternal } from "../../lib/product-links";
 
 export interface Props {
   lang: string;
@@ -11,144 +14,7 @@ export interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const products = [
-  {
-    id: "atenea",
-    number: "01",
-    badge: t("products.atenea.badge"),
-    badgeVariant: "brand",
-    title: t("products.atenea.title"),
-    description: t("products.atenea.desc"),
-    features: t("products.atenea.features"),
-    cta: t("products.atenea.cta"),
-    href: "https://v3.atenea.iruzlabs.com",
-    logo: "/images/logos/iruzlabs-atenea-logo.png",
-    logoAlt: "Iruz Atenea",
-    logoWidth: 745,
-    logoHeight: 537,
-    wordmark: null,
-    tone: "violet",
-  },
-  {
-    id: "lindex",
-    number: "02",
-    badge: t("products.lindex.badge"),
-    badgeVariant: "glow",
-    title: t("products.lindex.title"),
-    description: t("products.lindex.desc"),
-    features: t("products.lindex.features"),
-    cta: t("products.lindex.cta"),
-    href: "https://lindex.iruzlabs.com",
-    logo: "/images/logos/lindex-logo.png",
-    logoAlt: "Lindex by Iruz Labs",
-    logoWidth: 1853,
-    logoHeight: 594,
-    wordmark: null,
-    tone: "ice",
-  },
-  {
-    id: "sales-os",
-    number: "03",
-    badge: t("products.salesOs.badge"),
-    badgeVariant: "blue",
-    title: t("products.salesOs.title"),
-    description: t("products.salesOs.desc"),
-    features: t("products.salesOs.features"),
-    cta: t("products.salesOs.cta"),
-    href: "https://crm.iruzlabs.com",
-    logo: null,
-    logoAlt: "",
-    logoWidth: 0,
-    logoHeight: 0,
-    wordmark: "SALES OS",
-    tone: "navy",
-  },
-  {
-    id: "mi-negocio",
-    number: "04",
-    badge: t("products.miNegocio.badge"),
-    badgeVariant: "glow",
-    title: t("products.miNegocio.title"),
-    description: t("products.miNegocio.desc"),
-    features: t("products.miNegocio.features"),
-    cta: t("products.miNegocio.cta"),
-    href: `https://minegocio.iruzlabs.com/${lang}`,
-    logo: null,
-    logoAlt: "",
-    logoWidth: 0,
-    logoHeight: 0,
-    wordmark: "MI NEGOCIO",
-    tone: "cyan",
-  },
-  {
-    id: "ciee",
-    number: "05",
-    badge: t("products.ciee.badge"),
-    badgeVariant: "brand",
-    title: t("products.ciee.title"),
-    description: t("products.ciee.desc"),
-    features: t("products.ciee.features"),
-    cta: t("products.ciee.cta"),
-    href: "https://ciee.iruzlabs.com",
-    logo: "/images/logos/iruzlabs-ciee-logo.png",
-    logoAlt: "Iruz CIEE",
-    logoWidth: 1871,
-    logoHeight: 512,
-    wordmark: null,
-    tone: "ice",
-  },
-  {
-    id: "systems",
-    number: "06",
-    badge: t("products.systems.badge"),
-    badgeVariant: "blue",
-    title: t("products.systems.title"),
-    description: t("products.systems.desc"),
-    features: t("products.systems.features"),
-    cta: t("products.systems.cta"),
-    href: "https://systems.iruzlabs.com",
-    logo: null,
-    logoAlt: "",
-    logoWidth: 0,
-    logoHeight: 0,
-    wordmark: "SYSTEMS",
-    tone: "graphite",
-  },
-  {
-    id: "connect",
-    number: "07",
-    badge: t("products.connect.badge"),
-    badgeVariant: "glow",
-    title: t("products.connect.title"),
-    description: t("products.connect.desc"),
-    features: t("products.connect.features"),
-    cta: t("products.connect.cta"),
-    href: connectHref(lang),
-    logo: null,
-    logoAlt: "",
-    logoWidth: 0,
-    logoHeight: 0,
-    wordmark: "CONNECT",
-    tone: "navy",
-  },
-  {
-    id: "tracking",
-    number: "08",
-    badge: t("products.tracking.badge"),
-    badgeVariant: "brand",
-    title: t("products.tracking.title"),
-    description: t("products.tracking.desc"),
-    features: t("products.tracking.features"),
-    cta: t("products.tracking.cta"),
-    href: trackingHref(lang),
-    logo: null,
-    logoAlt: "",
-    logoWidth: 0,
-    logoHeight: 0,
-    wordmark: "TRACKING SYSTEM",
-    tone: "cyan",
-  },
-];
+const products = getProducts(lang);
 ---
 
 <section class="products" id="productos">
@@ -166,37 +32,14 @@ const products = [
         <article
           class:list={[
             "product-card",
-            `product-card--${product.tone}`,
+            `product-card--${product.id}`,
             index < 2 && "product-card--featured",
             "reveal",
           ]}
-          style={`transition-delay: ${index * 70}ms`}
+          data-product-motion
+          style={`--product-accent:${product.artwork.accent}`}
         >
-          <div class="product-card__media">
-            <span class="product-card__number">{product.number}</span>
-            {product.logo ? (
-              <img
-                class:list={["product-card__logo", `product-card__logo--${product.id}`]}
-                src={product.logo}
-                alt={product.logoAlt}
-                width={product.logoWidth}
-                height={product.logoHeight}
-                loading="lazy"
-                decoding="async"
-              />
-            ) : (
-              <div
-                class:list={["product-card__wordmark", `product-card__wordmark--${product.id}`]}
-                aria-label={`Iruz ${product.wordmark}`}
-              >
-                <img src="/images/logos/iruzlabs-isotipo-light.png" alt="" width="512" height="512" loading="lazy" />
-                <span>
-                  <small>IRUZ</small>
-                  <strong>{product.wordmark}</strong>
-                </span>
-              </div>
-            )}
-          </div>
+          <ProductMedia product={product} featured={index < 2} mirrored={index % 2 === 1} />
 
           <div class="product-card__content">
             <Badge variant={product.badgeVariant as any}>{product.badge}</Badge>
@@ -272,6 +115,7 @@ const products = [
   }
 
   .product-card {
+    --product-surface: #0b1025;
     grid-column: span 4;
     container-type: inline-size;
     display: flex;
@@ -280,7 +124,7 @@ const products = [
     overflow: hidden;
     border: 1px solid var(--color-border-subtle);
     border-radius: clamp(1.2rem, 2.4vw, 1.8rem);
-    background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+    background: var(--product-surface);
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
     transition:
       transform var(--duration-normal) var(--ease-out),
@@ -291,126 +135,17 @@ const products = [
   .product-card:nth-child(1) { grid-column: span 7; }
   .product-card:nth-child(2) { grid-column: span 5; }
 
-  .product-card:hover {
+  .product-card:is(:hover, :focus-within) {
     transform: translateY(-6px);
-    border-color: color-mix(in srgb, var(--color-brand) 42%, var(--color-border));
-    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28), 0 0 34px color-mix(in srgb, var(--color-brand) 10%, transparent);
+    border-color: var(--product-accent);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28), 0 12px 38px color-mix(in srgb, var(--product-accent) 24%, transparent);
   }
 
-  .product-card__media {
-    position: relative;
-    display: flex;
-    min-height: 190px;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(1.5rem, 4vw, 3rem);
-    overflow: hidden;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .product-card--featured .product-card__media { min-height: 245px; }
-  .product-card--violet .product-card__media { background: linear-gradient(145deg, #f2edff, #dcd0ff); }
-  .product-card--navy .product-card__media { background: linear-gradient(145deg, #0b1629, #0c3150); }
-  .product-card--cyan .product-card__media { background: linear-gradient(145deg, #072338, #09617c); }
-  .product-card--ice .product-card__media { background: linear-gradient(145deg, #f4fbff, #d8effc); }
-  .product-card--graphite .product-card__media { background: linear-gradient(145deg, #0b111d, #273142); }
-
-  .product-card__number {
-    position: absolute;
-    top: 1rem;
-    right: 1.1rem;
-    color: rgba(255, 255, 255, 0.55);
-    font-size: 0.67rem;
-    font-weight: 750;
-    letter-spacing: 0.14em;
-  }
-
-  .product-card--violet .product-card__number,
-  .product-card--ice .product-card__number { color: rgba(15, 31, 62, 0.48); }
-
-  .product-card__logo {
-    display: block;
-    width: auto;
-    max-width: 80%;
-    max-height: 138px;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 18px rgba(18, 28, 55, 0.12));
-  }
-
-  .product-card__logo--atenea { max-width: min(72%, 290px); }
-  .product-card__logo--ciee { max-width: 92%; max-height: 120px; }
-  .product-card__logo--lindex { max-width: min(82%, 340px); }
-
-  .product-card__wordmark {
-    display: flex;
-    max-width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(1rem, 2.5vw, 1.7rem);
-    color: #f3f8fd;
-  }
-
-  .product-card__wordmark > img {
-    width: clamp(62px, 8vw, 96px);
-    height: clamp(62px, 8vw, 96px);
-    object-fit: contain;
-    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.32));
-  }
-
-  .product-card__wordmark span { display: flex; flex-direction: column; gap: 0.2rem; }
-  .product-card__wordmark small { color: #6fe3ff; font-size: 0.67rem; font-weight: 750; letter-spacing: 0.22em; }
-  .product-card__wordmark strong {
-    font-family: var(--font-brand);
-    font-size: clamp(1.7rem, 3.8vw, 3.1rem);
-    line-height: 0.95;
-    letter-spacing: -0.045em;
-    white-space: nowrap;
-  }
-
-  .product-card:not(.product-card--featured) .product-card__media {
-    padding-inline: 1.25rem;
-  }
-
-  .product-card__wordmark--mi-negocio,
-  .product-card__wordmark--systems,
-  .product-card__wordmark--connect,
-  .product-card__wordmark--tracking {
-    gap: clamp(0.7rem, 1.2vw, 0.95rem);
-  }
-
-  .product-card__wordmark--mi-negocio > img,
-  .product-card__wordmark--systems > img,
-  .product-card__wordmark--connect > img,
-  .product-card__wordmark--tracking > img {
-    width: clamp(48px, 19cqi, 72px);
-    height: clamp(48px, 19cqi, 72px);
-  }
-
-  .product-card__wordmark--mi-negocio span,
-  .product-card__wordmark--systems span,
-  .product-card__wordmark--connect span,
-  .product-card__wordmark--tracking span {
-    gap: 0.12rem;
-  }
-
-  .product-card__wordmark--mi-negocio small,
-  .product-card__wordmark--systems small,
-  .product-card__wordmark--connect small,
-  .product-card__wordmark--tracking small {
-    font-size: 0.56rem;
-  }
-
-  .product-card__wordmark--mi-negocio strong,
-  .product-card__wordmark--systems strong,
-  .product-card__wordmark--connect strong,
-  .product-card__wordmark--tracking strong {
-    font-size: clamp(1.25rem, 8cqi, 2rem);
-    letter-spacing: -0.035em;
-  }
-
-  .product-card__wordmark--tracking strong {
-    white-space: normal;
-    line-height: 1;
+  @media (prefers-reduced-motion: reduce) {
+    .product-card,
+    .product-card__content > a span { transition: none; }
+    .product-card.reveal { opacity: 1; transform: none; }
+    .product-card:is(:hover, :focus-within) { transform: none; }
   }
 
   .product-card__content {
@@ -474,7 +209,6 @@ const products = [
   .product-card__content > a:hover span { transform: translate(3px, -3px); }
 
   :global(:root[data-theme="light"]) .product-card {
-    background: rgba(255, 255, 255, 0.94);
     border-color: rgba(15, 23, 42, 0.1);
     box-shadow: 0 18px 42px rgba(15, 23, 42, 0.1);
   }
@@ -485,18 +219,11 @@ const products = [
     .product-card,
     .product-card:nth-child(1),
     .product-card:nth-child(2) { grid-column: span 1; }
-    .product-card:last-child { grid-column: 1 / -1; }
-    .product-card__media,
-    .product-card--featured .product-card__media { min-height: 215px; }
   }
 
   @media (max-width: 640px) {
     .products { padding-block: var(--space-20); }
     .products__grid { grid-template-columns: 1fr; gap: var(--space-4); }
-    .product-card,
-    .product-card:last-child { grid-column: 1; }
-    .product-card__media,
-    .product-card--featured .product-card__media { min-height: 190px; }
-    .product-card__logo--ciee { max-width: 100%; }
+    .product-card { grid-column: 1; }
   }
 </style>

@@ -3,9 +3,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Navbar from "../../components/sections/Navbar.astro";
 import Footer from "../../components/sections/Footer.astro";
 import { useTranslations } from "../../i18n/utils";
-import { connectHref, trackingHref, isExternal } from "../../lib/product-links";
 import { getEnv, getTeamMembers, mediaUrl } from "../../lib/strapi";
-import SocialIcon from "../../components/ui/SocialIcon.astro";
+import TeamConstellation from "../../components/ui/team-constellation";
 import ContactForm from "../../components/sections/ContactForm.astro";
 
 // SSR para que un integrante recien agregado en Strapi aparezca sin rebuild.
@@ -28,12 +27,47 @@ const contactCopy = lang === "es"
     };
 
 const titleMap = {
-  es: "Acerca de Azury Labs — Inteligencia artificial aplicada",
-  en: "About Azury Labs — Applied artificial intelligence",
+  es: "Acerca de Azury Labs — Inteligencia artificial aplicada y ARM",
+  en: "About Azury Labs — Applied artificial intelligence and ARM",
+};
+
+const site = Astro.site ?? Astro.url;
+const pageUrl = new URL(`/${lang}/acerca`, site).toString();
+const homeUrl = new URL(`/${lang}/`, site).toString();
+const aboutJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: titleMap[lang as keyof typeof titleMap],
+      description: t("about.hero.subtitle"),
+      inLanguage: htmlLang,
+      isPartOf: { "@id": `${site}#website` },
+      about: { "@id": `${site}#organization` },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: lang === "es" ? "Inicio" : "Home", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: lang === "es" ? "Acerca de Azury Labs" : "About Azury Labs", item: pageUrl },
+      ],
+    },
+  ],
 };
 
 const strapiBase = getEnv(Astro.locals, "STRAPI_URL").replace(/\/$/, "");
 const teamMembers = await getTeamMembers({ locals: Astro.locals, lang });
+const team = teamMembers.map((member) => ({
+  src: member.avatar?.url ? mediaUrl(strapiBase, member.avatar.url) : "/images/logos/azurylabs-isotipo-white.png",
+  alt: member.avatar?.alternativeText || member.name,
+  title: member.name,
+  role: member.role,
+  bio: member.bio,
+  href: `/${lang}/equipo/${member.slug}`,
+  tags: ["Azury Labs", member.role].filter(Boolean),
+}));
 
 Astro.response.headers.set(
   "Cache-Control",
@@ -46,7 +80,8 @@ Astro.response.headers.set(
   description={t("about.hero.subtitle")}
   lang={htmlLang}
 >
-  <Navbar lang={lang} page="about" />
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(aboutJsonLd)} />
+  <Navbar lang={lang} page="about" showTeam={teamMembers.length > 0} />
 
   <main class="about-page">
     <section id="mision" class="about-hero">
@@ -55,15 +90,22 @@ Astro.response.headers.set(
           <p class="about-hero__eyebrow"><span aria-hidden="true"></span>{t("nav.company")}</p>
           <h1 class="about-hero__title">{t("about.hero.title")}</h1>
           <p class="about-hero__subtitle">{t("about.hero.subtitle")}</p>
-          <a class="about-hero__contact-link" href="#contacto">
-            {lang === "es" ? "Hablemos de tu operación" : "Let's talk about your operation"} <span aria-hidden="true">↓</span>
-          </a>
+          <div class="about-hero__actions">
+            <a class="about-hero__primary" href="#contacto">{lang === "es" ? "Hablemos de tu operación" : "Let's talk about your operation"}<span aria-hidden="true">↗</span></a>
+            <a class="about-hero__contact-link" href={teamMembers.length ? "#equipo" : "#vision"}>
+              {teamMembers.length ? (lang === "es" ? "Conoce al equipo" : "Meet the team") : (lang === "es" ? "Nuestra visión" : "Our vision")}<span aria-hidden="true">↓</span>
+            </a>
+          </div>
+          <p class="about-hero__markets">México <span aria-hidden="true">·</span> Colombia <span aria-hidden="true">·</span> {lang === "es" ? "Estados Unidos" : "United States"}</p>
         </div>
         <aside class="about-hero__statement" aria-label={lang === "es" ? "Tesis Azury" : "Azury thesis"}>
-          <span class="about-hero__statement-index">AZURY / 2026</span>
+          <div class="about-hero__statement-top">
+            <span class="about-hero__statement-index">AZURY / {new Date().getFullYear()}</span>
+            <img src="/images/logos/azurylabs-isotipo-white.png" alt="" width="64" height="64" />
+          </div>
           <blockquote>{t("about.hero.quote")}</blockquote>
           <div class="about-hero__statement-lines" aria-hidden="true">
-            <span>PRODUCTO</span><span>IA</span><span>DATOS</span><span>SOFTWARE</span>
+            <span>{lang === "es" ? "PRODUCTO" : "PRODUCT"}</span><span>{lang === "es" ? "IA" : "AI"}</span><span>{lang === "es" ? "DATOS" : "DATA"}</span><span>SOFTWARE</span>
           </div>
         </aside>
       </div>
@@ -78,41 +120,10 @@ Astro.response.headers.set(
             <h2 class="section-title">{t("about.team.title")}</h2>
             <p class="about-team__subtitle">{t("about.team.subtitle")}</p>
 
-            <div class="team-grid">
+            <TeamConstellation client:load items={team} lang={lang} />
+            <div class="team-directory" aria-label={lang === "es" ? "Directorio del equipo" : "Team directory"}>
               {teamMembers.map((member) => (
-                <div class="team-card">
-                  <a href={`/${lang}/equipo/${member.slug}`} class="team-card__link">
-                    {member.avatar?.url && (
-                      <img
-                        class="team-card__photo"
-                        src={mediaUrl(strapiBase, member.avatar.url)}
-                        alt={member.avatar.alternativeText || member.name}
-                        width="120"
-                        height="120"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    )}
-                    <h3 class="team-card__name">{member.name}</h3>
-                    <p class="team-card__role">{member.role}</p>
-                    <p class="team-card__bio">{member.bio}</p>
-                  </a>
-                  {member.socials && member.socials.length > 0 && (
-                    <div class="team-card__socials">
-                      {member.socials.map((social) => (
-                        <a
-                          href={social.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="team-card__social"
-                          aria-label={social.platform}
-                        >
-                          <SocialIcon platform={social.platform} />
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <a href={`/${lang}/equipo/${member.slug}`}><span>{member.name}</span><small>{member.role}</small><span aria-hidden="true">↗</span></a>
               ))}
             </div>
           </div>
@@ -120,113 +131,10 @@ Astro.response.headers.set(
       )
     }
 
-    <!-- Ecosystem Section -->
-    <section id="ecosistema" class="about-ecosystem">
-      <div class="container about-ecosystem__inner">
-        <span class="badge">{t("about.ecosystem.badge")}</span>
-        <h2 class="section-title">{t("about.ecosystem.title")}</h2>
-        <p class="about-ecosystem__subtitle">{t("about.ecosystem.subtitle")}</p>
-
-        <div class="ecosystem-grid">
-          <div class="ecosystem-card">
-            <img
-              src="/images/logos/iruzlabs-atenea-logo.png"
-              alt="Iruz Atenea"
-              class="ecosystem-card__logo"
-              loading="lazy"
-            />
-            <h3>{t("about.ecosystem.items.atenea.name")}</h3>
-            <p>{t("about.ecosystem.items.atenea.desc")}</p>
-            <a href="https://v3.atenea.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
-              {t("about.ecosystem.cta")} →
-            </a>
-          </div>
-          <div class="ecosystem-card">
-            <img
-              src="/images/logos/lindex-logo.png"
-              alt="Lindex by Iruz Labs"
-              class="ecosystem-card__logo ecosystem-card__logo--lindex"
-              loading="lazy"
-            />
-            <h3>{t("about.ecosystem.items.lindex.name")}</h3>
-            <p>{t("about.ecosystem.items.lindex.desc")}</p>
-            <a href="https://lindex.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
-              {t("about.ecosystem.cta")} →
-            </a>
-          </div>
-          <div class="ecosystem-card">
-            <span class="ecosystem-card__wordmark gradient-text">SALES OS</span>
-            <h3>{t("about.ecosystem.items.crm.name")}</h3>
-            <p>{t("about.ecosystem.items.crm.desc")}</p>
-            <a href="https://crm.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
-              {t("about.ecosystem.cta")} →
-            </a>
-          </div>
-          <div class="ecosystem-card ecosystem-card--minegocio">
-            <span class="ecosystem-card__wordmark ecosystem-card__wordmark--minegocio">
-              <small>IRUZ</small>
-              <strong>Mi Negocio</strong>
-            </span>
-            <h3>{t("about.ecosystem.items.minegocio.name")}</h3>
-            <p>{t("about.ecosystem.items.minegocio.desc")}</p>
-            <a href={`https://minegocio.iruzlabs.com/${lang}`} target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
-              {t("about.ecosystem.cta")} →
-            </a>
-          </div>
-          <div class="ecosystem-card">
-            <img
-              src="/images/logos/iruzlabs-ciee-logo.png"
-              alt="Iruz CIEE"
-              class="ecosystem-card__logo"
-              loading="lazy"
-            />
-            <h3>{t("about.ecosystem.items.ciee.name")}</h3>
-            <p>{t("about.ecosystem.items.ciee.desc")}</p>
-            <a href="https://ciee.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
-              {t("about.ecosystem.cta")} →
-            </a>
-          </div>
-          <div class="ecosystem-card">
-            <span class="ecosystem-card__wordmark gradient-text">SYSTEMS</span>
-            <h3>{t("about.ecosystem.items.systems.name")}</h3>
-            <p>{t("about.ecosystem.items.systems.desc")}</p>
-            <a href="https://systems.iruzlabs.com" target="_blank" rel="noopener noreferrer" class="ecosystem-card__link">
-              {t("about.ecosystem.cta")} →
-            </a>
-          </div>
-          <div class="ecosystem-card">
-            <span class="ecosystem-card__wordmark gradient-text">CONNECT</span>
-            <h3>{t("about.ecosystem.items.connect.name")}</h3>
-            <p>{t("about.ecosystem.items.connect.desc")}</p>
-            <a
-              href={connectHref(lang)}
-              target={isExternal(connectHref(lang)) ? "_blank" : undefined}
-              rel={isExternal(connectHref(lang)) ? "noopener noreferrer" : undefined}
-              class="ecosystem-card__link"
-            >
-              {t("about.ecosystem.cta")} →
-            </a>
-          </div>
-          <div class="ecosystem-card">
-            <span class="ecosystem-card__wordmark gradient-text">TRACKING</span>
-            <h3>{t("about.ecosystem.items.tracking.name")}</h3>
-            <p>{t("about.ecosystem.items.tracking.desc")}</p>
-            <a
-              href={trackingHref(lang)}
-              target={isExternal(trackingHref(lang)) ? "_blank" : undefined}
-              rel={isExternal(trackingHref(lang)) ? "noopener noreferrer" : undefined}
-              class="ecosystem-card__link"
-            >
-              {t("about.ecosystem.cta")} →
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Vision Section -->
     <section id="vision" class="about-vision">
       <div class="container about-vision__inner">
+        <span class="badge">{lang === "es" ? "HACIA DÓNDE VAMOS" : "WHERE WE'RE HEADED"}</span>
         <h2 class="section-title">{t("about.vision.title")}</h2>
         <p class="vision-text">{t("about.vision.text")}</p>
       </div>
@@ -235,29 +143,32 @@ Astro.response.headers.set(
     <!-- Values Section -->
     <section id="valores" class="about-values">
       <div class="container">
-        <h2 class="section-title">{t("about.values.title")}</h2>
+        <header class="about-section-heading">
+          <div><span class="badge">{lang === "es" ? "NUESTROS PRINCIPIOS" : "OUR PRINCIPLES"}</span><h2 class="section-title">{t("about.values.title")}</h2></div>
+          <p>{lang === "es" ? "El criterio que guía cada producto, cada decisión y cada implementación." : "The principles behind every product, decision and implementation."}</p>
+        </header>
         <div class="values-grid">
           <!-- Value 1 -->
           <div class="value-card">
-            <div class="value-icon">⚡️</div>
+            <span class="value-index" aria-hidden="true">01</span>
             <h3>{t("about.values.v1.title")}</h3>
             <p>{t("about.values.v1.desc")}</p>
           </div>
           <!-- Value 2 -->
           <div class="value-card">
-            <div class="value-icon">🧹</div>
+            <span class="value-index" aria-hidden="true">02</span>
             <h3>{t("about.values.v2.title")}</h3>
             <p>{t("about.values.v2.desc")}</p>
           </div>
           <!-- Value 3 -->
           <div class="value-card">
-            <div class="value-icon">🌐</div>
+            <span class="value-index" aria-hidden="true">03</span>
             <h3>{t("about.values.v3.title")}</h3>
             <p>{t("about.values.v3.desc")}</p>
           </div>
           <!-- Value 4 -->
           <div class="value-card">
-            <div class="value-icon">🏆</div>
+            <span class="value-index" aria-hidden="true">04</span>
             <h3>{t("about.values.v4.title")}</h3>
             <p>{t("about.values.v4.desc")}</p>
           </div>
@@ -268,7 +179,7 @@ Astro.response.headers.set(
     <!-- Brand Personality Section -->
     <section id="personalidad" class="about-personality">
       <div class="container">
-        <h2 class="section-title">{t("about.personality.title")}</h2>
+        <h2 class="section-title">{lang === "es" ? "Nuestra manera de trabajar" : "How we work"}</h2>
         <div class="personality-grid">
           <div class="personality-card">
             <h3>{t("about.personality.items.p1.title")}</h3>
@@ -284,14 +195,6 @@ Astro.response.headers.set(
           </div>
         </div>
         <p class="brand-slogan">{t("about.personality.slogan")}</p>
-      </div>
-    </section>
-
-    <!-- Tone & Voice -->
-    <section class="about-tone">
-      <div class="container about-tone__inner">
-        <h2 class="section-title">{t("about.tone.title")}</h2>
-        <p class="tone-text">{t("about.tone.desc")}</p>
       </div>
     </section>
 
@@ -316,696 +219,93 @@ Astro.response.headers.set(
 </BaseLayout>
 
 <style>
-  .about-page {
-    padding-top: 80px;
-    background: var(--color-bg);
-  }
-
-  .section-title {
-    font-size: var(--text-3xl);
-    text-align: center;
-    margin-bottom: var(--space-8);
-    color: var(--color-text);
-  }
-
-  /* Hero */
+  .about-page { padding-top: 80px; background: var(--color-bg); }
+  .about-page section { scroll-margin-top: 100px; }
   .about-hero {
-    padding: var(--space-20) 0;
-    text-align: center;
-    background: radial-gradient(
-      circle at 50% 0%,
-      rgba(8, 145, 178, 0.15),
-      transparent 70%
-    );
-  }
-
-  .about-hero__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-6);
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .badge {
-    color: var(--color-brand);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    background: rgba(8, 145, 178, 0.1);
-    padding: 6px 12px;
-    border-radius: 99px;
-    border: 1px solid rgba(8, 145, 178, 0.2);
-  }
-
-  .about-hero__title {
-    font-size: var(--text-5xl);
-    line-height: 1.1;
-    color: var(--color-text);
-  }
-
-  .about-hero__subtitle {
-    font-size: var(--text-xl);
-    color: var(--color-text-muted);
-    line-height: 1.6;
-  }
-
-  .about-hero__quote {
-    font-size: var(--text-2xl);
-    font-style: italic;
-    color: var(--color-text);
-    margin-top: var(--space-8);
-    border-left: 4px solid var(--color-brand);
-    padding-left: var(--space-6);
-  }
-
-  /* Team / Founder */
-  .about-team {
-    padding: var(--space-20) 0;
-  }
-
-  .about-team__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-    gap: var(--space-4);
-  }
-
-  .about-team__subtitle {
-    font-size: var(--text-lg);
-    color: var(--color-text-muted);
-    line-height: 1.6;
-    margin-bottom: var(--space-4);
-    max-width: 640px;
-  }
-
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--space-6);
-    width: 100%;
-  }
-
-  .team-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-    transition: transform var(--duration-normal), border-color var(--duration-normal);
-  }
-
-  .team-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--color-brand);
-  }
-
-  .team-card__link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-    width: 100%;
-  }
-
-  .team-card__photo {
-    width: 120px;
-    height: 120px;
-    border-radius: var(--radius-full);
-    object-fit: cover;
-    border: 2px solid var(--color-brand);
-    margin-bottom: var(--space-4);
-  }
-
-  .team-card__name {
-    font-size: var(--text-lg);
-    color: var(--color-text);
-    font-weight: var(--weight-bold);
-  }
-
-  .team-card__role {
-    color: var(--color-brand);
-    font-size: var(--text-xs);
-    font-weight: var(--weight-semibold);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--space-3);
-  }
-
-  .team-card__bio {
-    color: var(--color-text-muted);
-    font-size: var(--text-sm);
-    line-height: 1.6;
-    margin-bottom: var(--space-4);
-  }
-
-  .team-card__socials {
-    display: flex;
-    gap: var(--space-2);
-  }
-
-  .team-card__social {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--color-border);
-    color: var(--color-text-muted);
-    transition:
-      border-color var(--duration-fast),
-      color var(--duration-fast),
-      transform var(--duration-fast);
-  }
-
-  .team-card__social:hover {
-    border-color: var(--color-brand);
-    color: var(--color-brand);
-    transform: translateY(-2px);
-  }
-
-  /* Ecosystem */
-  .about-ecosystem {
-    padding: var(--space-20) 0;
-    background: rgba(255, 255, 255, 0.02);
-    border-block: 1px solid var(--color-border);
-  }
-
-  .about-ecosystem__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    max-width: 1120px;
-    margin: 0 auto;
-    gap: var(--space-4);
-  }
-
-  .about-ecosystem__subtitle {
-    font-size: var(--text-lg);
-    color: var(--color-text-muted);
-    line-height: 1.6;
-    margin-bottom: var(--space-4);
-    max-width: 640px;
-  }
-
-  .ecosystem-grid {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: var(--space-6);
-    width: 100%;
-  }
-
-  .ecosystem-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--color-border);
-    padding: var(--space-8);
-    border-radius: var(--radius-lg);
-    transition: transform var(--duration-normal), border-color var(--duration-normal);
-    grid-column: span 2;
-  }
-
-  .ecosystem-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--color-brand);
-  }
-
-  .ecosystem-card__logo {
-    height: 40px;
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
-    object-position: left center;
-    margin-bottom: var(--space-4);
-  }
-
-  .ecosystem-card__logo--lindex {
-    height: 48px;
-    padding: 6px 12px;
-    border-radius: var(--radius-md);
-    background: #fff;
-  }
-
-  .ecosystem-card__wordmark {
-    display: block;
-    font-family: var(--font-brand);
-    font-weight: var(--weight-bold);
-    font-size: var(--text-3xl);
-    letter-spacing: 0.01em;
-    margin-bottom: var(--space-4);
-  }
-
-  .ecosystem-card__wordmark--minegocio {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    color: #59bdd7;
-    line-height: 1;
-  }
-
-  .ecosystem-card__wordmark--minegocio small {
-    font-family: var(--font-body);
-    font-size: 0.68rem;
-    font-weight: var(--weight-bold);
-    letter-spacing: 0.16em;
-  }
-
-  .ecosystem-card__wordmark--minegocio strong {
-    font-family: var(--font-brand);
-    font-size: clamp(1.45rem, 2vw, 1.9rem);
-    font-weight: var(--weight-semibold);
-    letter-spacing: -0.035em;
-    white-space: nowrap;
-  }
-
-  @media (min-width: 901px) {
-    .ecosystem-card:nth-last-child(-n + 2) { grid-column: span 3; }
-  }
-
-  .ecosystem-card--minegocio {
-    background:
-      radial-gradient(circle at 92% 8%, rgba(89, 189, 215, 0.14), transparent 38%),
-      rgba(255, 255, 255, 0.03);
-  }
-
-  @media (max-width: 900px) {
-    .ecosystem-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .ecosystem-card {
-      grid-column: span 1;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .ecosystem-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .ecosystem-card {
-      grid-column: span 1;
-    }
-  }
-
-  .ecosystem-card h3 {
-    font-size: var(--text-lg);
-    color: var(--color-text);
-    margin-bottom: var(--space-2);
-    font-weight: var(--weight-bold);
-  }
-
-  .ecosystem-card p {
-    color: var(--color-text-muted);
-    font-size: var(--text-base);
-    line-height: 1.6;
-    margin-bottom: var(--space-4);
-    flex-grow: 1;
-  }
-
-  .ecosystem-card__link {
-    color: var(--color-brand);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
-    text-decoration: none;
-    transition: color var(--duration-fast);
-  }
-
-  .ecosystem-card__link:hover {
-    color: var(--color-glow);
-  }
-
-  /* Vision */
-  .about-vision {
-    padding: var(--space-16) 0;
-    background: rgba(255, 255, 255, 0.02);
-    border-block: 1px solid var(--color-border);
-  }
-
-  .about-vision__inner {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .vision-text {
-    font-size: var(--text-xl);
-    line-height: 1.7;
-    color: var(--color-text-muted);
-  }
-
-  /* Values */
-  .about-values {
-    padding: var(--space-20) 0;
-  }
-
-  .values-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-6);
-  }
-
-  .value-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--color-border);
-    padding: var(--space-8);
-    border-radius: var(--radius-lg);
-    transition: transform var(--duration-normal);
-  }
-
-  .value-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--color-brand);
-  }
-
-  .value-icon {
-    font-size: var(--text-4xl);
-    margin-bottom: var(--space-4);
-  }
-
-  .value-card h3 {
-    font-size: var(--text-lg);
-    color: var(--color-text);
-    margin-bottom: var(--space-2);
-    font-weight: var(--weight-bold);
-  }
-
-  .value-card p {
-    color: var(--color-text-muted);
-    font-size: var(--text-base);
-    line-height: 1.6;
-  }
-
-  /* Personality */
-  .about-personality {
-    padding: var(--space-20) 0;
-    background: rgba(255, 255, 255, 0.02);
-  }
-
-  .personality-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--space-8);
-    margin-bottom: var(--space-12);
-  }
-
-  .personality-card {
-    padding: var(--space-6);
-    border-left: 2px solid var(--color-brand);
-    background: linear-gradient(
-      to right,
-      rgba(8, 145, 178, 0.05),
-      transparent
-    );
-  }
-
-  .personality-card h3 {
-    font-size: var(--text-lg);
-    color: var(--color-text);
-    margin-bottom: var(--space-2);
-  }
-
-  .personality-card p {
-    color: var(--color-text-muted);
-    line-height: 1.6;
-  }
-
-  .brand-slogan {
-    text-align: center;
-    font-size: var(--text-3xl);
-    font-weight: var(--weight-bold);
-    color: var(--color-text);
-    margin-top: var(--space-8);
-    letter-spacing: -0.02em;
-  }
-
-  /* Tone */
-  .about-tone {
-    padding: var(--space-20) 0;
-    text-align: center;
-  }
-
-  .about-tone__inner {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .tone-text {
-    font-size: var(--text-lg);
-    color: var(--color-text-muted);
-    line-height: 1.8;
-  }
-
-  /* CTA */
-  .about-cta {
-    padding: var(--space-20) 0;
-    text-align: center;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .about-cta h2 {
-    font-size: var(--text-3xl);
-    margin-bottom: var(--space-8);
-  }
-
-  .btn-primary {
-    display: inline-block;
-    background: var(--color-brand);
-    color: white;
-    padding: 12px 32px;
-    border-radius: 99px;
-    text-decoration: none;
-    font-weight: var(--weight-bold);
-    transition: filter var(--duration-fast);
-  }
-
-  .btn-primary:hover {
-    filter: brightness(1.1);
-  }
-
-  /* ── Reframed company story ── */
-  .about-page {
-    position: relative;
-    overflow: hidden;
-    padding-top: 80px;
-  }
-
-  .about-page::before {
-    position: absolute;
-    top: -18rem;
-    right: -12rem;
-    width: 45rem;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle, color-mix(in srgb, var(--color-brand) 20%, transparent), transparent 68%);
-    content: "";
-    filter: blur(20px);
-    pointer-events: none;
-  }
-
-  .about-hero {
-    position: relative;
-    padding: clamp(4rem, 7vw, 6.5rem) 0 clamp(4rem, 7vw, 6rem);
-    text-align: left;
-    background: transparent;
-  }
-
-  .about-hero__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 0.72fr);
-    align-items: center;
-    max-width: var(--container-xl);
-    gap: clamp(2rem, 7vw, 8rem);
-  }
-
-  .about-hero__copy { align-items: flex-start; max-width: 48rem; }
-
-  .about-hero__eyebrow,
-  .about-contact__eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    color: var(--color-brand);
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-
-  .about-hero__eyebrow span,
-  .about-contact__eyebrow span {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--color-brand);
-    box-shadow: 0 0 14px var(--color-brand);
-  }
-
-  .about-hero__title {
-    max-width: 20ch;
-    margin-top: 1rem;
-    font-size: clamp(var(--text-4xl), 4vw, var(--text-5xl));
-    line-height: 1.02;
-    letter-spacing: -0.045em;
-    text-wrap: balance;
-  }
-
-  .about-hero__subtitle {
-    max-width: 58ch;
-    margin-top: 1.55rem;
-    font-size: 1rem;
-    line-height: 1.68;
-  }
-
-  .about-hero__contact-link,
-  .about-contact__route {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-top: 1.8rem;
-    color: var(--color-brand);
-    font-weight: 780;
-  }
-
-  .about-hero__contact-link span,
-  .about-contact__route span { font-size: 1.2em; }
-
+    padding-block: clamp(3.5rem, 7vw, 7rem);
+    background: radial-gradient(ellipse at 85% 10%, rgba(8, 145, 178, 0.11), transparent 55%);
+  }
+  .about-hero__inner { display: grid; grid-template-columns: 1.25fr 0.75fr; align-items: center; gap: clamp(2rem, 6vw, 6rem); }
+  .about-hero__eyebrow, .about-contact__eyebrow {
+    display: flex; align-items: center; gap: 0.65rem; color: var(--color-glow);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  .about-hero__eyebrow span, .about-contact__eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .about-hero__title { max-width: 16ch; margin-top: 1.3rem; font-size: clamp(2.9rem, 5.3vw, 5.1rem); font-weight: 700; letter-spacing: -0.055em; line-height: 1.04; text-wrap: balance; }
+  .about-hero__subtitle { max-width: 58ch; margin-top: 1.7rem; font-size: clamp(1rem, 1.3vw, 1.13rem); line-height: 1.75; color: var(--color-text-muted); }
+  .about-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 2rem; }
+  .about-hero__primary { display: inline-flex; align-items: center; gap: 1rem; padding: 0.85rem 1.3rem; border-radius: 0.75rem; background: var(--color-brand); color: #fff; font-size: 0.88rem; font-weight: 650; text-decoration: none; }
+  .about-hero__primary:hover { background: #087c99; }
+  .about-hero__contact-link { display: inline-flex; gap: 0.6rem; color: var(--color-text); font-size: 0.85rem; font-weight: 600; text-decoration: none; }
+  .about-hero__contact-link:hover { color: var(--color-glow); }
+  .about-hero__markets { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; color: var(--color-text-muted); font-size: 0.77rem; }
+  .about-hero__markets span { color: var(--color-brand); }
   .about-hero__statement {
-    position: relative;
-    display: grid;
-    gap: 1.4rem;
-    min-height: 18rem;
-    padding: clamp(1.4rem, 2.5vw, 2rem);
-    border: 1px solid var(--color-border);
-    border-radius: 1.5rem;
-    background:
-      radial-gradient(circle at 76% 16%, color-mix(in srgb, var(--color-brand) 22%, transparent), transparent 38%),
-      var(--color-surface);
-    box-shadow: var(--shadow-md);
+    display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;
+    min-height: 370px; padding: clamp(1.6rem, 3vw, 2.4rem); border: 1px solid rgba(0, 200, 255, 0.24); border-radius: 1.5rem;
+    background: radial-gradient(circle at 100% 0%, #12425a, transparent 65%), #0d1b29;
   }
-
-  .about-hero__statement-index {
-    color: var(--color-brand);
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
+  .about-hero__statement-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .about-hero__statement-index { color: #81c5d8; font-size: 0.65rem; font-weight: 650; letter-spacing: 0.14em; }
+  .about-hero__statement-top img { width: 54px; height: 54px; object-fit: contain; }
+  .about-hero__statement blockquote { max-width: 13ch; margin: 0; color: #eaf4fb; font-size: clamp(1.8rem, 2.6vw, 2.7rem); font-weight: 650; line-height: 1.1; letter-spacing: -0.035em; }
+  .about-hero__statement-lines { display: flex; flex-wrap: wrap; gap: 0.6rem; border-top: 1px solid #2b4654; padding-top: 1.3rem; }
+  .about-hero__statement-lines span { color: #a3c4d3; font-size: 0.6rem; font-weight: 650; letter-spacing: 0.12em; }
+  .badge { display: inline-block; color: var(--color-brand); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; }
+  .section-title { margin-top: 0.75rem; color: var(--color-text); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; text-wrap: balance; }
+  .about-section-heading { display: grid; grid-template-columns: 1fr 0.85fr; align-items: end; gap: 2rem; margin-bottom: 2.7rem; }
+  .about-section-heading > p { max-width: 52ch; color: var(--color-text-muted); font-size: 1rem; line-height: 1.7; }
+  .about-team { padding-block: clamp(3.5rem, 6vw, 5.5rem); border-top: 1px solid var(--color-border-subtle); }
+  .about-team__subtitle { max-width: 58ch; margin-top: 1rem; margin-bottom: 2rem; color: var(--color-text-muted); line-height: 1.7; }
+  .team-directory { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 1.5rem; margin-top: 2rem; }
+  .team-directory a { position: relative; padding: 1rem 1.4rem 1rem 0; border-top: 1px solid var(--color-border-subtle); color: var(--color-text); text-decoration: none; }
+  .team-directory a > span:first-child { display: block; font-size: 0.84rem; font-weight: 600; line-height: 1.5; }
+  .team-directory small { display: block; margin-top: 0.3rem; font-size: 0.71rem; color: var(--color-text-muted); }
+  .team-directory a > span:last-child { position: absolute; right: 0; top: 1rem; color: var(--color-brand); }
+  .team-directory a:hover { color: var(--color-glow); }
+  .team-directory a:focus-visible { outline: 2px solid var(--color-glow); outline-offset: 4px; }
+  .about-vision { padding-block: clamp(3.5rem, 6vw, 6rem); border-block: 1px solid var(--color-border-subtle); background: var(--color-surface); }
+  .about-vision .section-title { font-size: 1.25rem; margin-top: 0.8rem; color: var(--color-text-muted); }
+  .vision-text { max-width: 42ch; margin-top: 1.4rem; color: var(--color-text); font-size: clamp(1.6rem, 2.8vw, 2.65rem); line-height: 1.4; letter-spacing: -0.025em; text-wrap: balance; }
+  .about-values { padding-block: clamp(3.5rem, 6vw, 6rem); }
+  .values-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.2rem; }
+  .value-card { padding: 1.5rem; border: 1px solid var(--color-border-subtle); border-radius: 1rem; background: var(--color-surface); }
+  .value-index { color: var(--color-brand); font-size: 0.72rem; font-weight: 650; letter-spacing: 0.12em; }
+  .value-card h3 { margin-top: 1.5rem; font-size: 1.05rem; font-weight: 650; line-height: 1.4; }
+  .value-card p { margin-top: 0.75rem; color: var(--color-text-muted); font-size: 0.86rem; line-height: 1.7; }
+  .about-personality { padding-bottom: clamp(3.5rem, 6vw, 6rem); }
+  .personality-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin-top: 2rem; }
+  .personality-card { border-top: 1px solid var(--color-brand); padding-top: 1.25rem; }
+  .personality-card h3 { font-size: 1rem; font-weight: 650; }
+  .personality-card p { margin-top: 0.65rem; color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.75; }
+  .brand-slogan { margin-top: 3.5rem; font-size: clamp(1.3rem, 2vw, 2rem); color: var(--color-text); letter-spacing: -0.03em; font-weight: 600; }
+  .about-contact { padding-block: clamp(3.5rem, 7vw, 7rem); border-top: 1px solid var(--color-border-subtle); }
+  .about-contact__inner { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+  .about-contact__copy h2 { max-width: 16ch; margin-top: 1rem; font-size: clamp(2rem, 3.6vw, 3.3rem); line-height: 1.1; letter-spacing: -0.045em; text-wrap: balance; }
+  .about-contact__copy > p:not(.about-contact__eyebrow) { max-width: 46ch; margin-top: 1.3rem; color: var(--color-text-muted); line-height: 1.7; }
+  .about-contact__route { display: inline-flex; gap: 0.6rem; margin-top: 1.5rem; font-size: 0.85rem; font-weight: 600; color: var(--color-brand); text-decoration: none; }
+  .about-contact__route:hover { color: var(--color-glow); }
+  .about-contact__form { min-width: 0; padding: clamp(1.25rem, 3vw, 2.2rem); border: 1px solid var(--color-border-subtle); border-radius: 1.3rem; background: var(--color-surface); }
+  :is(.about-hero__primary, .about-hero__contact-link, .about-contact__route):focus-visible { outline: 2px solid var(--color-glow); outline-offset: 5px; }
+  @media (max-width: 1000px) {
+    .values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .about-hero__inner { grid-template-columns: 1.15fr 0.85fr; gap: 2rem; }
+    .about-hero__statement { min-height: 330px; }
   }
-
-  .about-hero__statement blockquote {
-    align-self: center;
-    max-width: 12ch;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    color: var(--color-text);
-    font-family: var(--font-brand);
-    font-size: clamp(1.6rem, 2.15vw, 2.25rem);
-    font-style: normal;
-    font-weight: 700;
-    line-height: 1.04;
-    letter-spacing: -0.045em;
+  @media (max-width: 760px) {
+    .about-hero__inner, .about-section-heading, .about-contact__inner { grid-template-columns: 1fr; }
+    .about-hero__statement { min-height: 290px; }
+    .about-hero__statement blockquote { max-width: 20ch; }
+    .about-section-heading { gap: 1.2rem; margin-bottom: 2rem; }
+    .personality-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .team-directory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-
-  .about-hero__statement-lines {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem 0.8rem;
-    border-top: 1px solid var(--color-border-subtle);
-    padding-top: 1rem;
-  }
-
-  .about-hero__statement-lines span {
-    color: var(--color-text-faint);
-    font-size: 0.65rem;
-    font-weight: 800;
-    letter-spacing: 0.11em;
-  }
-
-  .about-ecosystem,
-  .about-vision,
-  .about-personality { background: transparent; }
-
-  .about-ecosystem { border-block: 1px solid var(--color-border-subtle); }
-  .about-ecosystem__inner { align-items: flex-start; text-align: left; }
-  .about-ecosystem__subtitle { max-width: 58ch; }
-  .ecosystem-card { border-radius: 1.15rem; background: var(--color-surface); }
-  .ecosystem-card:hover { box-shadow: var(--shadow-md); }
-
-  .about-vision__inner { max-width: 60rem; text-align: left; }
-  .about-vision .section-title,
-  .about-values .section-title,
-  .about-personality .section-title,
-  .about-tone .section-title { text-align: left; }
-  .vision-text { max-width: 45ch; font-size: clamp(1.35rem, 2vw, 1.9rem); color: var(--color-text); }
-
-  .value-card { border-radius: 1.15rem; background: var(--color-surface); }
-  .value-icon { color: var(--color-brand); font-size: 1.2rem; }
-  .value-icon { font-size: 0; }
-  .value-icon::after { font-size: 1.2rem; content: "✦"; }
-  .personality-card { border-left-width: 1px; }
-
-  .about-contact {
-    padding: clamp(4.5rem, 9vw, 8rem) 0;
-    border-top: 1px solid var(--color-border-subtle);
-  }
-
-  .about-contact__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(25rem, 0.9fr);
-    align-items: start;
-    gap: clamp(2.5rem, 8vw, 9rem);
-  }
-
-  .about-contact__copy { max-width: 36rem; }
-
-  .about-contact__copy h2 {
-    max-width: 16ch;
-    margin-top: 1rem;
-    font-size: clamp(var(--text-3xl), 3vw, var(--text-5xl));
-    line-height: 1.05;
-    letter-spacing: -0.035em;
-  }
-
-  .about-contact__copy > p:not(.about-contact__eyebrow) {
-    margin-top: 1.3rem;
-    font-size: 1.05rem;
-  }
-
-  .about-contact__form {
-    padding: clamp(1.3rem, 3vw, 2.25rem);
-    border: 1px solid var(--color-border);
-    border-radius: 1.4rem;
-    background: var(--color-surface);
-    box-shadow: var(--shadow-md);
-  }
-
-  @media (max-width: 850px) {
-    .about-hero__inner,
-    .about-contact__inner { grid-template-columns: 1fr; }
-    .about-hero__statement { max-width: 34rem; min-height: 16rem; }
-    .about-contact__form { max-width: 42rem; }
-  }
-
-  @media (max-width: 640px) {
-    .about-hero { padding-block: 4.25rem 3.75rem; }
-    .about-hero__title { font-size: clamp(2.3rem, 11vw, var(--text-5xl)); }
-    .about-hero__statement { min-height: 14rem; border-radius: 1rem; }
-    .about-hero__statement blockquote { font-size: 1.7rem; }
-    .about-contact__form { padding: 1.2rem; border-radius: 1rem; }
+  @media (max-width: 540px) {
+    .about-page { padding-top: 70px; }
+    .about-hero__title { font-size: clamp(2.4rem, 10.5vw, 3.4rem); }
+    .about-hero__actions { align-items: flex-start; flex-direction: column; }
+    .values-grid, .team-directory { grid-template-columns: 1fr; }
+    .about-hero__statement { border-radius: 1.1rem; }
+    .about-hero__markets { font-size: 0.7rem; }
   }
 </style>

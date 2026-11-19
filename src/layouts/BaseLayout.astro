@@ -1,7 +1,9 @@
 ---
 const SITE_NAME = "Azury Labs";
+const LEGAL_NAME = "Azury Labs LLC";
 const DEFAULT_OG_IMAGE = "/images/og-default.png";
 const SAME_AS = [
+  "https://iruzlabs.com",
   "https://www.facebook.com/profile.php?id=61588787630828",
   "https://www.linkedin.com/company/iruzlabs",
   "https://www.instagram.com/iruzlabsmx/",
@@ -35,6 +37,7 @@ const canonicalURL = new URL(canonical ?? Astro.url.pathname, site);
 const ogImageURL = new URL(image, site);
 const locale = lang.startsWith("en") ? "en_US" : "es_MX";
 const altLocale = locale === "en_US" ? "es_MX" : "en_US";
+const urlLang = lang.startsWith("en") ? "en" : "es";
 
 // Alternates es/en solo aplican a rutas bajo /[lang]/...
 const langMatch = Astro.url.pathname.match(/^\/(es|en)(\/.*)?$/);
@@ -58,20 +61,59 @@ const structuredData = {
       "@type": "Organization",
       "@id": `${site}#organization`,
       name: SITE_NAME,
+      legalName: LEGAL_NAME,
+      alternateName: [LEGAL_NAME, "Azury"],
       url: site.toString(),
-      logo: new URL("/images/logos/azurylabs-isotipo-light.png", site).toString(),
+      logo: {
+        "@type": "ImageObject",
+        url: new URL("/images/logos/azurylabs-isotipo-light.png", site).toString(),
+      },
       description:
-        "Azury Labs builds applied AI and software products: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio (business management), CIEE (surveys and research), Systems (custom software), Connect (official WhatsApp API) and Tracking System (product analytics).",
-      areaServed: ["MX", "CO", "US"],
+        "Azury Labs LLC (the United States entity of the Iruz Labs group) builds applied AI and software products: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (Agentic Relationship Management, ARM), Mi Negocio (business management), CIEE (surveys and research), Systems (custom software), Connect (official WhatsApp API) and Tracking System (product analytics).",
+      address: {
+        "@type": "PostalAddress",
+        addressRegion: "ID",
+        addressCountry: "US",
+      },
+      areaServed: ["US", "MX", "CO"],
+      knowsLanguage: ["English", "Spanish"],
       knowsAbout: [
         "Applied artificial intelligence",
         "AI agents",
+        "Conversational voice AI",
         "Autonomous software engineering",
-        "Omnichannel CRM",
+        "Agentic Relationship Management (ARM)",
+        "Omnichannel Sales OS",
         "Market research",
         "Custom software development",
         "WhatsApp Business API",
-        "Marketing and campaign analytics",
+        "Product and campaign analytics",
+      ],
+      memberOf: [
+        {
+          "@type": "Organization",
+          name: "NVIDIA Inception",
+          url: "https://www.nvidia.com/en-us/startups/",
+        },
+        {
+          "@type": "Organization",
+          name: "Microsoft AI Cloud Partner Program",
+          url: "https://partner.microsoft.com/",
+        },
+      ],
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          url: new URL(`/${urlLang}/contacto`, site).toString(),
+          availableLanguage: ["English", "Spanish"],
+        },
+        {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          url: new URL(`/${urlLang}/support`, site).toString(),
+          availableLanguage: ["English", "Spanish"],
+        },
       ],
       sameAs: SAME_AS,
     },
@@ -80,8 +122,10 @@ const structuredData = {
       "@id": `${site}#website`,
       name: SITE_NAME,
       url: site.toString(),
+      description:
+        "Applied AI, Agentic Relationship Management (ARM), autonomous software engineering and custom software by Azury Labs LLC.",
       publisher: { "@id": `${site}#organization` },
-      inLanguage: ["es-MX", "en"],
+      inLanguage: ["en", "es-MX"],
     },
   ],
 };
@@ -94,10 +138,16 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta
+      name="robots"
+      content={noindex
+        ? "noindex, nofollow"
+        : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}
+    />
 
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt" />
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="LLMs Full Reference" />
     {
       hreflangAlternates.map((alt) => (
         <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
@@ -113,6 +163,7 @@ const structuredData = {
     <meta property="og:locale" content={locale} />
     {langMatch && <meta property="og:locale:alternate" content={altLocale} />}
     <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -121,6 +172,7 @@ const structuredData = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content={title} />
 
     <!-- Favicon / iconos oficiales -->
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -151,26 +203,38 @@ const structuredData = {
   <body class="noise-overlay app-theme">
     <slot />
     <script>
-      const observeElements = () => {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { rootMargin: "0px 0px -10% 0px", threshold: 0.1 }
-        );
-
-        document.querySelectorAll(".reveal").forEach((el) => {
-          observer.observe(el);
+      let revealObserver: IntersectionObserver | undefined;
+      function observeReveals() {
+        revealObserver?.disconnect();
+        const elements = document.querySelectorAll<HTMLElement>(".reveal:not(.is-visible)");
+        if (!elements.length) return;
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        // Keep the current viewport painted; reveal new blocks as they enter it.
+        elements.forEach((element) => {
+          const rect = element.getBoundingClientRect();
+          if (reduced || (rect.top < window.innerHeight && rect.bottom > 0)) {
+            element.classList.add("is-visible");
+          }
         });
-      };
-
-      observeElements();
-      document.addEventListener("astro:page-load", observeElements);
+        document.documentElement.dataset.revealReady = "true";
+        revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver?.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -32px 0px", threshold: 0 });
+        elements.forEach((element) => {
+          if (!element.classList.contains("is-visible")) revealObserver!.observe(element);
+        });
+      }
+      observeReveals();
+      document.addEventListener("astro:page-load", observeReveals);
+      document.addEventListener("astro:before-swap", () => {
+        revealObserver?.disconnect();
+        delete document.documentElement.dataset.revealReady;
+      });
     </script>
     <!-- Iruz Links: mide las visitas que llegan desde nuestros links/QR (llave publicable, segura de publicar) -->
     <script is:inline src="https://go.iruzlabs.com/t.js" data-key="iruz_pk_890da6448cd4ae3bf4d5e11b482f6d5e90d5275e180d5df3" defer></script>

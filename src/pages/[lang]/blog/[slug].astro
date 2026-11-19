@@ -84,6 +84,7 @@ const ogImage = article
   : "";
 
 const site = Astro.site ?? Astro.url;
+const homeHref = new URL(`/${lang}/`, site).toString();
 const blogIndexHref = new URL(`/${lang}/blog`, site).toString();
 
 const blogPostingJsonLd = article && {
@@ -91,28 +92,31 @@ const blogPostingJsonLd = article && {
   "@type": "BlogPosting",
   headline: article.title,
   description: article.excerpt,
+  inLanguage: htmlLang,
   ...(ogImage && { image: [ogImage] }),
   ...(article.publishedAt && { datePublished: article.publishedAt }),
   dateModified: article.updatedAt,
+  ...(article.readingTime && { timeRequired: `PT${article.readingTime}M` }),
+  ...(article.categories &&
+    article.categories.length > 0 && {
+      articleSection: article.categories.map((c) => c.name),
+    }),
   ...(article.author?.name && {
     author: { "@type": "Person", name: article.author.name },
   }),
-  publisher: {
-    "@type": "Organization",
-    name: "Azury Labs",
-    logo: {
-      "@type": "ImageObject",
-      url: new URL("/images/logos/azurylabs-isotipo-light.png", site).toString(),
-    },
-  },
+  publisher: { "@id": `${site}#organization` },
   mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", ".article__excerpt"],
+  },
 };
 
 const breadcrumbJsonLd = article && {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Azury Labs", item: site.toString() },
+    { "@type": "ListItem", position: 1, name: "Azury Labs", item: homeHref },
     { "@type": "ListItem", position: 2, name: "Blog", item: blogIndexHref },
     { "@type": "ListItem", position: 3, name: article.title, item: canonical },
   ],
@@ -152,6 +156,15 @@ const previewLabel = isLive
   noindex={isPreview || article?.seo?.noIndex || false}
 >
   <Fragment slot="head">
+    {article?.publishedAt && (
+      <meta property="article:published_time" content={article.publishedAt} />
+    )}
+    {article?.updatedAt && (
+      <meta property="article:modified_time" content={article.updatedAt} />
+    )}
+    {article?.author?.name && (
+      <meta property="article:author" content={article.author.name} />
+    )}
     {blogPostingJsonLd && (
       <script type="application/ld+json" is:inline set:html={JSON.stringify(blogPostingJsonLd)} />
     )}

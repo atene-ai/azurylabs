@@ -4,6 +4,7 @@
 // grupo): si cambia un programa, se edita ahí y lo toman hero y footer.
 import { footerBadges, footerPartners as partners } from "../../lib/iruz-labs-footer";
 import NvidiaInceptionBadge from "../ui/NvidiaInceptionBadge.astro";
+import MicrosoftPartnerBadge from "../ui/MicrosoftPartnerBadge.astro";
 
 export interface Props {
   lang: string;
@@ -22,6 +23,12 @@ const copy =
   <div class="container partners__inner">
     <p class="partners__label">{copy.label}</p>
     <ul class="partners__list">
+      <li class="partners__item">
+        <NvidiaInceptionBadge lang={lang} lazy={false} />
+      </li>
+      <li class="partners__item partners__item--ms">
+        <MicrosoftPartnerBadge lang={lang} lazy={false} />
+      </li>
       {
         partners.map(({ icon, name, status }) => (
           <li class="partners__item">
@@ -57,9 +64,6 @@ const copy =
             decoding="async"
           />
         </a>
-      </li>
-      <li class="partners__item">
-        <NvidiaInceptionBadge lang={lang} lazy={false} />
       </li>
     </ul>
   </div>
@@ -118,6 +122,12 @@ const copy =
       transform var(--duration-normal) var(--ease-out),
       border-color var(--duration-normal) var(--ease-out),
       box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  .partners__item--ms {
+    width: auto;
+    min-width: 140px;
+    padding-inline: var(--space-3);
   }
 
   .partners__item:hover {

@@ -24,12 +24,12 @@ hero:
     feed:
       re: "RE Agent processed lead #4821"
       hc: "HC Agent scheduled appointment #1093"
-      crm: "CRM updated Q1 pipeline"
+      crm: "ARM updated Q1 pipeline"
       re2: "RE Agent qualified prospect"
     pills:
       re: "Real Estate"
       hc: "Healthcare"
-      crm: "CRM"
+      crm: "ARM"
       sw: "Software"
 
 products:
@@ -65,13 +65,13 @@ products:
       - "Per-task budget control"
     cta: "Explore Lindex"
   salesOs:
-    badge: "03 · Sales OS"
+    badge: "03 · Sales OS · ARM"
     title: "Iruz Sales OS"
-    desc: "More than a CRM: it connects channels, AI agents and human teams to engage, qualify and advance every opportunity."
+    desc: "Not a CRM, an ARM (Agentic Relationship Management): it connects channels, AI agents and human teams to engage, qualify and advance every opportunity autonomously."
     features:
-      - "Omnichannel conversation"
-      - "AI agents and human teams"
-      - "Sales follow-up and control"
+      - "Omnichannel ARM with autonomous agents"
+      - "Coordinated AI agents and human teams"
+      - "Real-time sales follow-up and control"
     cta: "Explore Sales OS"
   miNegocio:
     badge: "04 · Business management"
@@ -183,7 +183,7 @@ faq:
     - q: "What is Azury Labs?"
       a: "Azury Labs is a software company specialized in applied artificial intelligence. We build our own products and custom solutions so companies can sell, operate and decide with data. We have a presence in Mexico, Colombia and the United States."
     - q: "What products does Azury Labs offer?"
-      a: "Eight lines: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel CRM), Mi Negocio (customers, quotes and orders management), CIEE (surveys and research), Systems (custom software and consulting), Connect (official WhatsApp API) and Tracking System (analytics from first contact to sale)."
+      a: "Eight lines: Atenea (AI agents for real-time messaging and voice), Lindex (autonomous software engineering), Sales OS (omnichannel ARM — Agentic Relationship Management), Mi Negocio (customers, quotes and orders management), CIEE (surveys and research), Systems (custom software and consulting), Connect (official WhatsApp API) and Tracking System (analytics from first contact to sale)."
     - q: "What is Iruz Atenea and which channels does it work on?"
       a: "Atenea is the platform we use to create AI agents that handle messages and voice in real time, understand your business and connect to your systems to execute real processes. It integrates with WhatsApp Business, Telegram, Instagram Messenger, phone calls and Google Calendar."
     - q: "What is Lindex?"
@@ -192,8 +192,10 @@ faq:
       a: "Iruz Connect is the official WhatsApp API for businesses and applications. It handles the Meta integration, credentials, webhooks and message statuses so your team can send and receive WhatsApp messages from its own platform or from Atenea. Instagram, Messenger, SMS, RCS and voice are the next channels."
     - q: "What is Iruz Tracking System?"
       a: "It is product analytics that measures every step of the customer journey, from the first contact to the sale. With trackable links and QR codes you can see which campaign, channel or QR generates leads, appointments and sales, and where customers drop off."
-    - q: "How is Sales OS different from a traditional CRM?"
-      a: "Sales OS connects your channels, AI agents and human team in a single omnichannel conversation to serve, qualify and follow up on every opportunity, instead of just storing contacts."
+    - q: "What is an ARM and how is Sales OS different from a traditional CRM?"
+      a: "An ARM (Agentic Relationship Management) goes beyond passively logging contacts like a traditional CRM: in Sales OS, AI agents and your human team operate together across every channel to engage, qualify, follow up and advance each sales opportunity autonomously."
+    - q: "How are Azury Labs LLC and Iruz Labs SAS related?"
+      a: "They are sister brands within the same applied-AI technology group and share the same product ecosystem: Azury Labs LLC serves the United States market, while Iruz Labs SAS serves Mexico and Colombia with local operations and regional pricing."
     - q: "Does Azury Labs build custom software?"
       a: "Yes. Iruz Systems designs and develops the software your operation needs when an off-the-shelf tool is no longer enough, with technology consulting and guided implementation."
     - q: "How can I get started?"
@@ -224,7 +226,7 @@ chat:
         - value: lindex
           label: "Lindex · Autonomous engineering"
         - value: salesOs
-          label: "Sales OS · CRM"
+          label: "Sales OS · ARM"
         - value: miNegocio
           label: "Mi Negocio · Management"
         - value: ciee
@@ -339,7 +341,7 @@ about:
         desc: "Autonomous software engineering harness: coordinates AI agents from ticket to code, tests and a deployed preview."
       crm:
         name: "Iruz Sales OS"
-        desc: "The omnichannel sales operating system that connects channels, AI agents and human teams to advance every opportunity."
+        desc: "The omnichannel ARM (Agentic Relationship Management) sales operating system that connects channels, AI agents and human teams to advance every opportunity."
       minegocio:
         name: "Iruz My Business"
         desc: "An AI-powered omnichannel operation that centralizes customer conversations and accelerates sales."

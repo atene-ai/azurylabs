@@ -32,8 +32,8 @@ async function initEcosystem(root) {
 
   const brandDefinitions = [
     {
-      name: "AZURY LABS",
-      image: "/images/logos/azurylabs-logotipo-h-white.png",
+      name: "IRUZ LABS",
+      image: "/images/logos/iruzlabs-logotipo-h-white.png",
     },
     {
       name: "ATENEA",
@@ -49,7 +49,7 @@ async function initEcosystem(root) {
     },
     {
       name: "IRUZ MI NEGOCIO",
-      wordmark: "MI NEGOCIO",
+      image: "/images/logos/mi-negocio-logo.png",
     },
     {
       name: "IRUZ CIEE",
@@ -61,11 +61,11 @@ async function initEcosystem(root) {
     },
     {
       name: "IRUZ CONNECT",
-      wordmark: "CONNECT",
+      image: "/images/logos/connect-logo.png",
     },
     {
       name: "IRUZ TRACKING SYSTEM",
-      wordmark: "TRACKING SYSTEM",
+      image: "/images/logos/tracking-system-logo.png",
     },
   ];
 
