@@ -96,6 +96,12 @@ const { copy, brand, badges } = footer;
             <div class="footer__alliances-group">
               <p class="footer__alliances-label">{copy.alliances}</p>
               <ul class="footer__partners">
+                <li
+                  class="footer__partner footer__partner--text"
+                  title={`${copy.microsoftProgram} (${copy.microsoftProgramStatus})`}
+                >
+                  <span>{copy.microsoftProgram}</span>
+                </li>
                 {footer.partners.map(({ icon, name, status }) => (
                   <li class="footer__partner" title={`${name} ${status}`}>
                     <span class="footer__partner-logo" set:html={icon} />
@@ -154,51 +160,22 @@ const { copy, brand, badges } = footer;
               </ul>
             </div>
             <div class="footer__inception">
-              <p class="footer__inception-label">{copy.programs}</p>
-              <div class="footer__inception-badges">
-                <a
-                  href={badges.nvidiaInception.href}
-                  class="footer__inception-link"
-                  target="_blank"
-                  rel="noopener"
-                  title={copy.inception}
-                >
-                  <img
-                    src={badges.nvidiaInception.src}
-                    alt={badges.nvidiaInception.alt}
-                    width={badges.nvidiaInception.width}
-                    height={badges.nvidiaInception.height}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </a>
-                <a
-                  href={badges.microsoftPartner.href}
-                  class="footer__inception-link footer__ms-partner-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={copy.microsoftPartner}
-                >
-                  <img
-                    src={badges.microsoftPartner.srcDark}
-                    alt={badges.microsoftPartner.alt}
-                    class="footer__ms-partner-logo footer__on-dark"
-                    width={badges.microsoftPartner.width}
-                    height={badges.microsoftPartner.height}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <img
-                    src={badges.microsoftPartner.srcLight}
-                    alt={badges.microsoftPartner.alt}
-                    class="footer__ms-partner-logo footer__on-light"
-                    width={badges.microsoftPartner.width}
-                    height={badges.microsoftPartner.height}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </a>
-              </div>
+              <p class="footer__inception-label">{copy.inception}</p>
+              <a
+                href={badges.nvidiaInception.href}
+                class="footer__inception-link"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src={badges.nvidiaInception.src}
+                  alt={badges.nvidiaInception.alt}
+                  width={badges.nvidiaInception.width}
+                  height={badges.nvidiaInception.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
             </div>
           </div>
         )
@@ -549,26 +526,15 @@ const { copy, brand, badges } = footer;
     flex-shrink: 0;
   }
 
-  .footer__inception-badges {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
   .footer__inception-link {
     display: block;
     border-radius: var(--radius-sm);
   }
 
   .footer__inception-link img {
+    display: block;
     width: 140px;
     height: auto;
-  }
-
-  .footer__ms-partner-link img {
-    width: auto;
-    height: 40px;
   }
 
   /* ── Bottom ── */

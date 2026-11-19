@@ -2,9 +2,8 @@
 // Franja «Respaldados por» al pie del hero, igual que en iruzlabs.com.
 // Alianzas e insignias salen de `iruz-labs-footer.ts` (archivo compartido del
 // grupo): si cambia un programa, se edita ahí y lo toman hero y footer.
-import { footerBadges, footerPartners as partners } from "../../lib/iruz-labs-footer";
+import { footerBadges, footerCopy, footerLang, footerPartners as partners } from "../../lib/iruz-labs-footer";
 import NvidiaInceptionBadge from "../ui/NvidiaInceptionBadge.astro";
-import MicrosoftPartnerBadge from "../ui/MicrosoftPartnerBadge.astro";
 
 export interface Props {
   lang: string;
@@ -12,6 +11,7 @@ export interface Props {
 
 const { lang } = Astro.props;
 const grants = footerBadges.elevenLabs;
+const footerText = footerCopy[footerLang(lang)];
 
 const copy =
   lang === "es"
@@ -27,7 +27,10 @@ const copy =
         <NvidiaInceptionBadge lang={lang} lazy={false} />
       </li>
       <li class="partners__item partners__item--ms">
-        <MicrosoftPartnerBadge lang={lang} lazy={false} />
+        <span class="partners__text">
+          <strong>{footerText.microsoftProgram}</strong>
+          <span>{footerText.microsoftProgramStatus}</span>
+        </span>
       </li>
       {
         partners.map(({ icon, name, status }) => (
