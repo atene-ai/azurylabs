@@ -1,134 +1,42 @@
 ---
-import Button from "../ui/Button.astro";
 import { useTranslations } from "../../i18n/utils";
-
-export interface Props {
-  lang: string;
-}
-
+export interface Props { lang: string; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
-
-<section class="cta" id="contacto">
-  <!-- Background glow -->
-  <div class="cta__glow" aria-hidden="true"></div>
-
-  <div class="container cta__inner">
-    <div class="cta__content">
-      <p class="cta__overline">{t("cta.overline")}</p>
-
-      <h2 class="cta__title" set:html={t("cta.title")} />
-
-      <p class="cta__sub">
-        {t("cta.sub")}
-      </p>
-
-      <div class="cta__actions">
-        <Button variant="primary" size="lg" href={t("cta.link")}>
-          {t("cta.primary")}
-        </Button>
-        <Button variant="ghost" size="lg" href="#productos">
-          {t("cta.secondary")}
-        </Button>
+<section class="cta" id="contacto" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta__panel">
+      <img class="cta__watermark" src="/images/logos/azurylabs-isotipo-white.png" alt="" aria-hidden="true" width="512" height="512" loading="lazy" />
+      <div class="cta__top reveal"><span class="cta__overline">{t("cta.overline")}</span><span class="cta__invitation">{lang === "es" ? "EL SIGUIENTE PASO EMPIEZA AQUÍ" : "YOUR NEXT STEP STARTS HERE"}</span></div>
+      <div class="cta__layout">
+        <div class="cta__content reveal"><h2 id="cta-title" class="cta__title" set:html={t("cta.title")} /><p class="cta__sub">{t("cta.sub")}</p></div>
+        <div class="cta__actions reveal"><a class="cta__primary" href={t("cta.link")}>{t("cta.primary")}<span aria-hidden="true">↗</span></a><a class="cta__secondary" href="#productos">{t("cta.secondary")}<span aria-hidden="true">→</span></a></div>
       </div>
-
-      <p class="cta__disclaimer">
-        {t("cta.disclaimer")}
-      </p>
+      <div class="cta__bottom reveal"><p>{t("cta.disclaimer")}</p><span>{lang === "es" ? "México · Colombia · Estados Unidos" : "Mexico · Colombia · United States"}</span></div>
     </div>
   </div>
 </section>
-
 <style>
-  .cta {
-    padding-block: var(--space-32);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta__glow {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(
-        ellipse 60% 50% at 50% 50%,
-        rgba(8, 145, 178, 0.12) 0%,
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 40% 40% at 20% 80%,
-        rgba(59, 130, 246, 0.08) 0%,
-        transparent 60%
-      );
-    pointer-events: none;
-  }
-
-  .cta__inner {
-    position: relative;
-    z-index: 1;
-  }
-
-  .cta__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--space-6);
-    max-width: 640px;
-    margin-inline: auto;
-  }
-
-  .cta__overline {
-    font-family: var(--font-body);
-    font-size: var(--text-xs);
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-widest);
-    text-transform: uppercase;
-    color: var(--color-brand);
-  }
-
-  .cta__title {
-    font-family: var(--font-brand);
-    font-size: clamp(var(--text-4xl), 5vw, var(--text-6xl));
-    font-weight: var(--weight-bold);
-    line-height: var(--leading-tight);
-    letter-spacing: var(--tracking-tight);
-    color: var(--color-text);
-  }
-
-  :global(.cta__title--accent) {
-    background: linear-gradient(
-      135deg,
-      var(--color-brand) 0%,
-      var(--color-glow) 50%,
-      var(--color-blue) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .cta__sub {
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    color: var(--color-text-muted);
-    line-height: var(--leading-relaxed);
-    max-width: 480px;
-  }
-
-  .cta__actions {
-    display: flex;
-    gap: var(--space-4);
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: var(--space-2);
-  }
-
-  .cta__disclaimer {
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    color: var(--color-text-faint);
-    margin-top: var(--space-2);
-  }
+  .cta { padding-block: 2rem clamp(4rem, 8vw, 7rem); }
+  .cta__panel { position: relative; isolation: isolate; overflow: hidden; padding: clamp(1.5rem, 5vw, 4rem); border: 1px solid #85c8ff45; border-radius: 2rem; background: linear-gradient(120deg, #102940, #102039 55%, #0a1429); }
+  .cta__panel::before { content: ""; z-index: -1; pointer-events: none; position: absolute; inset: 0; background: radial-gradient(ellipse at 95% 0, #746fed30, transparent 50%), radial-gradient(ellipse at 0 100%, #00c8ff20, transparent 55%); }
+  .cta__watermark { position: absolute; z-index: -1; right: -4rem; top: -4rem; width: 460px; height: 460px; object-fit: contain; opacity: 0.055; transform: rotate(-14deg); pointer-events: none; }
+  .cta__top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 3rem; }
+  .cta__overline { color: #c1e8f5; font-size: 0.75rem; letter-spacing: 0.15em; font-weight: 600; text-transform: uppercase; }
+  .cta__invitation { color: #96a9c6; font-size: 0.6rem; letter-spacing: 0.14em; }
+  .cta__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(230px, 0.4fr); align-items: end; gap: 2rem 4rem; }
+  .cta__title { color: #f3f7ff; font-size: clamp(2.2rem, 4.6vw, 4.4rem); letter-spacing: -0.05em; line-height: 1.06; text-wrap: balance; }
+  :global(.cta__title--accent) { color: #79dafa; }
+  .cta__sub { color: #b0c1d8; font-size: 0.98rem; line-height: 1.8; max-width: 53ch; margin-top: 1.5rem; }
+  .cta__actions { display: grid; gap: 0.8rem; padding-bottom: 0.25rem; }
+  .cta__actions a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.15rem 1.4rem; border-radius: 0.8rem; font-size: 0.9rem; font-weight: 600; transition: background 180ms, border-color 180ms; }
+  .cta__primary { color: #11263d; background: #e9f5ff; border: 1px solid #e9f5ff; }.cta__primary:hover { color: #11263d; background: #9ae5ff; border-color: #9ae5ff; }
+  .cta__secondary { color: #dceafa; border: 1px solid #a1c6e22e; background: #ffffff03; }.cta__secondary:hover { color: #fff; border-color: #a1c6e270; background: #ffffff07; }
+  .cta__actions a span { font-size: 1.2rem; }.cta__actions a:focus-visible { outline: 2px solid #79dafa; outline-offset: 4px; }
+  .cta__bottom { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid #a1c6e226; padding-top: 1.5rem; margin-top: 3rem; }
+  .cta__bottom p, .cta__bottom > span { color: #8ea8c4; font-size: 0.65rem; }
+  @media (max-width: 800px) { .cta__layout { grid-template-columns: 1fr; }.cta__actions { display: flex; flex-wrap: wrap; }.cta__actions a { min-width: 230px; }.cta__invitation { display: none; } }
+  @media (max-width: 560px) { .cta__panel { border-radius: 1.5rem; }.cta__top { margin-bottom: 2rem; }.cta__bottom { flex-direction: column; margin-top: 2rem; }.cta__actions { display: grid; }.cta__actions a { min-width: 0; }.cta__title { font-size: 2.2rem; } }
+  @media (prefers-reduced-motion: reduce) { .cta__actions a { transition: none; } }
 </style>

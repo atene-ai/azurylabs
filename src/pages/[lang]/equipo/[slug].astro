@@ -93,21 +93,50 @@ const experience = [...(member?.experience ?? [])].sort((a, b) => {
   return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
 });
 
+const homeUrl = new URL(`/${lang}/`, site).toString();
+const aboutUrl = new URL(`/${lang}/acerca`, site).toString();
+const knowsAbout = [
+  ...(member?.skills?.map((s) => s.name) ?? []),
+  ...commaList(member?.techStack),
+].filter(Boolean);
+
 const personJsonLd = member && {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: member.name,
-  jobTitle: member.role,
-  description: member.bio,
-  ...(avatarUrl && { image: avatarUrl }),
-  ...(member.email && { email: member.email }),
-  ...(member.location && { address: member.location }),
-  ...(member.socials &&
-    member.socials.length > 0 && {
-      sameAs: member.socials.map((s) => s.url),
-    }),
-  worksFor: { "@type": "Organization", name: "Azury Labs", url: site.toString() },
-  mainEntityOfPage: { "@type": "ProfilePage", "@id": canonical },
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": `${canonical}#profilepage`,
+      url: canonical,
+      name: pageTitle,
+      inLanguage: htmlLang,
+      isPartOf: { "@id": `${site}#website` },
+      mainEntity: {
+        "@type": "Person",
+        "@id": `${canonical}#person`,
+        name: member.name,
+        url: canonical,
+        jobTitle: member.role,
+        description: member.bio,
+        ...(avatarUrl && { image: avatarUrl }),
+        ...(member.email && { email: member.email }),
+        ...(member.location && { address: member.location }),
+        ...(knowsAbout.length > 0 && { knowsAbout }),
+        ...(member.socials &&
+          member.socials.length > 0 && {
+            sameAs: member.socials.map((s) => s.url),
+          }),
+        worksFor: { "@id": `${site}#organization` },
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Azury Labs", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: lang === "es" ? "Equipo" : "Team", item: aboutUrl },
+        { "@type": "ListItem", position: 3, name: member.name, item: canonical },
+      ],
+    },
+  ],
 };
 ---
 

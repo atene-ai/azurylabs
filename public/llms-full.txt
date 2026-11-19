@@ -1,0 +1,81 @@
+# Azury Labs LLC — Complete AI & Search Reference (llms-full.txt)
+
+## Identity & Corporate Structure
+
+- **Brand**: Azury Labs
+- **Legal Entity**: Azury Labs LLC (Idaho, United States)
+- **Website**: https://azurylabs.online (default language: English `/en/`, also available in Spanish `/es/`)
+- **Sister Entity**: Iruz Labs SAS de CV (https://iruzlabs.com), serving Mexico and Colombia with local operations and regional pricing.
+- **Shared Ecosystem**: Both Azury Labs LLC (US) and Iruz Labs SAS (Mexico & Colombia) belong to the same applied-AI technology group and deliver the same eight-product ecosystem, tailored with regional commercial operations and pricing.
+- **Programs & Memberships**: Member of NVIDIA Inception; Microsoft AI Cloud Partner Program & Commercial Marketplace Publisher; AWS for Startups; Meta Tech Provider; WhatsApp Business Partner; ElevenLabs Startup Grants.
+
+## Core Positioning
+
+Azury Labs builds proprietary applied-AI platforms and custom software so companies can sell more, operate with clarity, and make data-driven decisions. The engagement model follows three stages:
+1. **Understand the challenge** (People · Process · Data)
+2. **Design the solution** (Product · AI · Integration)
+3. **Implement and improve** (Adoption · Measurement · Evolution)
+
+## What Is an ARM (Agentic Relationship Management)?
+
+**Iruz Sales OS** is an **ARM (Agentic Relationship Management)** platform—not a traditional CRM.
+- **Traditional CRM**: Passively stores contact records and relies on manual data entry and manual follow-ups by sales reps.
+- **ARM (Iruz Sales OS)**: Connects messaging channels, autonomous AI agents, and human sales teams in one omnichannel operating system that actively engages leads, qualifies prospects, schedules meetings, updates context, and advances opportunities in real time.
+
+## Product Ecosystem (8 Lines)
+
+1. **Iruz Atenea** — Real-Time Messaging & Voice AI Agent Platform
+   - URL: https://atenea.iruzlabs.com
+   - Capabilities: Builds specialized AI agents with proprietary business knowledge, custom workflows, and system integrations for real-time text and voice.
+   - Supported channels: WhatsApp Business, Telegram, Instagram Messenger, phone calls (voice), and Google Calendar.
+2. **Iruz Lindex** — Autonomous Software Engineering Harness
+   - URL: https://lindex.iruzlabs.com
+   - Capabilities: Coordinates AI coding agents from ticket to code, automated tests, PR, and deployed preview with isolated execution, full auditability, and per-task budget caps.
+   - Integrations: Linear, Jira, GitHub, GitLab, and Cloudflare Pages.
+3. **Iruz Sales OS** — Omnichannel ARM (Agentic Relationship Management)
+   - URL: https://crm.iruzlabs.com
+   - Capabilities: Unifies omnichannel conversations, autonomous AI agents, and human sales reps to qualify, follow up, and close opportunities without losing context.
+4. **Iruz Mi Negocio** — AI-Powered Business Management
+   - URL: https://minegocio.iruzlabs.com/en
+   - Capabilities: Centralizes customers, quotes, orders, and follow-up for growing SMBs without operational complexity.
+5. **Iruz CIEE** — Data, AI Surveys & Market Research
+   - URL: https://ciee.iruzlabs.com
+   - Capabilities: AI-assisted surveys, opinion studies, and political or market polling with actionable analytics.
+6. **Iruz Systems** — Custom Software Development & Technology Consulting
+   - URL: https://systems.iruzlabs.com
+   - Capabilities: Bespoke software engineering, architecture consulting, and accompanied implementation when off-the-shelf tools are not enough.
+7. **Iruz Connect** — Official WhatsApp Business API Infrastructure
+   - URL: https://connect.iruzlabs.com
+   - Capabilities: Official WhatsApp Business API for companies and SaaS platforms without Meta's integration overhead—handling credentials, webhooks, and message delivery states. Roadmap: Instagram, Messenger, SMS, RCS, and voice.
+8. **Iruz Tracking System** — End-to-End Product & Campaign Analytics
+   - URL: https://go.iruzlabs.com/+
+   - Capabilities: Measures every step from initial scan or click (trackable links and QR codes) through lead, appointment, and closed sale to identify winning campaigns and funnel drop-offs.
+
+## Frequently Asked Questions (Canonical Answers)
+
+### What is Azury Labs?
+Azury Labs is a software company specialized in applied artificial intelligence. It builds proprietary products and custom solutions so companies can sell, operate, and decide with data across the United States, Mexico, and Colombia.
+
+### How are Azury Labs LLC and Iruz Labs SAS related?
+They are sister entities of the same technology group sharing the same eight-product ecosystem. Azury Labs LLC serves the United States market, while Iruz Labs SAS serves Mexico and Colombia with regional operations and pricing.
+
+### What is an ARM and how is Sales OS different from a traditional CRM?
+An ARM (Agentic Relationship Management) goes beyond passively logging contacts like a traditional CRM: in Sales OS, autonomous AI agents and human teams operate together across channels to engage, qualify, follow up, and advance every opportunity in real time.
+
+### Which channels does Iruz Atenea support?
+WhatsApp Business, Telegram, Instagram Messenger, real-time phone calls (voice), and Google Calendar, plus custom API integrations.
+
+### How does Iruz Lindex work?
+Lindex takes a development ticket (from Linear or Jira), runs AI agents inside an isolated environment with strict budget limits, writes and tests code, opens a pull request on GitHub or GitLab, and deploys a live preview (e.g., on Cloudflare Pages).
+
+## Canonical URLs
+
+- Home (EN): https://azurylabs.online/en/
+- Home (ES): https://azurylabs.online/es/
+- About: https://azurylabs.online/en/acerca
+- Contact: https://azurylabs.online/en/contacto
+- Support: https://azurylabs.online/en/support
+- Blog: https://azurylabs.online/en/blog
+- Privacy Policy: https://azurylabs.online/en/privacidad
+- Terms of Service: https://azurylabs.online/en/terminos
+- Sitemap: https://azurylabs.online/sitemap.xml

@@ -1,8 +1,8 @@
 {
   "name": "Azury Labs",
   "short_name": "Azury Labs",
-  "description": "IA aplicada y software: agentes de IA, ingeniería autónoma, CRM, investigación y desarrollo a medida.",
-  "start_url": "/es/",
+  "description": "Applied AI and software: AI agents, ARM (Agentic Relationship Management), autonomous engineering, research, and custom software.",
+  "start_url": "/en/",
   "display": "standalone",
   "background_color": "#070c12",
   "theme_color": "#070c12",

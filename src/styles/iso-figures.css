@@ -1,0 +1,251 @@
+/* Process line on the navy panel. The panel stays dark in both site themes, so only dark tokens. */
+.line.iso {
+  --anatomy-card: #0a1325;
+  --anatomy-text: #9fb2cc;
+  --anatomy-strong: #e6f0ff;
+  --anatomy-muted: #6a809f;
+  --anatomy-paper: #0a1325;
+  --anatomy-face: #111d33;
+  --anatomy-top: #13203a;
+  --anatomy-shade-0: #08101f;
+  --anatomy-shade-1: #0a1324;
+  --anatomy-shade-2: #0c1629;
+  --anatomy-shade-3: #0f1a2f;
+  --anatomy-lit-top: #16304d;
+  --anatomy-lit-shade: #10243c;
+  --anatomy-hi: #d5e3f5;
+  --anatomy-mid: #61789a;
+  --anatomy-lo: #364863;
+  --anatomy-faint: #22304a;
+  --anatomy-lit: #75daff;
+  --anatomy-halo: #02060e;
+  --anatomy-halo-opacity: 0.9;
+  --anatomy-dot: #d5e3f5;
+  margin: 0;
+  min-width: 0;
+}
+
+.line .iso-plate {
+  padding: 46px 12px 30px;
+  border-radius: 1.25rem;
+  background: transparent;
+  box-shadow: none;
+}
+
+.line .iso-plate-corners {
+  inset: 18px 22px;
+}
+
+.line__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  list-style: none;
+}
+
+.line__step {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  gap: 0.8rem;
+  padding: 1rem 0.25rem 1.1rem;
+  border: 0;
+  background: none;
+  color: #7f93b0;
+  font: inherit;
+  text-align: left;
+  transition: color 300ms;
+}
+
+.line__step::before,
+.line__step::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+  content: "";
+}
+
+.line__step::before {
+  right: 0;
+  background: #8eb7ef24;
+}
+
+.line__step::after {
+  width: calc(var(--progress, 0) * 100%);
+  background: var(--anatomy-lit);
+  box-shadow: 0 0 12px #00c8ff66;
+}
+
+.line__number {
+  font-family: var(--anatomy-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.line__title {
+  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.line__step[data-active] {
+  color: #f0f5ff;
+}
+
+.line__step[data-active] .line__number {
+  color: var(--anatomy-lit);
+}
+
+.line__step:hover {
+  color: #c9d8ee;
+}
+
+.line__step:focus-visible {
+  outline: 1px solid var(--anatomy-muted);
+  outline-offset: 4px;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .line .iso-plate {
+    overflow: hidden;
+    padding: 44px 0 34px;
+  }
+
+  .line .iso-svg {
+    width: 150%;
+    max-width: none;
+    margin: -2% -25% 0;
+  }
+
+  .line__steps {
+    gap: 0.4rem;
+  }
+
+  .line__step {
+    flex-direction: column;
+    gap: 0.3rem;
+    padding-top: 0.8rem;
+  }
+
+  .line__title {
+    font-size: 0.82rem;
+  }
+}
+
+/* Capability cards: small live figures that follow the card's ink and the site theme. */
+.capfig.iso {
+  --anatomy-paper: #101922;
+  --anatomy-face: #142030;
+  --anatomy-top: #16222e;
+  --anatomy-shade-0: #0b131b;
+  --anatomy-shade-1: #0d161f;
+  --anatomy-shade-2: #101a24;
+  --anatomy-shade-3: #131e29;
+  --anatomy-lit-top: color-mix(in srgb, var(--ink, #56d9ef) 22%, #16222e);
+  --anatomy-lit-shade: color-mix(in srgb, var(--ink, #56d9ef) 14%, #101a24);
+  --anatomy-hi: #d9e6f2;
+  --anatomy-mid: #627589;
+  --anatomy-lo: #37475a;
+  --anatomy-faint: #233140;
+  --anatomy-lit: var(--ink, #56d9ef);
+  --anatomy-halo: #03070b;
+  --anatomy-halo-opacity: 0.85;
+  --anatomy-dot: #d9e6f2;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+}
+
+:root[data-theme="light"] .capfig.iso {
+  --anatomy-paper: #ffffff;
+  --anatomy-face: #ffffff;
+  --anatomy-top: #ffffff;
+  --anatomy-shade-0: #dfe6ec;
+  --anatomy-shade-1: #e7edf2;
+  --anatomy-shade-2: #eef2f6;
+  --anatomy-shade-3: #f5f8fa;
+  --anatomy-lit-top: color-mix(in srgb, var(--ink, #087a99) 12%, #ffffff);
+  --anatomy-lit-shade: color-mix(in srgb, var(--ink, #087a99) 22%, #eef2f6);
+  --anatomy-hi: #1d2b38;
+  --anatomy-mid: #7d8c9a;
+  --anatomy-lo: #b3bec8;
+  --anatomy-faint: #d5dde4;
+  --anatomy-halo: #7d8a96;
+  --anatomy-halo-opacity: 0.3;
+  --anatomy-dot: #34414d;
+}
+
+.capfig__stage {
+  width: 100%;
+  height: 100%;
+}
+
+.capfig .iso-svg {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.capfig__readout {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: var(--color-text-muted);
+  font-family: var(--anatomy-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.capfig .gov-ball {
+  fill: var(--anatomy-lit-top);
+  stroke: var(--anatomy-lit);
+  stroke-width: 0.6px;
+  vector-effect: non-scaling-stroke;
+}
+
+.capfig .gov-glint {
+  fill: var(--anatomy-lit);
+  opacity: 0.5;
+}
+
+.capfig .gov-core {
+  stroke: var(--anatomy-face);
+}
+
+.capfig .cap-led {
+  fill: var(--anatomy-lo);
+}
+
+.capfig .cap-led[data-on="steady"] {
+  fill: var(--anatomy-hi);
+}
+
+.capfig .cap-led[data-on="lit"],
+.capfig .cap-pulse {
+  fill: var(--anatomy-lit);
+  filter: drop-shadow(0 0 2px var(--anatomy-lit));
+}
+
+.capfig .rec-paper {
+  fill: var(--anatomy-top);
+  stroke: var(--anatomy-lo);
+  stroke-width: 0.6px;
+  vector-effect: non-scaling-stroke;
+}
+
+.capfig .rec-trace {
+  stroke-width: 1px;
+}
+
+.line [data-part="lamp"] .iso-solid[data-lit] {
+  filter: drop-shadow(0 0 5px var(--anatomy-lit));
+}

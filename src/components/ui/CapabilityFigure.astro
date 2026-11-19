@@ -1,0 +1,15 @@
+---
+import "../../lib/iso/iso.css";
+import "../../styles/iso-figures.css";
+import { FIGURES } from "../../lib/figures/capabilities/index.mjs";
+export interface Props { variant: number; lang: string; }
+const { variant, lang } = Astro.props;
+const figure = FIGURES[variant];
+---
+<div class="capfig iso" data-capfig={variant} data-lang={lang}>
+  <div class="capfig__stage" set:html={figure.art(lang)} />
+  <span class="capfig__readout" data-readout aria-hidden="true">{figure.readoutAt(lang)}</span>
+</div>
+<script>
+  import "../../scripts/capability-figures.js";
+</script>

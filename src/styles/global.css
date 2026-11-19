@@ -233,29 +233,34 @@ ol {
   opacity: 0.12;
 }
 
-/* ── Scroll Reveal System ────────────────────────────────── */
+/* Visible without JavaScript; fade and rise when each block enters the viewport. */
 .reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
-.reveal-fade {
+html[data-reveal-ready] .reveal {
+  transition: opacity 420ms ease-out, transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 160ms ease, box-shadow 160ms ease;
+  transition-delay: 0s;
+}
+
+html[data-reveal-ready] .reveal:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-reveal-ready] .reveal,
+  html[data-reveal-ready] .reveal:not(.is-visible) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+html[data-reveal-ready] .reveal-fade:not(.is-visible) {
   transform: none; /* Just fade in */
-}
-
-/* Stagger delays safely */
-@media (min-width: 640px) {
-  .reveal-delay-100 { transition-delay: 100ms; }
-  .reveal-delay-200 { transition-delay: 200ms; }
-  .reveal-delay-300 { transition-delay: 300ms; }
-  .reveal-delay-400 { transition-delay: 400ms; }
 }
 
 /* ── Premium Aesthetic Utilities ─────────────────────────── */

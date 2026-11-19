@@ -1,0 +1,61 @@
+---
+export interface Props { variant: number; }
+const { variant } = Astro.props;
+---
+<div class="capability-visual" aria-hidden="true">
+  <div class="halo"></div>
+  <svg viewBox="0 0 360 210" fill="none">
+    {variant === 0 && <>
+      <path class="trace" d="M76 60H127L157 105M76 150H127L157 105M203 105H245L275 60M245 105L275 150" />
+      <rect class="panel" x="21" y="35" width="80" height="50" rx="12" /><rect class="panel" x="21" y="125" width="80" height="50" rx="12" />
+      <rect class="panel" x="259" y="35" width="80" height="50" rx="12" /><rect class="panel" x="259" y="125" width="80" height="50" rx="12" />
+      <path class="glyph" d="M44 52h34M44 61h24M44 70h29M45 141h10v16H45zM61 137h10v20H61zM277 54h44M286 65h26M286 143l8 8 16-17" />
+      <circle class="orbit" cx="180" cy="105" r="54" /><circle class="core" cx="180" cy="105" r="34" /><path class="glyph" d="M170 88v34M180 96v26M190 88v34" />
+      <circle class="dot" cx="125" cy="60" r="4" /><circle class="dot" cx="246" cy="105" r="4" />
+    </>}
+    {variant === 1 && <>
+      <path class="layer back" d="M180 33l121 54-121 54L59 87z" /><path class="layer middle" d="M180 63l121 54-121 54-121-54z" /><path class="layer" d="M180 93l121 54-121 54-121-54z" />
+      <path class="trace" d="M180 18v32M180 169v32" /><circle class="dot" cx="180" cy="86" r="6" /><path class="glyph" d="M156 147h48M166 156h28" />
+    </>}
+    {variant === 2 && <>
+      <ellipse class="orbit" cx="180" cy="105" rx="124" ry="42" transform="rotate(-28 180 105)" /><ellipse class="orbit" cx="180" cy="105" rx="124" ry="42" transform="rotate(28 180 105)" />
+      <circle class="core" cx="180" cy="105" r="40" /><path class="glyph" d="M154 105h7l6-15 9 31 8-37 8 27 6-6h8" />
+      <circle class="dot" cx="83" cy="147" r="7" /><circle class="dot" cx="277" cy="147" r="5" /><circle class="dot" cx="273" cy="59" r="5" />
+    </>}
+    {variant === 3 && <>
+      <path class="trace" d="M71 63h52l31 29M71 147h52l31-29M289 63h-52l-31 29M289 147h-52l-31-29" />
+      <rect class="panel" x="41" y="38" width="60" height="50" rx="14" /><rect class="panel" x="41" y="122" width="60" height="50" rx="14" /><rect class="panel" x="259" y="38" width="60" height="50" rx="14" /><rect class="panel" x="259" y="122" width="60" height="50" rx="14" />
+      <rect class="core" x="147" y="72" width="66" height="66" rx="22" /><path class="glyph" d="M59 61h24M59 69h15M60 137h22v19H60zM278 54h22v17h-14l-7 6v-6h-1zM278 142l7 9 15-17M168 102h24M180 90v24" />
+    </>}
+    {variant === 4 && <>
+      <path class="orbit" d="M48 44h264M48 83h264M48 122h264M48 161h264" />
+      <rect class="chart" x="65" y="132" width="27" height="42" rx="5" /><rect class="chart" x="116" y="105" width="27" height="69" rx="5" /><rect class="chart" x="167" y="84" width="27" height="90" rx="5" /><rect class="chart" x="218" y="61" width="27" height="113" rx="5" />
+      <path class="glyph" d="M64 112l67-30 51-15 53-39h56" /><circle class="dot" cx="291" cy="28" r="6" />
+    </>}
+    {variant === 5 && <>
+      <path class="orbit" d="M122 54h116a51 51 0 0 1 0 102H122a51 51 0 0 1 0-102z" /><path class="glyph" d="M132 54h106a51 51 0 0 1 51 51M228 156H122a51 51 0 0 1-51-51M132 47l9 7-9 7M228 149l-9 7 9 7" />
+      <circle class="core" cx="180" cy="105" r="30" /><path class="glyph" d="M167 105l9 9 19-19" /><circle class="dot" cx="71" cy="105" r="6" /><circle class="dot" cx="289" cy="105" r="6" />
+    </>}
+  </svg>
+</div>
+<style>
+  .capability-visual { position: relative; width: min(100%, 400px); height: 100%; display: grid; place-items: center; }
+  .halo { position: absolute; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, currentColor, transparent 65%); opacity: 0.09; }
+  svg { position: relative; width: 100%; height: 100%; overflow: visible; transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1); }
+  :global(.capability:hover) svg { transform: translateY(-5px) scale(1.025); }
+  .trace { stroke: currentColor; stroke-width: 1.5; opacity: 0.5; stroke-linejoin: round; }
+  :global(html[data-reveal-ready]) .trace { stroke-dasharray: 500; stroke-dashoffset: 500; transition: stroke-dashoffset 900ms ease-out; }
+  :global(html[data-reveal-ready] .capability.is-visible) .trace { stroke-dashoffset: 0; }
+  .orbit { stroke: currentColor; stroke-width: 1; opacity: 0.22; }
+  .panel { fill: var(--color-surface); stroke: currentColor; stroke-opacity: 0.4; }.core { fill: color-mix(in srgb, currentColor 15%, var(--color-surface)); stroke: currentColor; stroke-opacity: 0.8; }
+  .glyph { stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }.dot { fill: currentColor; }
+  .layer { fill: color-mix(in srgb, currentColor 8%, var(--color-surface)); stroke: currentColor; stroke-opacity: 0.5; transition: transform 450ms ease-out; }.back { opacity: 0.45; }.middle { opacity: 0.7; }
+  :global(.capability:hover) .back { transform: translateY(-7px); }
+  :global(.capability:hover) .layer:not(.back):not(.middle) { transform: translateY(7px); }
+  .chart { fill: currentColor; opacity: 0.25; stroke: currentColor; stroke-opacity: 0.5; }
+  @media (prefers-reduced-motion: reduce) {
+    svg, .layer, :global(html[data-reveal-ready]) .trace { transition: none; }
+    :global(.capability:hover) svg, :global(.capability:hover) .layer { transform: none; }
+    :global(html[data-reveal-ready]) .trace { stroke-dashoffset: 0; }
+  }
+</style>

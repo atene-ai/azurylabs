@@ -26,9 +26,37 @@ const copy = lang === "es"
       signals: ["Proprietary products", "AI agents", "Custom software"],
       response: "We will respond with the most useful next step, not a generic pitch.",
     };
+
+const site = Astro.site ?? Astro.url;
+const pageUrl = new URL(`/${lang}/contacto`, site).toString();
+const homeUrl = new URL(`/${lang}/`, site).toString();
+const contactTitle = lang === "es" ? "Contacto — Azury Labs" : "Contact — Azury Labs";
+const contactJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ContactPage",
+      "@id": `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: contactTitle,
+      description: copy.text,
+      inLanguage: htmlLang,
+      isPartOf: { "@id": `${site}#website` },
+      about: { "@id": `${site}#organization` },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: lang === "es" ? "Inicio" : "Home", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: lang === "es" ? "Contacto" : "Contact", item: pageUrl },
+      ],
+    },
+  ],
+};
 ---
 
-<BaseLayout title={lang === "es" ? "Contacto — Azury Labs" : "Contact — Azury Labs"} description={copy.text} lang={htmlLang}>
+<BaseLayout title={contactTitle} description={copy.text} lang={htmlLang}>
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(contactJsonLd)} />
   <Navbar lang={lang} page="contact" />
 
   <main class="contact-page">

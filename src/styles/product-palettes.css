@@ -1,0 +1,11 @@
+/* Neutral surfaces keep the original product logos in focus. */
+.product-card,
+.ecosystem-card {
+  --product-media: #f3f4f6;
+  --product-surface: #181b22;
+  --product-accent: #a8b0bf;
+}
+
+:root[data-theme="light"] :is(.product-card, .ecosystem-card) {
+  --product-surface: #ffffff;
+}

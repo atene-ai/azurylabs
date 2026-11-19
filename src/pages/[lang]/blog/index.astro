@@ -42,10 +42,44 @@ const fmtDate = (iso: string | null) => iso
   ? new Intl.DateTimeFormat(htmlLang, { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso))
   : "";
 
+const site = Astro.site ?? Astro.url;
+const pageUrl = new URL(`/${lang}/blog`, site).toString();
+const homeUrl = new URL(`/${lang}/`, site).toString();
+const blogJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "@id": `${pageUrl}#blog`,
+      url: pageUrl,
+      name: copy.title,
+      description: copy.intro,
+      inLanguage: htmlLang,
+      publisher: { "@id": `${site}#organization` },
+      isPartOf: { "@id": `${site}#website` },
+      blogPost: articles.slice(0, 20).map((a) => ({
+        "@type": "BlogPosting",
+        headline: a.title,
+        url: new URL(`/${lang}/blog/${a.slug}`, site).toString(),
+        ...(a.publishedAt && { datePublished: a.publishedAt }),
+        ...(a.excerpt && { description: a.excerpt }),
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: lang === "es" ? "Inicio" : "Home", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: "Blog", item: pageUrl },
+      ],
+    },
+  ],
+};
+
 Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=600");
 ---
 
 <BaseLayout title={copy.title} description={copy.intro} lang={htmlLang}>
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(blogJsonLd)} />
   <Navbar lang={lang} page="blog" />
 
   <main class="blog">

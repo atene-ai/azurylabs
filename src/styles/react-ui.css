@@ -1,0 +1,16 @@
+/* Tailwind utilities without preflight: the site already has its own reset. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --color-muted: var(--color-surface);
+  --color-muted-foreground: var(--color-text-muted);
+  --color-border: var(--color-border-subtle);
+  --color-accent: var(--color-surface-2);
+  --color-ring: var(--color-glow);
+  --color-card: var(--color-surface);
+  --color-card-foreground: var(--color-text);
+}

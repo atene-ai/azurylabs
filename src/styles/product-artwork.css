@@ -1,0 +1,65 @@
+.product-color-bloom { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.product-color-bloom__base,
+.product-color-bloom__color { position: absolute; inset: 0; }
+.product-color-bloom__base { filter: grayscale(1) contrast(1.04); }
+.product-color-bloom__color { pointer-events: none; clip-path: circle(0% at 50% 50%); }
+.product-artwork {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 2.4rem 2rem;
+  isolation: isolate;
+}
+.product-artwork__circles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  /* Fade only the artwork behind the logo, without adding a logo background. */
+  mask-image: radial-gradient(ellipse at center, transparent 22%, #000 85%);
+}
+.product-artwork__circle {
+  position: absolute;
+  top: calc(var(--y) - var(--size) / 2);
+  left: calc(var(--x) - var(--size) / 2);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: var(--bubble-color);
+}
+.product-artwork--connect .product-artwork__circle:nth-child(3n),
+.product-artwork--atenea .product-artwork__circle:nth-child(4n) {
+  border: 3px solid var(--bubble-color);
+  background: transparent;
+}
+.product-artwork--tracking .product-artwork__circle:nth-child(3n) {
+  background: linear-gradient(135deg, var(--bubble-color), #63d8d0);
+}
+.product-artwork__logo {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 330px;
+  height: 100%;
+  max-height: 165px;
+  object-fit: contain;
+}
+.product-artwork--atenea .product-artwork__logo { max-width: 260px; }
+.product-artwork--mi-negocio .product-artwork__logo { max-height: 170px; }
+.product-artwork--ciee .product-artwork__logo { max-width: 380px; }
+.product-artwork--tracking .product-artwork__logo { max-width: 285px; }
+.product-artwork__wordmark { position: relative; z-index: 1; display: flex; align-items: center; gap: 1rem; color: #111827; }
+.product-artwork__wordmark > img { width: clamp(44px, 18cqi, 72px); height: clamp(44px, 18cqi, 72px); object-fit: contain; }
+.product-artwork__wordmark span { display: flex; flex-direction: column; gap: 0.3rem; }
+.product-artwork__wordmark small { color: #475467; font-size: 0.67rem; font-weight: 750; letter-spacing: 0.22em; }
+.product-artwork__wordmark strong { font-family: var(--font-brand); font-size: clamp(1.25rem, 8cqi, 2rem); line-height: 1; letter-spacing: -0.04em; white-space: nowrap; }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .product-color-bloom__base { filter: none; }
+}
+@media (max-width: 640px) {
+  .product-artwork { padding: 2rem 1.5rem; }
+}

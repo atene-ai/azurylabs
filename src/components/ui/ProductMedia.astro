@@ -1,0 +1,54 @@
+---
+import { ProductColorBloom } from "./color-filter-gallery";
+import type { getProducts } from "../../lib/products";
+
+interface Props {
+  product: ReturnType<typeof getProducts>[number];
+  featured?: boolean;
+  compact?: boolean;
+  mirrored?: boolean;
+}
+const { product, featured = false, compact = false, mirrored = false } = Astro.props;
+---
+
+<div class:list={["product-media", featured && "product-media--featured", compact && "product-media--compact"]}>
+  <span class="product-media__number" aria-hidden="true">{product.number}</span>
+  <ProductColorBloom
+    client:load
+    id={product.id}
+    src={product.logo ?? undefined}
+    alt={product.logoAlt || `Iruz ${product.wordmark}`}
+    width={product.logoWidth}
+    height={product.logoHeight}
+    wordmark={product.wordmark ?? undefined}
+    background={product.artwork.base}
+    colors={product.artwork.colors}
+    mirrored={mirrored}
+  />
+</div>
+
+<style>
+  .product-media {
+    position: relative;
+    height: 245px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    background: #e5e9f0;
+    isolation: isolate;
+  }
+  .product-media--featured { height: 275px; }
+  .product-media--compact { height: 225px; }
+  .product-media__number {
+    position: absolute;
+    top: 1rem;
+    right: 1.1rem;
+    z-index: 2;
+    color: #334155;
+    font-size: 0.8rem;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+  }
+  @media (max-width: 960px) { .product-media--featured { height: 245px; } }
+  @media (max-width: 640px) { .product-media { height: 230px; } }
+</style>

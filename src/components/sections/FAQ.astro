@@ -28,13 +28,16 @@ const faqJsonLd = {
     <header class="faq__header reveal">
       <Badge variant="subtle">{t("faq.badge")}</Badge>
       <h2 class="faq__title" set:html={t("faq.title")} />
+      <p class="faq__intro">{lang === "es" ? "Aclaremos las dudas para encontrar el mejor punto de partida para tu negocio." : "Let’s clear up the questions and find the right starting point for your business."}</p>
+      <a class="faq__contact" href={`/${lang}/contacto`}>{lang === "es" ? "Hablemos de tu proyecto" : "Let’s talk about your project"}<span aria-hidden="true">↗</span></a>
     </header>
 
     <div class="faq__list">
       {
         items.map((item, index) => (
-          <details class="faq__item reveal" style={`transition-delay: ${index * 50}ms`}>
+          <details class="faq__item reveal">
             <summary>
+              <span class="faq__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <span>{item.q}</span>
               <span class="faq__icon" aria-hidden="true"></span>
             </summary>
@@ -65,6 +68,8 @@ const faqJsonLd = {
     display: grid;
     gap: var(--space-5);
     justify-items: start;
+    position: sticky;
+    top: 110px;
   }
 
   .faq__title {
@@ -85,27 +90,27 @@ const faqJsonLd = {
 
   .faq__list {
     display: grid;
-    gap: var(--space-3);
+    gap: 0;
+    border-top: 1px solid var(--color-border-subtle);
   }
 
   .faq__item {
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--color-surface) 94%, transparent);
-    transition: border-color var(--duration-normal) var(--ease-out);
+    border-bottom: 1px solid var(--color-border-subtle);
+    background: transparent;
   }
 
   .faq__item[open],
   .faq__item:hover {
-    border-color: color-mix(in srgb, var(--color-brand) 42%, var(--color-border));
+    border-color: color-mix(in srgb, var(--color-glow) 42%, var(--color-border));
   }
 
   .faq__item summary {
-    display: flex;
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr) 14px;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
-    padding: var(--space-5) var(--space-6);
+    padding: 1.5rem 0;
     color: var(--color-text);
     font-size: var(--text-base);
     font-weight: var(--weight-semibold);
@@ -115,6 +120,12 @@ const faqJsonLd = {
   }
 
   .faq__item summary::-webkit-details-marker { display: none; }
+
+  .faq__number { color: var(--color-text-muted); font-size: 0.65rem; font-weight: 500; }
+  .faq__intro { font-size: 0.9rem; max-width: 35ch; line-height: 1.8; }
+  .faq__contact { display: inline-flex; gap: 1.5rem; align-items: center; margin-top: 0.6rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-border); font-size: 0.85rem; color: var(--color-text); }
+  .faq__contact span { color: var(--color-glow); }
+  .faq__item summary:focus-visible, .faq__contact:focus-visible { outline: 2px solid var(--color-glow); outline-offset: 5px; }
 
   .faq__icon {
     position: relative;
@@ -140,18 +151,14 @@ const faqJsonLd = {
   .faq__item[open] .faq__icon::after { transform: rotate(0deg); }
 
   .faq__item p {
-    padding: 0 var(--space-6) var(--space-6);
+    padding: 0 2rem 1.5rem 2.5rem;
     color: var(--color-text-muted);
     font-size: var(--text-sm);
     line-height: 1.7;
   }
 
-  :global(:root[data-theme="light"]) .faq__item {
-    background: rgba(255, 255, 255, 0.94);
-    border-color: rgba(15, 23, 42, 0.1);
-  }
-
   @media (max-width: 860px) {
     .faq__inner { grid-template-columns: 1fr; }
+    .faq__header { position: static; }
   }
 </style>

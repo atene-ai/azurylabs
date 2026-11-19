@@ -180,17 +180,23 @@ function resolve(opts: FetchOptions) {
 }
 
 async function call<T>(url: string, token: string): Promise<T | null> {
-  const res = await fetch(url, {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
-  });
+  if (!/^https?:\/\//i.test(url)) return null;
+  try {
+    const res = await fetch(url, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
 
-  if (!res.ok) {
-    console.error(`[strapi] ${res.status} ${res.statusText} -> ${url}`);
+    if (!res.ok) {
+      console.error(`[strapi] ${res.status} ${res.statusText} -> ${url}`);
+      return null;
+    }
+
+    const json = (await res.json()) as { data: T };
+    return json.data;
+  } catch (err) {
+    console.error(`[strapi] request failed -> ${url}`, err);
     return null;
   }
-
-  const json = (await res.json()) as { data: T };
-  return json.data;
 }
 
 const TEAM_MEMBER_POPULATE = [

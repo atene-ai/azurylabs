@@ -3,7 +3,7 @@ import { getArticles, getTeamMembers } from "../lib/strapi";
 
 export const prerender = false;
 
-const STATIC_PATHS = ["", "acerca", "privacidad", "terminos"];
+const STATIC_PATHS = ["", "acerca", "contacto", "privacidad", "terminos"];
 const LANGS = ["es", "en"] as const;
 
 function xmlEscape(value: string): string {
@@ -36,6 +36,7 @@ export const GET: APIRoute = async ({ site, locals }) => {
     const alternates = [
       { hreflang: "es", href: esHref },
       { hreflang: "en", href: enHref },
+      { hreflang: "x-default", href: enHref },
     ];
     entries.push(urlEntry(esHref, alternates));
     entries.push(urlEntry(enHref, alternates));
@@ -46,6 +47,7 @@ export const GET: APIRoute = async ({ site, locals }) => {
   const blogAlternates = [
     { hreflang: "es", href: blogIndexEs },
     { hreflang: "en", href: blogIndexEn },
+    { hreflang: "x-default", href: blogIndexEn },
   ];
   entries.push(urlEntry(blogIndexEs, blogAlternates));
   entries.push(urlEntry(blogIndexEn, blogAlternates));
@@ -63,7 +65,9 @@ export const GET: APIRoute = async ({ site, locals }) => {
       const enHref = new URL(`/en/blog/${article.slug}`, base);
       const alternates = [
         { hreflang: "es", href: esHref },
-        ...(enSlugs.has(article.slug) ? [{ hreflang: "en", href: enHref }] : []),
+        ...(enSlugs.has(article.slug)
+          ? [{ hreflang: "en", href: enHref }, { hreflang: "x-default", href: enHref }]
+          : [{ hreflang: "x-default", href: esHref }]),
       ];
       entries.push(urlEntry(esHref, alternates, article.updatedAt?.slice(0, 10)));
     }
@@ -75,6 +79,7 @@ export const GET: APIRoute = async ({ site, locals }) => {
       const alternates = [
         ...(esSlugs.has(article.slug) ? [{ hreflang: "es", href: esHref }] : []),
         { hreflang: "en", href: enHref },
+        { hreflang: "x-default", href: enHref },
       ];
       entries.push(urlEntry(enHref, alternates, article.updatedAt?.slice(0, 10)));
     }
@@ -94,7 +99,9 @@ export const GET: APIRoute = async ({ site, locals }) => {
       const enHref = new URL(`/en/equipo/${member.slug}`, base);
       const alternates = [
         { hreflang: "es", href: esHref },
-        ...(enSlugs.has(member.slug) ? [{ hreflang: "en", href: enHref }] : []),
+        ...(enSlugs.has(member.slug)
+          ? [{ hreflang: "en", href: enHref }, { hreflang: "x-default", href: enHref }]
+          : [{ hreflang: "x-default", href: esHref }]),
       ];
       entries.push(urlEntry(esHref, alternates, member.updatedAt?.slice(0, 10)));
     }
@@ -105,6 +112,7 @@ export const GET: APIRoute = async ({ site, locals }) => {
       const alternates = [
         ...(esSlugs.has(member.slug) ? [{ hreflang: "es", href: esHref }] : []),
         { hreflang: "en", href: enHref },
+        { hreflang: "x-default", href: enHref },
       ];
       entries.push(urlEntry(enHref, alternates, member.updatedAt?.slice(0, 10)));
     }
